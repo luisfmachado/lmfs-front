@@ -1,0 +1,13 @@
+<div class="caixa-dialogo">
+<h2 mat-dialog-title>{{ data.titulo }}</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field>
+    <mat-label>{{ data.descricao }}</mat-label>
+    <input matInput [(ngModel)]="descricao">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
+  <button class="btn-confirmar" mat-button [mat-dialog-close]="descricao" cdkFocusInitial>{{ data.confirmar }}</button>
+</mat-dialog-actions>
+</div>
