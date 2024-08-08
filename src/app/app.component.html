@@ -1,55 +1,52 @@
-<mat-sidenav-container>
-    <mat-sidenav mode="side" #sidenav [opened]="true">
-  
-      <div class="usuario">
-          <img class="foto_usuario" src="../assets/mat-card-avatar.svg" alt="Foto do Usuário">
-        <div class="info-usuario" [routerLink]="'/meuPerfil'">
-          <p class="txt_nome_usuario">Reis Zika</p>
-          <p class="txt_nivel_usuario">Administrador</p>
-        </div>
+<mat-sidenav-container *ngIf="!isLoginRoute()">
+  <mat-sidenav mode="side" #sidenav [opened]="false">
+    <div class="usuario">
+      <img class="foto_usuario" src="../assets/mat-card-avatar.svg" alt="Foto do Usuário">
+      <div class="info-usuario" [routerLink]="'/meuPerfil'">
+        <p class="txt_nome_usuario">Reis Zika</p>
+        <p class="txt_nivel_usuario">Administrador</p>
       </div>
-  
-      <mat-nav-list>
-        <!-- Cadastros -->
-        <mat-list-item (click)="toggleSubmenu('cadastros')">
-          <div class="item-menu">
-              <mat-icon>add</mat-icon>
-              <p>Cadastros</p>
-              <mat-icon *ngIf="!showSubmenu('cadastros')">navigate_before</mat-icon>
-              <mat-icon *ngIf="showSubmenu('cadastros')">expand_more</mat-icon>
+    </div>
+
+    <mat-nav-list>
+      <!-- Cadastros -->
+      <mat-list-item (click)="toggleSubmenu('cadastros')">
+        <div class="item-menu">
+          <mat-icon>add</mat-icon>
+          <p>Cadastros</p>
+          <mat-icon *ngIf="!showSubmenu('cadastros')">navigate_before</mat-icon>
+          <mat-icon *ngIf="showSubmenu('cadastros')">expand_more</mat-icon>
+        </div>
+      </mat-list-item>
+
+      <!-- escolas -->
+      <div *ngIf="showSubmenu('cadastros')">
+        <mat-list-item [routerLink]="'/cadastro/tipoGasto'">
+          <div class="item-submenu">
+            <mat-icon>shopping_cart</mat-icon>
+            <span>Tipo Gasto</span>
           </div>
-          </mat-list-item>
-        
-          <!-- escolas -->
-          <div *ngIf="showSubmenu('cadastros')">
-            <mat-list-item [routerLink]="'/cadastro/tipoGasto'">
-              <div class="item-submenu">
-                  <mat-icon>shopping_cart</mat-icon>
-                  <span>Tipo Gasto</span>
-              </div>
-          </mat-list-item>
+        </mat-list-item>
+      </div>
+
+      <div *ngIf="showSubmenu('cadastros')">
+        <mat-list-item [routerLink]="'/cadastro/Gasto'">
+          <div class="item-submenu">
+            <mat-icon>payments</mat-icon>
+            <span>Gasto</span>
           </div>
-  
-          <div *ngIf="showSubmenu('cadastros')">
-            <mat-list-item [routerLink]="'/cadastro/Gasto'">
-              <div class="item-submenu">
-                  <mat-icon>payments</mat-icon>
-                  <span>Gasto</span>
-              </div>
-          </mat-list-item>
-          </div>
-  
-      </mat-nav-list>
-  
-  
-    </mat-sidenav>
-  
-    <mat-sidenav-content class="bg-color-default">
-      <button mat-icon-button class="btn_menu" (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-  
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
+        </mat-list-item>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="bg-color-default">
+    <button mat-icon-button class="btn_menu" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet *ngIf="isLoginRoute()"></router-outlet>

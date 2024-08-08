@@ -1,0 +1,43 @@
+<div class="login animate-fade-slide-in">
+  <div class="card_login1">
+    <span class="span_login">Fazer Login</span>
+    <form class="form_login" (ngSubmit)="login()">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input
+          type="password"
+          matInput
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </mat-form-field>
+      <span class="login_message">
+        Caso não tenha o seu login, entre em contato com a administração.
+      </span>
+      <button mat-raised-button class="login_submit" type="submit">
+        Entrar
+      </button>
+    </form>
+  </div>
+  <div class="card_login2">
+    <img
+      src="../../../assets/svg/login.svg"
+      alt=""
+      class="img_login2"
+    />
+  </div>
+</div>
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

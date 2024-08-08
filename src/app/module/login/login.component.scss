@@ -1,0 +1,83 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../../assets/svg/imagem-bc.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.card_login1 {
+  background-color: white;
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 60px;
+
+  @media (max-width: 428px) {
+    width: 80%;
+    line-height: 1;
+    padding: 20px;
+    border-radius: 10px;
+  }
+}
+
+.form_login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.span_login {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  color: black;
+  padding: 20px;
+  justify-content: center;
+  display: flex;
+  padding-bottom: 40px;
+}
+
+.login_message {
+  position: relative;
+  top: -20px;
+}
+
+:host .login_submit {
+  background-color: black;
+  color: white;
+  height: 40px;
+}
+
+.img_login2 {
+  width: 100%;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-color: #C9CCD1;
+  border-width: 0;
+  border: none;
+  border-bottom: none;
+}
+
+.card_login2 {
+  width: 730px;
+  background-color: #C9CCD1;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  @media (max-width: 428px) {
+    display: none;
+  }
+}

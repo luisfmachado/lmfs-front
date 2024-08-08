@@ -15,6 +15,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const COMMONS = [
   MatToolbarModule,
@@ -31,7 +33,9 @@ const COMMONS = [
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  FormsModule
+  FormsModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule
 ]
 
 @NgModule({
