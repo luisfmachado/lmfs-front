@@ -10,6 +10,7 @@ import { LoginComponent } from './module/login/login.component';
 import { OrcamentoComponent } from './module/orcamento/orcamento.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { MaterialModule } from './shared/material.module';
+import { ProdutosComponent } from './module/cadastro/produtos/produtos.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MaterialModule } from './shared/material.module';
     HomeComponent,
     OrcamentoComponent,
     LoginComponent,
+    ProdutosComponent,
   ],
   imports: [
     BrowserModule,

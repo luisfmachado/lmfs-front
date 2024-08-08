@@ -1,0 +1,27 @@
+// Variáveis para controle fácil
+$animation-duration: 0.8s;
+$animation-delay: 0.3s;
+$slide-distance: 20px;
+
+// Keyframes para a animação
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY($slide-distance);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Classe base para elementos animados
+.animate-fade-slide-in {
+  opacity: 0; // começa invisível
+  transform: translateY($slide-distance); // começa deslocado para baixo
+  animation-name: fadeSlideIn;
+  animation-duration: $animation-duration;
+  animation-fill-mode: forwards; // mantém o estado final após a conclusão
+  animation-delay: $animation-delay; // atraso antes de começar a animação
+  will-change: opacity, transform; // otimização de performance
+}

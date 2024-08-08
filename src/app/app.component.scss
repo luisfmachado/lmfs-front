@@ -1,62 +1,95 @@
 .bg-color-default {
-    background-color: var(--secondary-color);
+  background-image: url("../assets/svg/imagem-bc.svg");
+  background-attachment: fixed;
+}
+
+.btn_menu {
+  margin: 10px;
+  color: rgb(255, 255, 255);
+}
+
+mat-sidenav {
+  width: 230px;
+  background-color: rgb(255, 255, 255);
+}
+
+mat-sidenav-content {
+  height: 100vh;
+}
+
+.usuario {
+  display: flex;
+  gap: 16px;
+  margin: 56px 21px 51px 21px;
+}
+
+.info-usuario {
+  margin-left: 10px;
+  cursor: pointer;
+
+  p {
+    margin: 0 0 4px;
   }
-  
-  .btn_menu {
-    margin: 10px;
+
+  .txt_nome_usuario {
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 20px;
   }
-  
-  mat-sidenav {
-    width: 230px;
+
+  .txt_nivel_usuario {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
   }
-  
-  mat-sidenav-content {
-    height: 100vh;
+}
+
+.item-menu {
+  display: flex;
+  justify-content: space-between;
+  mat-icon {
+    margin-right: 15px;
   }
-  
-  .usuario {
-    display: flex;
-    gap: 16px;
-    margin: 56px 21px 51px 21px;
+  span {
+    font-size: 18px;
   }
-  
-  .info-usuario {
-    margin-left: 10px;
-    cursor: pointer;
-  
-    p {
-      margin: 0 0 4px;
-    }
-  
-    .txt_nome_usuario {
-      font-size: 1.2em;
-      font-weight: 500;
-      line-height: 20px;
-    }
-  
-    .txt_nivel_usuario {
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 14px;
-    }
+}
+
+.item-submenu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  margin-left: 40px;
+}
+
+.logout {
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.item_logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  span {
+    font-size: 18px;
   }
-  
-  .item-menu {
-    display: flex;
-    justify-content: space-between;
-    mat-icon {
-        margin-right: 15px;
-    }
-    p {
-        width: 105px
-    }
-  }
-  
-  .item-submenu {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 20px;
-    margin-left: 40px;
-  }
-  
+}
+
+mat-icon {
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+mat-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+mat-list-item {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+

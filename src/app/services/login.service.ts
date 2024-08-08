@@ -17,7 +17,7 @@ interface CustomJwtPayload {
   providedIn: 'root',
 })
 export class LoginService {
-  private loginUrl = environment.URL_API + '/auth/login';
+  private loginUrl = environment.URL_API_FWT + '/auth/login';
 
   constructor(private http: HttpClient) {}
 
@@ -40,7 +40,7 @@ export class LoginService {
     );
   }
 
-  logout(): void {
+  logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     localStorage.removeItem('name');
@@ -49,5 +49,16 @@ export class LoginService {
   public get userRoles(): string[] {
     const roles = localStorage.getItem('roles');
     return roles ? JSON.parse(roles) : [];
+  }
+
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    if (token != null) {
+      console.log('logado')
+    } else {
+      console.log('não logado')
+    }
+
+    return token !== null && token !== '';
   }
 }

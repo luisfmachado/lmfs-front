@@ -6,7 +6,7 @@ import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss', '../../styles/animate-fade-slide-in.scss', '../../styles/spinner.scss']
 })
 export class LoginComponent {
   email: string = '';
@@ -20,7 +20,7 @@ export class LoginComponent {
     private alertService: AlertService
   ) {}
 
-  login(): void {
+  login() {
     this.spinnerCarregamento = true;
     this.loginService.login(this.email, this.password).subscribe({
       next: (response) => {

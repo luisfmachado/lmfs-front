@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { AlertService } from '../services/alert.service';
 
@@ -9,10 +9,17 @@ import { AlertService } from '../services/alert.service';
 export class AdminGuard implements CanActivate {
   constructor(
     private authService: LoginService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
+    console.log('entrou na func1')
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return false;
+    }
+
     const requiredRoles = route.data['roles'] as string[];
     const userRoles = this.authService.userRoles;
 

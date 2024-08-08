@@ -1,61 +1,63 @@
+// Definindo o azul marinho como a cor primária
 $my-custom-primary: (
-    50 : #e0e0e0,
-    100 : #b3b3b3,
-    200 : #808080,
-    300 : #4d4d4d,
-    400 : #262626,
-    500 : #000000,
-    600 : #000000,
-    700 : #000000,
-    800 : #000000,
-    900 : #000000,
-    A100 : #a6a6a6,
-    A200 : #8c8c8c,
-    A400 : #737373,
-    A700 : #666666,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
-
-$my-custom-accent: (
-    50 : #eef5ff,
-    100 : #d5e6ff,
-    200 : #b9d5ff,
-    300 : #9dc4ff,
-    400 : #88b8ff,
-    500 : #73abff,
-    600 : #6ba4ff,
-    700 : #609aff,
-    800 : #5691ff,
-    900 : #4380ff,
-    A100 : #ffffff,
-    A200 : #ffffff,
-    A400 : #ebf1ff,
-    A700 : #d1dfff,
+    50 : #e3eaf4, // Azul marinho claro
+    100 : #b5c5e8, // Azul marinho mais claro
+    200 : #8a9bd9, // Azul marinho
+    300 : #5f72c6, // Azul marinho escuro
+    400 : #4359b0, // Azul marinho mais escuro
+    500 : #002b6c, // Azul marinho principal
+    600 : #002660, // Azul marinho mais escuro
+    700 : #00234d, // Azul marinho escuro
+    800 : #001d40, // Azul marinho mais escuro
+    900 : #001429, // Azul marinho mais profundo
+    A100 : #a0c2ff, // Azul marinho suave
+    A200 : #6a9aff, // Azul marinho mais intenso
+    A400 : #2a72ff, // Azul marinho vibrante
+    A700 : #0048ff, // Azul marinho profundo
     contrast: (
         50 : #000000,
         100 : #000000,
         200 : #000000,
         300 : #000000,
         400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+// Definindo preto como a cor secundária
+$my-custom-accent: (
+    50 : #f5f5f5, // Preto claro
+    100 : #dcdcdc, // Preto mais claro
+    200 : #bcbcbc, // Preto médio
+    300 : #9e9e9e, // Preto escuro
+    400 : #787878, // Preto mais escuro
+    500 : #4d4d4d, // Preto principal
+    600 : #434343, // Preto mais escuro
+    700 : #333333, // Preto escuro
+    800 : #2b2b2b, // Preto mais profundo
+    900 : #1f1f1f, // Preto mais profundo
+    A100 : #ffffff, // Preto suave
+    A200 : #ffffff, // Preto mais claro
+    A400 : #dcdcdc, // Preto leve
+    A700 : #bfbfbf, // Preto mais leve
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
         900 : #ffffff,
         A100 : #000000,
         A200 : #000000,
@@ -64,22 +66,22 @@ $my-custom-accent: (
     )
 );
 
-/* For use in src/lib/core/theming/_palette.scss */
+// Definindo o vermelho como a cor de alerta
 $my-custom-warn: (
-    50 : #f9e0e0,
-    100 : #f0b3b3,
-    200 : #e68080,
-    300 : #db4d4d,
-    400 : #d42626,
-    500 : #cc0000,
-    600 : #c70000,
-    700 : #c00000,
-    800 : #b90000,
-    900 : #ad0000,
-    A100 : #ffd7d7,
-    A200 : #ffa4a4,
-    A400 : #ff7171,
-    A700 : #ff5858,
+    50 : #fce8e8,
+    100 : #f5c6c6,
+    200 : #ec9a9a,
+    300 : #e74c4c,
+    400 : #e53935,
+    500 : #c62828,
+    600 : #b71c1c,
+    700 : #a61c1c,
+    800 : #9e0000,
+    900 : #8c0000,
+    A100 : #ffd6d6,
+    A200 : #ffb3b3,
+    A400 : #ff8282,
+    A700 : #ff6666,
     contrast: (
         50 : #000000,
         100 : #000000,
@@ -97,6 +99,3 @@ $my-custom-warn: (
         A700 : #000000,
     )
 );
-
-
-
