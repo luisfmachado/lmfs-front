@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './services/login.service';
 import { AlertService } from './services/alert.service';
@@ -28,7 +28,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private loginService: LoginService,
@@ -39,8 +39,24 @@ export class AppComponent {
 
   spinnerCarregamento: boolean = false;
 
+  nome: string | null = '';
+  role: string | null = '';
   
   isMenuOpen = true;
+
+  ngOnInit(): void {
+    this.getNome();
+  }
+
+  getNome() {
+    this.nome = localStorage.getItem('name');
+    const regra = localStorage.getItem('roles');
+    if (regra === '"ADMIN"') {
+      this.role = 'Administrador';
+    } else if (regra === '"USER"') {
+      this.role = 'Usuário';
+    }
+  }
 
   toggleMenu(sidenav: any) {
     sidenav.toggle();

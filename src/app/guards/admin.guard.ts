@@ -14,7 +14,6 @@ export class AdminGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    console.log('entrou na func1')
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
       return false;

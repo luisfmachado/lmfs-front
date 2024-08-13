@@ -1,13 +1,59 @@
 <div class="caixa-dialogo">
-<h2 mat-dialog-title>{{ data.titulo }}</h2>
-<mat-dialog-content class="mat-typography">
-  <mat-form-field>
-    <mat-label>{{ data.descricao }}</mat-label>
-    <input matInput [(ngModel)]="descricao">
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
-  <button class="btn-confirmar" mat-button [mat-dialog-close]="descricao" cdkFocusInitial>{{ data.confirmar }}</button>
-</mat-dialog-actions>
+  <h2 mat-dialog-title>{{ data.titulo }}</h2>
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field *ngIf="data.descricao">
+      <mat-label>{{ data.descricao }}</mat-label>
+      <input matInput [(ngModel)]="descricao" required />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.valor">
+      <mat-label>{{ data.valor }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="valor"
+        required
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+        currencyMask
+        maxlength="10"
+        class="custom-text-align-left"
+      />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.cor">
+      <mat-label>{{ data.cor }}</mat-label>
+      <mat-select required [(ngModel)]="cor">
+        <mat-option
+          *ngFor="let opcaoCor of opcoesCor"
+          [value]="opcaoCor.value"
+        >
+          {{ opcaoCor.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.cliente">
+      <mat-label>Cliente</mat-label>
+      <mat-select [(ngModel)]="cliente">
+        <mat-option *ngFor="let opcao of opcoes" [value]="opcao.id" [disabled]="opcao.disabled">
+          {{ opcao.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
+    <button
+      class="btn-confirmar"
+      mat-button
+      [mat-dialog-close]="{
+        descricao: descricao,
+        valor: valor,
+        cor: cor,
+        cliente: cliente,
+      }"
+      cdkFocusInitial
+    >
+      {{ data.confirmar }}
+    </button>
+  </mat-dialog-actions>
 </div>

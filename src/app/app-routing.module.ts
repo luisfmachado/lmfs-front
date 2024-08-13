@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './module/home/home.component';
-import { OrcamentoComponent } from './module/orcamento/orcamento.component';
 import { LoginComponent } from './module/login/login.component';
 import { AdminGuard } from './guards/admin.guard';
+import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.component';
+import { ProdutosComponent } from './module/cadastro/produtos/produtos.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -16,8 +17,15 @@ const routes: Routes = [
   },
 
   {
-    path: 'orcamento',
+    path: 'cadastro/orcamento',
     component: OrcamentoComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'cadastro/produtos',
+    component: ProdutosComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
   },

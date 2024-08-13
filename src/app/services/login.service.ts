@@ -53,12 +53,6 @@ export class LoginService {
 
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
-    if (token != null) {
-      console.log('logado')
-    } else {
-      console.log('não logado')
-    }
-
     return token !== null && token !== '';
   }
 }
