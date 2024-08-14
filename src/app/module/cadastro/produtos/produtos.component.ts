@@ -11,7 +11,7 @@ import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-g
 @Component({
   selector: 'app-produtos',
   templateUrl: './produtos.component.html',
-  styleUrls: ['./produtos.component.scss'],
+  styleUrls: ['./produtos.component.scss', '../../../styles/animate-fade-slide-in.scss', '../../../styles/spinner.scss'],
 })
 export class ProdutosComponent implements OnInit {
   constructor(

@@ -20,6 +20,10 @@ export class ProdutosService {
     return this.http.get<Produtos[]>(`${this.baseURL}`);
   }
 
+  public getNome(): Observable<{ ds_produto: string, id_produto: number }[]> {
+    return this.http.get<{ ds_produto: string, id_produto: number }[]>(`${this.baseURL}/nome`);
+  }
+
   /*----------------------Salvar---------------------------*/
   public save(ds_produto: string, vl_produto: number, ds_corprod: string, id_cliente: number): Observable<Resposta> {
     console.log(ds_produto, vl_produto, ds_corprod, id_cliente);

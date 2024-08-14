@@ -15,6 +15,9 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { DialogGenericoComponent } from './shared/dialog-generico/dialog-generico.component';
 import { MaterialModule } from './shared/material.module';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.component';
+import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
+import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
 
 registerLocaleData(localePt);
 
@@ -25,6 +28,9 @@ registerLocaleData(localePt);
     LoginComponent,
     DialogGenericoComponent,
     ProdutosComponent,
+    OrcamentoComponent,
+    ClienteComponent,
+    OrcamentoManualComponent
   ],
   imports: [
     BrowserModule,

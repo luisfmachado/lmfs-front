@@ -59,7 +59,6 @@ export class DialogGenericoComponent implements OnInit {
           id: cliente.id_cliente,
           disabled: false,
         }));
-        console.log('Opções carregadas:', this.opcoes); // Verifique se as opções estão corretas
       },
       error: (err) => console.error('Erro ao carregar clientes:', err)
     });
