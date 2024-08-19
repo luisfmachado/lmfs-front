@@ -11,4 +11,5 @@ export interface OrcamentoVW {
     dt_orcamen: string;
     vl_totalor: number;
     no_cliente: string;
+    dt_entrega: string;
 }

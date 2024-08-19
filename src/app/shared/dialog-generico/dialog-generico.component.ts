@@ -19,6 +19,7 @@ interface OpcaoCor {
 })
 export class DialogGenericoComponent implements OnInit {
   
+  id: number | null = null;
   titulo: string = '';
   descricao: string = '';
   valor!: number;
@@ -44,6 +45,7 @@ export class DialogGenericoComponent implements OnInit {
 
   dadosInput(): void {
     this.dialogRef.close({
+      id: this.id,
       descricao: this.descricao,
       valor: this.valor,
       cor: this.cor,

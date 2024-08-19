@@ -18,6 +18,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.component';
 import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
+import { DialogEdicaoComponent } from './shared/dialog-edicao/dialog-edicao.component';
 
 registerLocaleData(localePt);
 
@@ -30,7 +31,8 @@ registerLocaleData(localePt);
     ProdutosComponent,
     OrcamentoComponent,
     ClienteComponent,
-    OrcamentoManualComponent
+    OrcamentoManualComponent,
+    DialogEdicaoComponent
   ],
   imports: [
     BrowserModule,

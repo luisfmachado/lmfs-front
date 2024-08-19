@@ -1,6 +1,12 @@
 <div class="caixa-dialogo">
   <h2 mat-dialog-title>{{ data.titulo }}</h2>
   <mat-dialog-content class="mat-typography">
+
+    <mat-form-field *ngIf="data.id">
+      <mat-label>{{ data.id }}</mat-label>
+      <input matInput [(ngModel)]="id" maxlength="6" mask="000000"/>
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.descricao">
       <mat-label>{{ data.descricao }}</mat-label>
       <input matInput [(ngModel)]="descricao" required />
@@ -46,6 +52,7 @@
       class="btn-confirmar"
       mat-button
       [mat-dialog-close]="{
+        id: id,
         descricao: descricao,
         valor: valor,
         cor: cor,

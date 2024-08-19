@@ -11,7 +11,11 @@ import { OrcamentoService } from 'src/app/services/cadastro/orcamento.service';
 @Component({
   selector: 'app-orcamento',
   templateUrl: './orcamento.component.html',
-  styleUrls: ['./orcamento.component.scss', '../../../styles/animate-fade-slide-in.scss', '../../../styles/spinner.scss'],
+  styleUrls: [
+    './orcamento.component.scss',
+    '../../../styles/animate-fade-slide-in.scss',
+    '../../../styles/spinner.scss',
+  ],
 })
 export class OrcamentoComponent implements OnInit {
   constructor(
@@ -35,11 +39,13 @@ export class OrcamentoComponent implements OnInit {
     'dt_orcamen',
     'vl_totalor',
     'no_cliente',
+    'dt_entrega',
     'acoes',
   ];
 
   //Tabela
-  dataSource: MatTableDataSource<OrcamentoVW> = new MatTableDataSource<OrcamentoVW>();
+  dataSource: MatTableDataSource<OrcamentoVW> =
+    new MatTableDataSource<OrcamentoVW>();
 
   //Chama o paginator
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,10 +69,43 @@ export class OrcamentoComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  /*----------------------Enviar para outro módulo---------------------------*/
+  /*----------------------Adicionar novo---------------------------*/
   public abrirSave() {
     this.router.navigate(['/cadastro/orcamento-manual']);
   }
+
+  public abrirImport() {}
+
+  // abrirDialogo(): void {
+  //   const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+  //     data: {
+  //       titulo: 'Importar:',
+  //       cliente: 'Cliente',
+  //       cancelar: 'Cancelar',
+  //       confirmar: 'Cadastrar',
+  //     },
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     this.pegarIdOrcamen().subscribe({
+  //       next: (id_orcamen) => {
+  //         // Após obter o ID do orçamento, enviar os produtos
+  //         this.spinnerCarregamento = true;
+  //         this.orcamentoService.save(this.produtos).subscribe(
+  //           () => {
+  //             this.spinnerCarregamento = false;
+  //             this.router.navigate(['/cadastro/orcamento']);
+  //             this.alertService.show('Adicionado com sucesso!', 'Fechar');
+  //           },
+  //           () => {
+  //             this.spinnerCarregamento = false;
+  //             this.alertService.show('Erro ao adicionar notícia.', 'Fechar');
+  //           }
+  //         );
+  //       },
+  //     });
+  //   });
+  // }
 
   /*----------------------Editar da tabela---------------------------*/
   /*

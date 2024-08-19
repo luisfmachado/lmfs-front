@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Produtos } from 'src/app/model/produtos';
 import { AlertService } from 'src/app/services/alert.service';
 import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
+import { DialogEdicaoComponent } from 'src/app/shared/dialog-edicao/dialog-edicao.component';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
 
 @Component({
@@ -28,7 +29,7 @@ export class ProdutosComponent implements OnInit {
   spinnerCarregamento: boolean = false;
 
   //Colunas da tabela
-  displayedColumns: string[] = ['id', 'ds_produto', 'vl_produto', 'ds_corprod', 'no_cliente', 'acoes'];
+  displayedColumns: string[] = ['id_produto', 'ds_produto', 'vl_produto', 'ds_corprod', 'no_cliente', 'acoes'];
 
   //Tabela
   dataSource: MatTableDataSource<Produtos> = new MatTableDataSource<Produtos>();
@@ -62,7 +63,8 @@ export class ProdutosComponent implements OnInit {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
         data: {
           titulo: 'Novo produto:',
-          descricao: 'Nome do produto',
+          id: 'ID (Opcional)',
+          descricao: 'Nome',
           valor: 'Valor',
           cor: 'Cor',
           cliente: 'Cliente',
@@ -76,7 +78,7 @@ export class ProdutosComponent implements OnInit {
           this.spinnerCarregamento = true;
           console.log(result.descricao, result.valor, result.cor, result.cliente);
           this.produtoService
-            .save(result.descricao, result.valor, result.cor, result.cliente)
+            .save(result.id, result.descricao, result.valor, result.cor, result.cliente)
             .subscribe(
               () => {
                 this.carregaDados();
@@ -100,44 +102,64 @@ export class ProdutosComponent implements OnInit {
   }
 
   /*----------------------Editar da tabela---------------------------*/
-  /*
-  abrirDialogoEditar(id_tp_gasto: number): void {
-    const dialogRef = this.dialogo.open(DialogGenericoComponent, {
-      data: {
-        titulo: 'Editar tipo de gasto:',
-        descricao: 'Nova descrição',
-        cancelar: 'Cancelar',
-        confirmar: 'Editar',
+  abrirDialogoEditar(id_produto: number, id_cliente: number): void {
+    this.produtoService.getProduto(id_produto, id_cliente).subscribe({
+      next: (produto: any) => {
+        const dialogRef = this.dialogo.open(DialogEdicaoComponent, {
+          data: {
+            titulo: 'Editar',
+            id_produto: produto.id_produto,
+            ds_produto: produto.ds_produto,
+            vl_produto: produto.vl_produto,
+            ds_corprod: produto.ds_corprod,
+            cliente: produto.id_cliente,
+            cancelar: 'Cancelar',
+            confirmar: 'Editar',
+          },
+        });
+  
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.editar(
+              result.id_produto,
+              result.ds_produto,
+              result.vl_produto,
+              result.ds_corprod,
+              result.cliente
+            );
+          }
+        });
       },
-    });
-
-    dialogRef.afterClosed().subscribe((novaDescricao: string) => {
-      if (novaDescricao) {
-        this.editar(id_tp_gasto, novaDescricao);
+      error: (error) => {
+        alert(`Erro ao buscar produto: ${error.message}`);
       }
     });
   }
-
-  public editar(id_tp_gasto: number, novaDescricao: string): void {
-    this.assembleiaService.update(id_tp_gasto, novaDescricao).subscribe({
+  
+  public editar(
+    id_produto: number,
+    ds_produto: string,
+    vl_produto: number,
+    ds_corprod: string,
+    id_cliente: number
+  ): void {
+    this.produtoService.update(id_produto, ds_produto, vl_produto, ds_corprod, id_cliente).subscribe({
       next: (res) => {
-        if (res.status) {
+        if (res) {
           this.carregaDados();
-          alert(res.mensagem);
+          this.alertService.show('Alterado com sucesso!', 'Fechar');
         } else {
-          alert(res.mensagem);
+          this.alertService.show('Erro ao alterar!', 'Fechar');
         }
-      },
-      error: (error) => {
-        alert(`Erro ao editar tipo de gasto: ${error.message}`);
-      },
+      }
     });
   }
-  */
+  
+  
   /*----------------------Excluir da tabela---------------------------*/
-  public excluir(id: number): void {
+  public excluir(id_produto: number, id_cliente: number): void {
     this.spinnerCarregamento = true;
-    this.produtoService.delete(id).subscribe({
+    this.produtoService.delete(id_produto, id_cliente).subscribe({
       next: (res) => {
         if (res.status) {
           this.carregaDados();

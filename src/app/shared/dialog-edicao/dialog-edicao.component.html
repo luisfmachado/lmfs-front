@@ -1,0 +1,65 @@
+<h2 mat-dialog-title class="title">{{ data.titulo }}</h2>
+<mat-dialog-content class="mat-typography">
+
+  <mat-form-field>
+    <mat-label>ID do Produto</mat-label>
+    <input matInput [(ngModel)]="id_produto" maxlength="6" mask="000000" disabled />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nome do Produto</mat-label>
+    <input matInput [(ngModel)]="ds_produto" required />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Valor</mat-label>
+    <input
+      matInput
+      [(ngModel)]="vl_produto"
+      required
+      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+      currencyMask
+      maxlength="10"
+      class="custom-text-align-left"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cor</mat-label>
+    <mat-select [(ngModel)]="ds_corprod">
+      <mat-option *ngFor="let opcaoCor of opcoesCor" [value]="opcaoCor.value">
+        {{ opcaoCor.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cliente</mat-label>
+    <mat-select [(ngModel)]="cliente">
+      <mat-option
+        *ngFor="let opcao of opcoes"
+        [value]="opcao.id"
+        [disabled]="opcao.disabled"
+      >
+        {{ opcao.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
+  <button
+    class="btn-confirmar"
+    mat-button
+    [mat-dialog-close]="{
+        id_produto: id_produto,
+        ds_produto: ds_produto,
+        vl_produto: vl_produto,
+        ds_corprod: ds_corprod,
+        cliente: cliente,
+      }"
+    cdkFocusInitial
+  >
+    {{ data.confirmar }}
+  </button>
+</mat-dialog-actions>
