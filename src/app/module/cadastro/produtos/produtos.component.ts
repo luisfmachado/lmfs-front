@@ -87,7 +87,62 @@ export class ProdutosComponent implements OnInit {
               },
               () => {
                 this.spinnerCarregamento = false;
-                this.alertService.show('Erro ao adicionar notícia.', 'Fechar');
+                this.alertService.show('Erro ao adicionar produto.', 'Fechar');
+              }
+            );
+        } else {
+          this.spinnerCarregamento = false;
+          this.alertService.show(
+            'Ação cancelada ou dados incompletos.',
+            'Fechar'
+          );
+        }
+      });
+    }
+  }
+
+  abrirImport() {
+    this.abrirDialogoImport();
+  }
+
+  abrirDialogoImport(): void {
+    const user = localStorage.getItem('name');
+    if (user) {
+      const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        data: {
+          titulo: 'Importar produtos:',
+          filePadrao: 'File',
+          file: 'File',
+          cancelar: 'Cancelar',
+          confirmar: 'Cadastrar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('Resultado do diálogo:', result);
+        if (result.file) {
+          this.spinnerCarregamento = true;
+          this.produtoService
+            .saveImport(result.file)
+            .subscribe(
+              () => {
+                this.produtoService.exec().subscribe(
+                  () => {
+                this.carregaDados();
+                this.spinnerCarregamento = false;
+                this.alertService.show('Importado com sucesso!', 'Fechar');
+                  },
+                  (error) => {
+                    this.spinnerCarregamento = false;
+                    this.alertService.show('Erro ao importar produtos.', 'Fechar');
+                    console.error('Erro ao importar produtos:', error);
+                  }
+                )
+              },
+              (error) => {
+                this.spinnerCarregamento = false;
+                this.alertService.show('Erro ao importar produtos.', 'Fechar');
+                console.error('Erro ao importar produtos:', error);
               }
             );
         } else {

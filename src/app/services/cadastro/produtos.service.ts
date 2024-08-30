@@ -32,13 +32,25 @@ export class ProdutosService {
     ds_corprod: string,
     id_cliente: number
   ): Observable<Resposta> {
-    console.log(ds_produto, vl_produto, ds_corprod, id_cliente);
     return this.http.post<Resposta>(`${this.baseURL}/save`, {
       id_produto: id_produto,
       ds_produto: ds_produto,
       vl_produto: vl_produto,
       ds_corprod: ds_corprod,
       id_cliente: id_cliente,
+    });
+  }
+
+  public saveImport(file: File): Observable<Resposta> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<Resposta>(`${this.baseURL}/import`, formData, { responseType: 'text' as 'json' });
+  
+  }
+
+  public exec(): Observable<string> {
+    return this.http.post<string>(`${this.baseURL}/exec`, null, {
+      responseType: 'text' as 'json'
     });
   }
 

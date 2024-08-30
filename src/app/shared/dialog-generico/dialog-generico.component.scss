@@ -15,3 +15,25 @@ mat-form-field {
 ::ng-deep .custom-text-align-left {
   text-align: left !important;
 }
+
+.files {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btn_download {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  line-height: 1;
+  color: black;
+  font-size: 15px;
+  padding-bottom: 25px;
+
+  button {
+    width: 180px;
+  }
+}

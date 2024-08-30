@@ -19,7 +19,9 @@ interface CustomJwtPayload {
 export class LoginService {
   private loginUrl = environment.URL_API_FWT + '/auth/login';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.checkAndClearLocalStorage();
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(this.loginUrl, { email, password }).pipe(
@@ -54,5 +56,28 @@ export class LoginService {
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
     return token !== null && token !== '';
+  }
+
+  private readonly clearInterval = 3 * 60 * 60 * 1000; // 3 horas em milissegundos
+  private readonly lastClearKey = 'lastClearTime';
+
+  private checkAndClearLocalStorage(): void {
+    const now = Date.now();
+    const lastClear = localStorage.getItem(this.lastClearKey);
+
+    if (lastClear) {
+      const lastClearTime = parseInt(lastClear, 10);
+      if (now - lastClearTime >= this.clearInterval) {
+        this.clearLocalStorage();
+      }
+    } else {
+      // Se não houver registro anterior, cria um novo.
+      localStorage.setItem(this.lastClearKey, now.toString());
+    }
+  }
+
+  private clearLocalStorage(): void {
+    localStorage.clear();
+    localStorage.setItem(this.lastClearKey, Date.now().toString());
   }
 }
