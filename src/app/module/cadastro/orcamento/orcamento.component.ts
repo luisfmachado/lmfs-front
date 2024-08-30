@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { OrcamentoVW } from 'src/app/model/orcamento';
 import { AlertService } from 'src/app/services/alert.service';
 import { OrcamentoService } from 'src/app/services/cadastro/orcamento.service';
+import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-orcamento',
@@ -22,7 +25,7 @@ export class OrcamentoComponent implements OnInit {
     private orcamentoService: OrcamentoService,
     public dialogo: MatDialog,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
   ) {}
 
   public ngOnInit(): void {
@@ -74,38 +77,55 @@ export class OrcamentoComponent implements OnInit {
     this.router.navigate(['/cadastro/orcamento-manual']);
   }
 
-  public abrirImport() {}
+  public abrirImport(): void {
+    const user = localStorage.getItem('name');
+    if (user) {
+      const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        data: {
+          titulo: 'Importar produtos:',
+          file: 'File',
+          cliente: 'Cliente',
+          cancelar: 'Cancelar',
+          confirmar: 'Cadastrar',
+        },
+      });
 
-  // abrirDialogo(): void {
-  //   const dialogRef = this.dialogo.open(DialogGenericoComponent, {
-  //     data: {
-  //       titulo: 'Importar:',
-  //       cliente: 'Cliente',
-  //       cancelar: 'Cancelar',
-  //       confirmar: 'Cadastrar',
-  //     },
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     this.pegarIdOrcamen().subscribe({
-  //       next: (id_orcamen) => {
-  //         // Após obter o ID do orçamento, enviar os produtos
-  //         this.spinnerCarregamento = true;
-  //         this.orcamentoService.save(this.produtos).subscribe(
-  //           () => {
-  //             this.spinnerCarregamento = false;
-  //             this.router.navigate(['/cadastro/orcamento']);
-  //             this.alertService.show('Adicionado com sucesso!', 'Fechar');
-  //           },
-  //           () => {
-  //             this.spinnerCarregamento = false;
-  //             this.alertService.show('Erro ao adicionar notícia.', 'Fechar');
-  //           }
-  //         );
-  //       },
-  //     });
-  //   });
-  // }
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result.file && result.cliente) {
+          this.spinnerCarregamento = true;
+          this.orcamentoService
+            .saveImport(result.file, result.cliente)
+            .subscribe(
+              () => {
+                this.orcamentoService.exec2().subscribe(
+                  () => {
+                this.carregaDados();
+                this.spinnerCarregamento = false;
+                this.alertService.show('Importado com sucesso!', 'Fechar');
+                  },
+                  (error) => {
+                    this.spinnerCarregamento = false;
+                    this.alertService.show('Erro ao importar produtos.', 'Fechar');
+                    console.error('Erro ao importar produtos:', error);
+                  }
+                )
+              },
+              (error) => {
+                this.spinnerCarregamento = false;
+                this.alertService.show('Erro ao importar produtos.', 'Fechar');
+                console.error('Erro ao importar produtos:', error);
+              }
+            );
+        } else {
+          this.spinnerCarregamento = false;
+          this.alertService.show(
+            'Ação cancelada ou dados incompletos.',
+            'Fechar'
+          );
+        }
+      });
+    }
+  }
 
   /*----------------------Editar da tabela---------------------------*/
   /*
@@ -144,7 +164,6 @@ export class OrcamentoComponent implements OnInit {
   */
   /*----------------------Excluir da tabela---------------------------*/
   public excluir(id: number): void {
-    console.log(id);
     this.spinnerCarregamento = true;
     this.orcamentoService.delete(id).subscribe({
       next: (res) => {
@@ -158,5 +177,18 @@ export class OrcamentoComponent implements OnInit {
         }
       },
     });
+  }
+
+  /*----------------------Gerar PDF---------------------------*/
+  gerarPDF(id_orcamen: number): void {
+    this.orcamentoService.getRelatorio(id_orcamen).subscribe(
+      (pdf: Blob) => {
+        saveAs(pdf, 'orcamento.pdf');
+        this.spinnerCarregamento = false;
+      },
+      (error) => {
+        console.error('Erro ao gerar o relatório:', error);
+      }
+    );
   }
 }

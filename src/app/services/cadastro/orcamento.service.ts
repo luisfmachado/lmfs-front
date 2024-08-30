@@ -23,12 +23,35 @@ export class OrcamentoService {
   public getIdOrcamen(): Observable<number> {
     return this.http.get<number>(`${this.baseURL}/id`);
   }
+
+  public getRelatorio(id_orcamen: number): Observable<Blob> {
+    return this.http.get(`${this.baseURL}/export/${id_orcamen}`, {
+      responseType: 'blob',
+    });
+  }
+  
   /*----------------------Salvar---------------------------*/
   public save(produtos: Orcamento[]): Observable<Resposta> {
     return this.http.post<Resposta>(`${this.baseURL}/save`, produtos, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
+    });
+  }
+
+  public saveImport(file: File, id_cliente: number): Observable<Resposta> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('id_cliente', id_cliente.toString());
+    return this.http.post<Resposta>(`${this.baseURL}/process`, formData, {
+      responseType: 'text' as 'json'
+    });
+  }
+  
+
+  public exec2(): Observable<string> {
+    return this.http.post<string>(`${this.baseURL}/exec2`, null, {
+      responseType: 'text' as 'json'
     });
   }
 

@@ -73,10 +73,9 @@
       <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let element">
-          <!-- Adicione aqui os botões ou links para as ações -->
-          <!-- <button mat-icon-button (click)="abrirDialogoEditar(element.id)">
-                  <mat-icon>edit</mat-icon>
-                </button> -->
+          <button mat-icon-button (click)="gerarPDF(element.id_orcamen)">
+            <mat-icon class="">download</mat-icon>
+          </button>
           <button mat-icon-button (click)="excluir(element.id_orcamen)">
             <mat-icon class="btn-deletar">delete</mat-icon>
           </button>

@@ -84,4 +84,19 @@ export class DialogGenericoComponent implements OnInit {
     link.download = 'EXEMPLO.xlsx';
     link.click();
   }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault(); // Necessário para permitir o drop
+    event.stopPropagation();
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const dataTransfer = event.dataTransfer;
+    if (dataTransfer && dataTransfer.files && dataTransfer.files.length > 0) {
+      this.file = dataTransfer.files[0];
+      this.selectedFileName = this.file.name;
+    }
+  }
 }

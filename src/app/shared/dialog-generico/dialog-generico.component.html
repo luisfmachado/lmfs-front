@@ -39,7 +39,7 @@
 
     <mat-form-field *ngIf="data.cliente">
       <mat-label>Cliente</mat-label>
-      <mat-select [(ngModel)]="cliente">
+      <mat-select [(ngModel)]="cliente" required>
         <mat-option *ngFor="let opcao of opcoes" [value]="opcao.id" [disabled]="opcao.disabled">
           {{ opcao.value }}
         </mat-option>
@@ -54,14 +54,19 @@
       <span>Baixe o arquivo de exemplo e o modifique para prosseguir</span>
     </div>
 
-    <div *ngIf="data.file" class="files">
-      <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" required />
-      <button mat-raised-button color="primary" (click)="fileInput.click()">
-        <mat-icon class="icon-add">attach_file</mat-icon>
-        <span class="text-add">Selecionar Arquivo</span>
-      </button>
-      <span>{{ selectedFileName || 'Nenhum arquivo selecionado' }}</span>
-    </div>
+    <div
+    *ngIf="data.file"
+    class="files"
+    (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
+  >
+    <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" />
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+      <mat-icon class="icon-add">attach_file</mat-icon>
+      <span class="text-add">Selecionar Arquivo</span>
+    </button>
+    <span>{{ selectedFileName || 'Nenhum arquivo selecionado' }}</span>
+  </div>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">

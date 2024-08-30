@@ -21,6 +21,10 @@ mat-form-field {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  transition: background-color 0.3s;
 }
 
 .btn_download {
@@ -36,4 +40,8 @@ mat-form-field {
   button {
     width: 180px;
   }
+}
+
+.files.dragover {
+  background-color: #f0f0f0;
 }

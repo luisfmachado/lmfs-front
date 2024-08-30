@@ -45,7 +45,6 @@ export class ProdutosService {
     const formData = new FormData();
     formData.append('file', file);
     return this.http.post<Resposta>(`${this.baseURL}/import`, formData, { responseType: 'text' as 'json' });
-  
   }
 
   public exec(): Observable<string> {
