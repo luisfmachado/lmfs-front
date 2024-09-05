@@ -181,12 +181,14 @@ export class OrcamentoComponent implements OnInit {
 
   /*----------------------Gerar PDF---------------------------*/
   gerarPDF(id_orcamen: number): void {
+    this.spinnerCarregamento = true;
     this.orcamentoService.getRelatorio(id_orcamen).subscribe(
       (pdf: Blob) => {
         saveAs(pdf, 'orcamento.pdf');
         this.spinnerCarregamento = false;
       },
       (error) => {
+        this.spinnerCarregamento = false;
         console.error('Erro ao gerar o relatório:', error);
       }
     );
