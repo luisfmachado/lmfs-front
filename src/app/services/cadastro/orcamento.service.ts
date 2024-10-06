@@ -47,13 +47,6 @@ export class OrcamentoService {
       responseType: 'text' as 'json'
     });
   }
-  
-
-  public exec2(): Observable<string> {
-    return this.http.post<string>(`${this.baseURL}/exec2`, null, {
-      responseType: 'text' as 'json'
-    });
-  }
 
   /*----------------------Deletar---------------------------*/
   public delete(id: number): Observable<Resposta> {
@@ -68,13 +61,20 @@ export class OrcamentoService {
   }
 
   /*----------------------PROCEDURES---------------------------*/
-  exec(id_orcamen: number, ds_orcamen: string): Observable<string> {
+  exec(id_orcamen: number, ds_orcamen: string, dt_entrega: string): Observable<string> {
     return this.http.post<string>(`${this.baseURL}/exec`, null, {
       params: {
-        id_orcamen: id_orcamen.toString(), // Converte para string
-        ds_orcamen: ds_orcamen
+        id_orcamen: id_orcamen.toString(), 
+        ds_orcamen: ds_orcamen,
+        dt_entrega: dt_entrega
       },
-      responseType: 'text' as 'json' // Adiciona o tipo de resposta como texto
+      responseType: 'text' as 'json'
+    });
+  }
+
+  public exec2(): Observable<string> {
+    return this.http.post<string>(`${this.baseURL}/exec2`, null, {
+      responseType: 'text' as 'json'
     });
   }
 }

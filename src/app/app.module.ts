@@ -1,7 +1,7 @@
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import localePt from '@angular/common/locales/pt';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
@@ -19,6 +19,7 @@ import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.compon
 import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
 import { DialogEdicaoComponent } from './shared/dialog-edicao/dialog-edicao.component';
+import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 
 registerLocaleData(localePt);
 
@@ -32,7 +33,8 @@ registerLocaleData(localePt);
     OrcamentoComponent,
     ClienteComponent,
     OrcamentoManualComponent,
-    DialogEdicaoComponent
+    DialogEdicaoComponent,
+    EstoqueComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,8 @@ registerLocaleData(localePt);
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    DatePipe,
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent],

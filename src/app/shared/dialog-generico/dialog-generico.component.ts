@@ -26,12 +26,14 @@ export class DialogGenericoComponent implements OnInit {
   cor: string = '';
   cliente: number | null = null;
   file!: File;
+  date: Date | null = null;
 
   opcoes: Opcao[] = [];
   opcoesCor: OpcaoCor[] = [
     { value: 'Incolor' },
     { value: 'Verde' },
     { value: 'Fumê' },
+    { value: 'Cromado' },
   ]
 
   constructor(
@@ -52,6 +54,7 @@ export class DialogGenericoComponent implements OnInit {
       cor: this.cor,
       cliente: this.cliente,
       file: this.file,
+      date: this.date
     });
   }
 
@@ -86,7 +89,7 @@ export class DialogGenericoComponent implements OnInit {
   }
 
   onDragOver(event: DragEvent): void {
-    event.preventDefault(); // Necessário para permitir o drop
+    event.preventDefault();
     event.stopPropagation();
   }
 

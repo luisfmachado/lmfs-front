@@ -25,6 +25,13 @@
       />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.date">
+      <mat-label>{{ data.date }}</mat-label>
+      <input matInput [(ngModel)]="date" required readonly="true" [matDatepicker]="picker">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.cor">
       <mat-label>{{ data.cor }}</mat-label>
       <mat-select required [(ngModel)]="cor">
@@ -81,6 +88,7 @@
         cor: cor,
         cliente: cliente,
         file: file,
+        date: date
       }"
       cdkFocusInitial
     >

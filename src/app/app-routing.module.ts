@@ -6,6 +6,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.component';
 import { ProdutosComponent } from './module/cadastro/produtos/produtos.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
+import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -34,6 +35,13 @@ const routes: Routes = [
   {
     path: 'cadastro/orcamento-manual',
     component: OrcamentoManualComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'cadastro/estoque',
+    component: EstoqueComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
   },

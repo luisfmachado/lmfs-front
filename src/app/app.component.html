@@ -50,6 +50,16 @@
           </div>
         </mat-list-item>
       </div>
+
+      <div *ngIf="showSubmenu('cadastros')">
+        <mat-list-item [routerLink]="'/cadastro/estoque'">
+          <div class="item-submenu">
+            <mat-icon>inventory_2</mat-icon>
+            <span>Estoque</span>
+          </div>
+        </mat-list-item>
+      </div>
+      
     </mat-nav-list>
   </mat-sidenav>
 

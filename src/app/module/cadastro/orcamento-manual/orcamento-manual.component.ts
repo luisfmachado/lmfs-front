@@ -82,9 +82,10 @@ export class OrcamentoManualComponent implements OnInit {
   abrirDialogo(): void {
     const dialogRef = this.dialogo.open(DialogGenericoComponent, {
       data: {
-        titulo: 'Finalizar:',
-        descricao: 'Descrição:',
+        titulo: 'Finalizar',
+        descricao: 'Descrição',
         cliente: 'Cliente',
+        date: 'Data de Entrega',
         cancelar: 'Cancelar',
         confirmar: 'Cadastrar',
       },
@@ -113,7 +114,10 @@ export class OrcamentoManualComponent implements OnInit {
             this.spinnerCarregamento = true;
             this.orcamentoService.save(this.produtos).subscribe(
               () => {
-                this.exec(this.idOrcam, result.descricao);
+                console.log(result.date);
+                const dataFormatada = this.formatDate(result.date);
+                console.log(dataFormatada);
+                this.exec(this.idOrcam, result.descricao, dataFormatada);
                 this.spinnerCarregamento = false;
                 this.router.navigate(['/cadastro/orcamento']);
                 this.alertService.show('Adicionado com sucesso!', 'Fechar');
@@ -146,8 +150,15 @@ export class OrcamentoManualComponent implements OnInit {
     return this.orcamentoService.getIdOrcamen();
   }
 
-  exec(idOrcamen: number, dsOrcamen: string) {
-    this.orcamentoService.exec(idOrcamen, dsOrcamen).subscribe(
+  exec(idOrcamen: number, dsOrcamen: string, dtEntrega: string) {
+    this.orcamentoService.exec(idOrcamen, dsOrcamen, dtEntrega).subscribe(
     );
+  }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   }
 }
