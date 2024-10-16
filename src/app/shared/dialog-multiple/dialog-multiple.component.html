@@ -1,0 +1,71 @@
+<div class="caixa-dialogo">
+  <form #orcamentoForm="ngForm" (ngSubmit)="onSubmit(orcamentoForm)">
+    <div
+      *ngFor="let produto of produtos; let i = index"
+      class="content-formulario animate-fade-slide-in"
+    >
+      <mat-form-field>
+        <mat-label>Produto {{ i + 1 }}</mat-label>
+        <mat-select
+          [(ngModel)]="produto.id_produto"
+          name="produto-{{ i }}-id"
+          required
+        >
+          <mat-option *ngFor="let opcao of opcoes" [value]="opcao.id">
+            {{ opcao.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mat_qtd">
+        <mat-label>Quantidade</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="produto.qt_produto"
+          name="quantidade-{{ i }}-qt"
+          required
+        />
+      </mat-form-field>
+
+      <button
+        mat-mini-fab
+        color="warn"
+        aria-label="Remover"
+        (click)="removerConvidado(i)"
+        *ngIf="produtos.length > 1"
+        type="button"
+      >
+        <mat-icon>remove</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="primary"
+        aria-label="Adicionar"
+        (click)="adicionarConvidado()"
+        type="button"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div class="btn-actions">
+      <button
+        mat-raised-button
+        color="secondary"
+        class="btn-style"
+        (click)="closeDialog()"
+        type="button"
+      >
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" type="submit" class="btn-style">
+        Avançar
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

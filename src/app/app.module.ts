@@ -20,6 +20,7 @@ import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
 import { DialogEdicaoComponent } from './shared/dialog-edicao/dialog-edicao.component';
 import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
+import { DialogMultipleComponent } from './shared/dialog-multiple/dialog-multiple.component';
 
 registerLocaleData(localePt);
 
@@ -34,7 +35,8 @@ registerLocaleData(localePt);
     ClienteComponent,
     OrcamentoManualComponent,
     DialogEdicaoComponent,
-    EstoqueComponent
+    EstoqueComponent,
+    DialogMultipleComponent
   ],
   imports: [
     BrowserModule,

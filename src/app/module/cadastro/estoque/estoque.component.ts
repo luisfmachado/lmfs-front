@@ -3,16 +3,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Estoque } from 'src/app/model/estoque';
+import { EstoqueVw } from 'src/app/model/estoque';
 import { AlertService } from 'src/app/services/alert.service';
 import { EstoqueService } from 'src/app/services/cadastro/estoque.service';
-import { DialogEdicaoComponent } from 'src/app/shared/dialog-edicao/dialog-edicao.component';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogMultipleComponent } from 'src/app/shared/dialog-multiple/dialog-multiple.component';
 
 @Component({
   selector: 'app-estoque',
   templateUrl: './estoque.component.html',
-  styleUrls: ['./estoque.component.scss'],
+  styleUrls: [
+    './estoque.component.scss',
+    '../../../styles/animate-fade-slide-in.scss',
+    '../../../styles/spinner.scss',
+  ],
 })
 export class EstoqueComponent implements OnInit {
   constructor(
@@ -31,14 +34,15 @@ export class EstoqueComponent implements OnInit {
   //Colunas da tabela
   displayedColumns: string[] = [
     'id_estoque',
-    'id_produto',
-    'qt_produto',
-    'vl_pgcusto',
+    'ds_estoque',
+    'dt_movimen',
+    'vl_pgtotal',
     'acoes',
   ];
 
   //Tabela
-  dataSource: MatTableDataSource<Estoque> = new MatTableDataSource<Estoque>();
+  dataSource: MatTableDataSource<EstoqueVw> =
+    new MatTableDataSource<EstoqueVw>();
 
   //Chama o paginator
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,7 +51,7 @@ export class EstoqueComponent implements OnInit {
   /*----------------------Pegar os dados da tabela---------------------------*/
   private carregaDados() {
     this.estoqueService.get().subscribe({
-      next: (data: Estoque[]) => {
+      next: (data: EstoqueVw[]) => {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -66,42 +70,25 @@ export class EstoqueComponent implements OnInit {
   abrirDialogo(): void {
     const user = localStorage.getItem('name');
     if (user) {
-      const dialogRef = this.dialogo.open(DialogGenericoComponent, {
-        data: {
-          titulo: 'Novo produto:',
-          id: 'ID (Opcional)',
-          descricao: 'Nome',
-          valor: 'Valor',
-          cor: 'Cor',
-          cliente: 'Cliente',
-          cancelar: 'Cancelar',
-          confirmar: 'Cadastrar',
-        },
+      const dialogRef = this.dialogo.open(DialogMultipleComponent, {
+        data: {},
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result.descricao) {
-          this.spinnerCarregamento = true;
-          this.estoqueService
-            .save(result.id, result.descricao, result.valor, result.cor)
-            .subscribe(
-              () => {
-                this.carregaDados();
-                this.spinnerCarregamento = false;
-                this.alertService.show('Adicionado com sucesso!', 'Fechar');
-              },
-              () => {
-                this.spinnerCarregamento = false;
-                this.alertService.show('Erro ao adicionar produto.', 'Fechar');
-              }
-            );
-        } else {
-          this.spinnerCarregamento = false;
-          this.alertService.show(
-            'Ação cancelada ou dados incompletos.',
-            'Fechar'
-          );
-        }
+        // this.spinnerCarregamento = true;
+        // this.estoqueService
+        //   .save(result.id, result.descricao, result.valor, result.cor)
+        //   .subscribe(
+        //     () => {
+        //       this.carregaDados();
+        //       this.spinnerCarregamento = false;
+        //       this.alertService.show('Adicionado com sucesso!', 'Fechar');
+        //     },
+        //     () => {
+        //       this.spinnerCarregamento = false;
+        //       this.alertService.show('Erro ao adicionar produto.', 'Fechar');
+        //     }
+        //   );
       });
     }
   }

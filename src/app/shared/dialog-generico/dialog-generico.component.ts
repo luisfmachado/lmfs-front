@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ClientesService } from 'src/app/services/cadastro/clientes.service';
+import { FornecedorService } from 'src/app/services/cadastro/fornecedor.service';
 
 interface Opcao {
   value: string; // Nome a ser exibido
@@ -23,8 +24,10 @@ export class DialogGenericoComponent implements OnInit {
   titulo: string = '';
   descricao: string = '';
   valor!: number;
+  valorCusto!: number;
   cor: string = '';
   cliente: number | null = null;
+  fornecedor: number | null = null;
   file!: File;
   date: Date | null = null;
 
@@ -40,10 +43,12 @@ export class DialogGenericoComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogGenericoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private clientesService: ClientesService,
+    private _fornecedorService: FornecedorService
   ) {}
 
   ngOnInit(): void {
     this.carregaCliente();
+    this.carregaFornecedor();
   }
 
   dadosInput(): void {
@@ -51,8 +56,10 @@ export class DialogGenericoComponent implements OnInit {
       id: this.id,
       descricao: this.descricao,
       valor: this.valor,
+      valorCusto: this.valorCusto,
       cor: this.cor,
       cliente: this.cliente,
+      fornecedor: this.fornecedor,
       file: this.file,
       date: this.date
     });
@@ -64,6 +71,19 @@ export class DialogGenericoComponent implements OnInit {
         this.opcoes = nomes.map(cliente => ({
           value: cliente.no_cliente,
           id: cliente.id_cliente,
+          disabled: false,
+        }));
+      },
+      error: (err) => console.error('Erro ao carregar clientes:', err)
+    });
+  }
+
+  carregaFornecedor(): void {
+    this._fornecedorService.getFornecedor().subscribe({
+      next: (nomes) => {
+        this.opcoes = nomes.map(fornecedor => ({
+          id: fornecedor.id_fornece,
+          value: fornecedor.no_fornece,
           disabled: false,
         }));
       },

@@ -29,7 +29,7 @@ export class ProdutosComponent implements OnInit {
   spinnerCarregamento: boolean = false;
 
   //Colunas da tabela
-  displayedColumns: string[] = ['id_produto', 'ds_produto', 'vl_produto', 'ds_corprod', 'no_cliente', 'acoes'];
+  displayedColumns: string[] = ['id_produto', 'ds_produto', 'vl_produto', 'vl_custopr', 'ds_corprod', 'no_cliente', 'acoes'];
 
   //Tabela
   dataSource: MatTableDataSource<Produtos> = new MatTableDataSource<Produtos>();
@@ -65,7 +65,8 @@ export class ProdutosComponent implements OnInit {
           titulo: 'Novo produto:',
           id: 'ID (Opcional)',
           descricao: 'Nome',
-          valor: 'Valor',
+          valor: 'Vlr. de venda',
+          valorCusto: 'Vlr. de custo',
           cor: 'Cor',
           cliente: 'Cliente',
           cancelar: 'Cancelar',
@@ -166,6 +167,7 @@ export class ProdutosComponent implements OnInit {
             id_produto: produto.id_produto,
             ds_produto: produto.ds_produto,
             vl_produto: produto.vl_produto,
+            vl_custopr: produto.vl_custopr,
             ds_corprod: produto.ds_corprod,
             cliente: produto.id_cliente,
             cancelar: 'Cancelar',
@@ -179,6 +181,7 @@ export class ProdutosComponent implements OnInit {
               result.id_produto,
               result.ds_produto,
               result.vl_produto,
+              result.vl_custopr,
               result.ds_corprod,
               result.cliente
             );
@@ -195,10 +198,11 @@ export class ProdutosComponent implements OnInit {
     id_produto: number,
     ds_produto: string,
     vl_produto: number,
+    vl_custopr: number,
     ds_corprod: string,
     id_cliente: number
   ): void {
-    this.produtoService.update(id_produto, ds_produto, vl_produto, ds_corprod, id_cliente).subscribe({
+    this.produtoService.update(id_produto, ds_produto, vl_produto, vl_custopr, ds_corprod, id_cliente).subscribe({
       next: (res) => {
         if (res) {
           this.carregaDados();

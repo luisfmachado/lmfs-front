@@ -21,6 +21,7 @@ export class DialogEdicaoComponent implements OnInit {
   id_produto: number | null = null;
   ds_produto: string = '';
   vl_produto!: number;
+  vl_custopr!: number;
   ds_corprod: string = '';
   cliente: number | null = null;
 
@@ -43,6 +44,7 @@ export class DialogEdicaoComponent implements OnInit {
     this.id_produto = this.data.id_produto;
     this.ds_produto = this.data.ds_produto;
     this.vl_produto = this.data.vl_produto;
+    this.vl_custopr = this.data.vl_custopr;
     this.ds_corprod = this.data.ds_corprod;
     this.cliente = this.data.cliente;
   }
@@ -52,6 +54,7 @@ export class DialogEdicaoComponent implements OnInit {
       id_produto: this.id_produto,
       ds_produto: this.ds_produto,
       vl_produto: this.vl_produto,
+      vl_custopr: this.vl_custopr,
       ds_corprod: this.ds_corprod,
       cliente: this.cliente,
     });

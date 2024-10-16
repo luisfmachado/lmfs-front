@@ -1,10 +1,9 @@
 <div class="caixa-dialogo">
   <h2 mat-dialog-title>{{ data.titulo }}</h2>
   <mat-dialog-content class="mat-typography">
-
     <mat-form-field *ngIf="data.id">
       <mat-label>{{ data.id }}</mat-label>
-      <input matInput [(ngModel)]="id" maxlength="6" mask="000000"/>
+      <input matInput [(ngModel)]="id" maxlength="6" mask="000000" />
     </mat-form-field>
 
     <mat-form-field *ngIf="data.descricao">
@@ -25,29 +24,65 @@
       />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.valorCusto">
+      <mat-label>{{ data.valorCusto }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="valorCusto"
+        required
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+        currencyMask
+        maxlength="10"
+        class="custom-text-align-left"
+      />
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.date">
       <mat-label>{{ data.date }}</mat-label>
-      <input matInput [(ngModel)]="date" required readonly="true" [matDatepicker]="picker">
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <input
+        matInput
+        [(ngModel)]="date"
+        required
+        readonly="true"
+        [matDatepicker]="picker"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field *ngIf="data.cor">
       <mat-label>{{ data.cor }}</mat-label>
       <mat-select required [(ngModel)]="cor">
-        <mat-option
-          *ngFor="let opcaoCor of opcoesCor"
-          [value]="opcaoCor.value"
-        >
+        <mat-option *ngFor="let opcaoCor of opcoesCor" [value]="opcaoCor.value">
           {{ opcaoCor.value }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.fornecedor">
+      <mat-label>{{ data.fornecedor }}</mat-label>
+      <mat-select [(ngModel)]="fornecedor" required>
+        <mat-option
+          *ngFor="let opcao of opcoes"
+          [value]="opcao.id"
+          [disabled]="opcao.disabled"
+        >
+          {{ opcao.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.cliente">
-      <mat-label>Cliente</mat-label>
+      <mat-label>{{ data.cliente }}</mat-label>
       <mat-select [(ngModel)]="cliente" required>
-        <mat-option *ngFor="let opcao of opcoes" [value]="opcao.id" [disabled]="opcao.disabled">
+        <mat-option
+          *ngFor="let opcao of opcoes"
+          [value]="opcao.id"
+          [disabled]="opcao.disabled"
+        >
           {{ opcao.value }}
         </mat-option>
       </mat-select>
@@ -62,19 +97,23 @@
     </div>
 
     <div
-    *ngIf="data.file"
-    class="files"
-    (dragover)="onDragOver($event)"
-    (drop)="onDrop($event)"
-  >
-    <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" />
-    <button mat-raised-button color="primary" (click)="fileInput.click()">
-      <mat-icon class="icon-add">attach_file</mat-icon>
-      <span class="text-add">Selecionar Arquivo</span>
-    </button>
-    <span>{{ selectedFileName || 'Nenhum arquivo selecionado' }}</span>
-  </div>
-
+      *ngIf="data.file"
+      class="files"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event)"
+    >
+      <input
+        #fileInput
+        type="file"
+        (change)="onFileSelected($event)"
+        style="display: none"
+      />
+      <button mat-raised-button color="primary" (click)="fileInput.click()">
+        <mat-icon class="icon-add">attach_file</mat-icon>
+        <span class="text-add">Selecionar Arquivo</span>
+      </button>
+      <span>{{ selectedFileName || "Nenhum arquivo selecionado" }}</span>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
@@ -85,8 +124,10 @@
         id: id,
         descricao: descricao,
         valor: valor,
+        valorCusto: valorCusto,
         cor: cor,
         cliente: cliente,
+        fornecedor: fornecedor,
         file: file,
         date: date
       }"

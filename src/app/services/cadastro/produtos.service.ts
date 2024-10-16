@@ -65,6 +65,7 @@ export class ProdutosService {
     id_produto: number,
     ds_produto: string,
     vl_produto: number,
+    vl_custopr: number,
     ds_corprod: string,
     id_cliente: number
   ): Observable<Resposta> {
@@ -73,6 +74,7 @@ export class ProdutosService {
         id_produto: id_produto.toString(),
         ds_produto: ds_produto,
         vl_produto: vl_produto.toString(),
+        vl_custopr: vl_custopr.toString(),
         ds_corprod: ds_corprod,
         id_cliente: id_cliente.toString(),
       },

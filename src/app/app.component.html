@@ -55,11 +55,20 @@
         <mat-list-item [routerLink]="'/cadastro/estoque'">
           <div class="item-submenu">
             <mat-icon>inventory_2</mat-icon>
-            <span>Estoque</span>
+            <span>Entr. Estoque</span>
           </div>
         </mat-list-item>
       </div>
       
+      <mat-list-item (click)="toggleSubmenu('relatorios')" onkeyup="">
+        <div class="item-menu">
+          <span>Relatórios</span>
+          <mat-icon [@rotateIcon]="showSubmenu('relatorios') ? 'open' : 'closed'"
+            >expand_more</mat-icon
+          >
+        </div>
+      </mat-list-item>
+
     </mat-nav-list>
   </mat-sidenav>
 

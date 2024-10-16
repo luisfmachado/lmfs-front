@@ -12,10 +12,23 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Valor</mat-label>
+    <mat-label>Vlr. de venda</mat-label>
     <input
       matInput
       [(ngModel)]="vl_produto"
+      required
+      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+      currencyMask
+      maxlength="10"
+      class="custom-text-align-left"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Vlr. de custo</mat-label>
+    <input
+      matInput
+      [(ngModel)]="vl_custopr"
       required
       [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
       currencyMask
@@ -55,6 +68,7 @@
         id_produto: id_produto,
         ds_produto: ds_produto,
         vl_produto: vl_produto,
+        vl_custopr: vl_custopr,
         ds_corprod: ds_corprod,
         cliente: cliente,
       }"

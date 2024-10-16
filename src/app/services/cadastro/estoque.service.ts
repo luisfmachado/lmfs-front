@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Estoque } from 'src/app/model/estoque';
+import { Estoque, EstoqueVw, Produtos } from 'src/app/model/estoque';
 import { Resposta } from 'src/app/model/resposta';
 import { environment } from 'src/environments/environment';
 
@@ -9,26 +9,31 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class EstoqueService {
-  protected readonly baseURL = environment.URL_API + '/orcamento';
+  protected readonly baseURL = environment.URL_API + '/estoque';
 
   constructor(private http: HttpClient) {}
 
   /*----------------------Buscar---------------------------*/
-  public get(): Observable<Estoque[]> {
-    return this.http.get<Estoque[]>(`${this.baseURL}`);
+  public get(): Observable<EstoqueVw[]> {
+    return this.http.get<EstoqueVw[]>(`${this.baseURL}/vw`);
   }
 
-  public save(
-    id_produto: number,
-    qt_produto: number,
-    dt_movimen: string,
-    vl_pgcusto: number
-  ): Observable<Resposta> {
-    return this.http.post<Resposta>(`${this.baseURL}/save`, {
-      id_produto: id_produto,
-      qt_produto: qt_produto,
-      dt_movimen: dt_movimen,
-      vl_pgcusto: vl_pgcusto,
+  public getIdEstoque(): Observable<number> {
+    return this.http.get<number>(`${this.baseURL}/id`);
+  }
+
+  /*----------------------Salvar---------------------------*/
+  public save(ds_estoque: string, id_fornece: number, date: string, estoques: Produtos[], ): Observable<Resposta> {
+    const body = {
+      ds_estoque: ds_estoque,
+      id_fornece: id_fornece,
+      dt_movimen: date,
+      estoques: estoques
+    };
+    return this.http.post<Resposta>(`${this.baseURL}/save`, body, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
     });
   }
 
