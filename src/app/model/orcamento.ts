@@ -12,4 +12,5 @@ export interface OrcamentoVW {
     vl_totalor: number;
     no_cliente: string;
     dt_entrega: string;
+    lg_faturad: string;
 }

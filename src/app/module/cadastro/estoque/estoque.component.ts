@@ -75,20 +75,7 @@ export class EstoqueComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        // this.spinnerCarregamento = true;
-        // this.estoqueService
-        //   .save(result.id, result.descricao, result.valor, result.cor)
-        //   .subscribe(
-        //     () => {
-        //       this.carregaDados();
-        //       this.spinnerCarregamento = false;
-        //       this.alertService.show('Adicionado com sucesso!', 'Fechar');
-        //     },
-        //     () => {
-        //       this.spinnerCarregamento = false;
-        //       this.alertService.show('Erro ao adicionar produto.', 'Fechar');
-        //     }
-        //   );
+        this.carregaDados();
       });
     }
   }

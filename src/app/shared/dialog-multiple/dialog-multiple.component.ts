@@ -20,7 +20,7 @@ interface Opcao {
 @Component({
   selector: 'app-dialog-multiple',
   templateUrl: './dialog-multiple.component.html',
-  styleUrls: ['./dialog-multiple.component.scss'],
+  styleUrls: ['./dialog-multiple.component.scss', '../../styles/spinner.scss'],
 })
 export class DialogMultipleComponent implements OnInit {
   produtos: Produtos[] = [{ id_produto: 0, qt_produto: 1, id_estoque: 1 }];
@@ -99,6 +99,7 @@ export class DialogMultipleComponent implements OnInit {
         this.spinnerCarregamento = true;
         this.getIdEstoque().subscribe({
           next: (id) => {
+            console.log("id", id);
             this.produtos.forEach((produto) => {
               if (id > 0) {
                 produto.id_estoque = id + 1;
@@ -107,6 +108,7 @@ export class DialogMultipleComponent implements OnInit {
                 produto.id_estoque = 1;
                 this.idEstoque = 1;
               }
+              console.log("id", id);
             });
             this._estoqueService
               .save(
@@ -118,6 +120,7 @@ export class DialogMultipleComponent implements OnInit {
               .subscribe(
                 () => {
                   this.spinnerCarregamento = false;
+                  this.dialogRef.close();
                   this.alertService.show('Adicionado com sucesso!', 'Fechar');
                 },
                 () => {
@@ -136,6 +139,7 @@ export class DialogMultipleComponent implements OnInit {
           'Fechar'
         );
       }
+
     });
   }
 

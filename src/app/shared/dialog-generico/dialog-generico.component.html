@@ -66,7 +66,7 @@
       <mat-label>{{ data.fornecedor }}</mat-label>
       <mat-select [(ngModel)]="fornecedor" required>
         <mat-option
-          *ngFor="let opcao of opcoes"
+          *ngFor="let opcao of opcoesF"
           [value]="opcao.id"
           [disabled]="opcao.disabled"
         >

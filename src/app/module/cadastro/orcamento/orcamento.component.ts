@@ -9,7 +9,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { OrcamentoService } from 'src/app/services/cadastro/orcamento.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
 import { saveAs } from 'file-saver';
-
+import { FaturamentoService } from 'src/app/services/cadastro/faturamento.service';
 
 @Component({
   selector: 'app-orcamento',
@@ -26,6 +26,7 @@ export class OrcamentoComponent implements OnInit {
     public dialogo: MatDialog,
     private alertService: AlertService,
     private router: Router,
+    private _faturamentoService: FaturamentoService
   ) {}
 
   public ngOnInit(): void {
@@ -99,16 +100,19 @@ export class OrcamentoComponent implements OnInit {
               () => {
                 this.orcamentoService.exec2().subscribe(
                   () => {
-                this.carregaDados();
-                this.spinnerCarregamento = false;
-                this.alertService.show('Importado com sucesso!', 'Fechar');
+                    this.carregaDados();
+                    this.spinnerCarregamento = false;
+                    this.alertService.show('Importado com sucesso!', 'Fechar');
                   },
                   (error) => {
                     this.spinnerCarregamento = false;
-                    this.alertService.show('Erro ao importar produtos.', 'Fechar');
+                    this.alertService.show(
+                      'Erro ao importar produtos.',
+                      'Fechar'
+                    );
                     console.error('Erro ao importar produtos:', error);
                   }
-                )
+                );
               },
               (error) => {
                 this.spinnerCarregamento = false;
@@ -192,5 +196,40 @@ export class OrcamentoComponent implements OnInit {
         console.error('Erro ao gerar o relatório:', error);
       }
     );
+  }
+
+  /*----------------------Faturar---------------------------*/
+  gerarFat(id_orcamen: number, lg_faturad: string): void {
+    this.spinnerCarregamento = true;
+    if (lg_faturad === 'T') {
+      this._faturamentoService.updtFo(id_orcamen, 0).subscribe({
+        next: (res) => {
+          if (res.status) {
+            this.carregaDados();
+            this.spinnerCarregamento = false;
+            this.alertService.show('Faturamento removido com sucesso!', 'Fechar');
+          } else {
+            this.carregaDados();
+            this.spinnerCarregamento = false;
+            this.alertService.show('Erro!', 'Fechar');
+          }
+        },
+      });
+    } else if (lg_faturad === 'F') {
+      console.log("entrou");
+      this._faturamentoService.updtFo(id_orcamen, 1).subscribe({
+        next: (res) => {
+          if (res.status) {
+            this.carregaDados();
+            this.spinnerCarregamento = false;
+            this.alertService.show('Faturado com sucesso!', 'Fechar');
+          } else {
+            this.carregaDados();
+            this.spinnerCarregamento = false;
+            this.alertService.show('Erro!', 'Fechar');
+          }
+        },
+      });
+    }
   }
 }

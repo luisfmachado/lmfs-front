@@ -9,6 +9,12 @@ interface Opcao {
   disabled: boolean;
 }
 
+interface OpcaoF {
+  value: string; // Nome a ser exibido
+  id: number;    // ID do cliente
+  disabled: boolean;
+}
+
 interface OpcaoCor {
   value: string;
 }
@@ -32,6 +38,7 @@ export class DialogGenericoComponent implements OnInit {
   date: Date | null = null;
 
   opcoes: Opcao[] = [];
+  opcoesF: OpcaoF[] = [];
   opcoesCor: OpcaoCor[] = [
     { value: 'Incolor' },
     { value: 'Verde' },
@@ -81,13 +88,13 @@ export class DialogGenericoComponent implements OnInit {
   carregaFornecedor(): void {
     this._fornecedorService.getFornecedor().subscribe({
       next: (nomes) => {
-        this.opcoes = nomes.map(fornecedor => ({
+        this.opcoesF = nomes.map(fornecedor => ({
           id: fornecedor.id_fornece,
           value: fornecedor.no_fornece,
           disabled: false,
         }));
       },
-      error: (err) => console.error('Erro ao carregar clientes:', err)
+      error: (err) => console.error('Erro ao carregar fornecedores:', err)
     });
   }
 

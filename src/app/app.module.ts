@@ -21,6 +21,7 @@ import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orc
 import { DialogEdicaoComponent } from './shared/dialog-edicao/dialog-edicao.component';
 import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 import { DialogMultipleComponent } from './shared/dialog-multiple/dialog-multiple.component';
+import { RelatorioComponent } from './module/relatorio/relatorio.component';
 
 registerLocaleData(localePt);
 
@@ -36,7 +37,8 @@ registerLocaleData(localePt);
     OrcamentoManualComponent,
     DialogEdicaoComponent,
     EstoqueComponent,
-    DialogMultipleComponent
+    DialogMultipleComponent,
+    RelatorioComponent
   ],
   imports: [
     BrowserModule,

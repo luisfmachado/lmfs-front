@@ -1,5 +1,5 @@
 mat-card {
-  width: 60%;
+  width: 65%;
   max-width: none;
   margin: auto;
   border-radius: 10px;
@@ -50,6 +50,14 @@ mat-card > * {
   color: red;
 }
 
+.btn_faturar {
+  color: rgb(255, 196, 59);
+}
+
+.btn_faturado {
+  color: green;
+}
+
 .icon-add,
 .text-add {
   color: white;
@@ -69,3 +77,4 @@ mat-paginator {
   margin-top: 22px;
   user-select: none;
 }
+
