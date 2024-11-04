@@ -21,7 +21,13 @@ import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orc
 import { DialogEdicaoComponent } from './shared/dialog-edicao/dialog-edicao.component';
 import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 import { DialogMultipleComponent } from './shared/dialog-multiple/dialog-multiple.component';
-import { RelatorioComponent } from './module/relatorio/relatorio.component';
+import { MateriaPrimaComponent } from './module/cadastro/materia-prima/materia-prima.component';
+import { ManualComponent } from './module/relatorio/manual/manual.component';
+import { AutomaticoComponent } from './module/relatorio/automatico/automatico.component';
+import { PerfilComponent } from './module/funcionario/perfil/perfil.component';
+import { StatusComponent } from './module/funcionario/status/status.component';
+import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
+import { VisualizarComponent } from './module/ponto/visualizar/visualizar.component';
 
 
 registerLocaleData(localePt);
@@ -39,7 +45,13 @@ registerLocaleData(localePt);
     DialogEdicaoComponent,
     EstoqueComponent,
     DialogMultipleComponent,
-    RelatorioComponent
+    MateriaPrimaComponent,
+    ManualComponent,
+    AutomaticoComponent,
+    PerfilComponent,
+    StatusComponent,
+    RegistrarComponent,
+    VisualizarComponent
   ],
   imports: [
     BrowserModule,
