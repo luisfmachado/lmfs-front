@@ -83,7 +83,7 @@ export class OrcamentoComponent implements OnInit {
     if (user) {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
         data: {
-          titulo: 'Importar produtos:',
+          titulo: 'Importar:',
           file: 'File',
           cliente: 'Cliente',
           cancelar: 'Cancelar',
@@ -131,41 +131,6 @@ export class OrcamentoComponent implements OnInit {
     }
   }
 
-  /*----------------------Editar da tabela---------------------------*/
-  /*
-  abrirDialogoEditar(id_tp_gasto: number): void {
-    const dialogRef = this.dialogo.open(DialogGenericoComponent, {
-      data: {
-        titulo: 'Editar tipo de gasto:',
-        descricao: 'Nova descrição',
-        cancelar: 'Cancelar',
-        confirmar: 'Editar',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((novaDescricao: string) => {
-      if (novaDescricao) {
-        this.editar(id_tp_gasto, novaDescricao);
-      }
-    });
-  }
-
-  public editar(id_tp_gasto: number, novaDescricao: string): void {
-    this.assembleiaService.update(id_tp_gasto, novaDescricao).subscribe({
-      next: (res) => {
-        if (res.status) {
-          this.carregaDados();
-          alert(res.mensagem);
-        } else {
-          alert(res.mensagem);
-        }
-      },
-      error: (error) => {
-        alert(`Erro ao editar tipo de gasto: ${error.message}`);
-      },
-    });
-  }
-  */
   /*----------------------Excluir da tabela---------------------------*/
   public excluir(id: number): void {
     this.spinnerCarregamento = true;

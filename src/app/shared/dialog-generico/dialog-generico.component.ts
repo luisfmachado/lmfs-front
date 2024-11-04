@@ -36,6 +36,8 @@ export class DialogGenericoComponent implements OnInit {
   fornecedor: number | null = null;
   file!: File;
   date: Date | null = null;
+  cnpj: string | null = null;
+  celular!: string;
 
   opcoes: Opcao[] = [];
   opcoesF: OpcaoF[] = [];
@@ -68,7 +70,9 @@ export class DialogGenericoComponent implements OnInit {
       cliente: this.cliente,
       fornecedor: this.fornecedor,
       file: this.file,
-      date: this.date
+      date: this.date,
+      cnpj: this.cnpj,
+      celular: this.celular,
     });
   }
 

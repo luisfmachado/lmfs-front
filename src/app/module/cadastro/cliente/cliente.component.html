@@ -1,1 +1,83 @@
-<p>cliente works!</p>
+<mat-card class="animate-fade-slide-in">
+  <mat-card-content>
+    <!-- Caixa de Pesquisa -->
+    <mat-form-field appearance="fill" class="caixa-pesquisa">
+      <mat-label>Pesquisar</mat-label>
+      <input
+        type="text"
+        (keyup)="applyFilter($event)"
+        matInput
+        placeholder="Pesquisar"
+      />
+    </mat-form-field>
+
+    <!-- Adicionar registros -->
+    <div class="caixa-adicionar">
+      <p class="txt-adicionar">Produtos</p>
+      <div class="botao-adicionar">
+        <button mat-raised-button (click)="abrirDialogo()" color="primary">
+          <mat-icon class="icon-add">add</mat-icon
+          ><span class="text-add">Adicionar</span>
+        </button>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Coluna Id -->
+      <ng-container matColumnDef="id_cliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id_cliente }}</td>
+      </ng-container>
+
+      <!-- Coluna Nome -->
+      <ng-container matColumnDef="no_cliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.no_cliente }}</td>
+      </ng-container>
+
+      <!-- CNPJ -->
+      <ng-container matColumnDef="ds_cnpjcli">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CNPJ</th>
+        <td mat-cell *matCellDef="let element">{{ element.ds_cnpjcli | mask: "00.000.000/0000-00" }}</td>
+      </ng-container>
+
+      <!-- Coluna Cor -->
+      <ng-container matColumnDef="nm_celular">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contato:</th>
+        <td mat-cell *matCellDef="let element">{{ element.nm_celular | mask: "(00) 000000000" }}</td>
+      </ng-container>
+
+      <!-- Coluna Ações -->
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element">
+          <!-- <button
+            mat-icon-button
+            (click)="abrirDialogoEditar(element.id_produto, element.id_cliente)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button> -->
+          <button mat-icon-button (click)="excluir(element.id_cliente)">
+            <mat-icon class="btn-deletar">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Definindo as colunas a serem exibidas -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <!-- Paginator -->
+    <mat-paginator
+      [length]="dataSource.data.length"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

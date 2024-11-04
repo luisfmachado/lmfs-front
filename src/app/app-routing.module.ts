@@ -7,6 +7,7 @@ import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.compon
 import { ProdutosComponent } from './module/cadastro/produtos/produtos.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
 import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
+import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -42,6 +43,13 @@ const routes: Routes = [
   {
     path: 'cadastro/estoque',
     component: EstoqueComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'cadastro/cliente',
+    component: ClienteComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
   },

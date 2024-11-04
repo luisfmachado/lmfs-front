@@ -1,6 +1,7 @@
 mat-card {
   width: 65%;
   max-width: none;
+  min-width: 70%;
   margin: auto;
   border-radius: 10px;
   padding: 20px;
@@ -78,3 +79,6 @@ mat-paginator {
   user-select: none;
 }
 
+.nfe {
+  color: rgb(86, 86, 255);
+}

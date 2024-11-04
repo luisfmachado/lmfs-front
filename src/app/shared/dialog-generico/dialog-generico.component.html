@@ -88,6 +88,22 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.cnpj">
+      <mat-label>{{ data.cnpj }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="cnpj"
+        maxlength="18"
+        mask="00.000.000/0000-00"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.celular">
+      <mat-label>{{ data.celular }}</mat-label>
+      <input matInput [(ngModel)]="celular" required maxlength="11"/>
+    </mat-form-field>
+
     <div *ngIf="data.filePadrao" class="btn_download" (click)="baixarExemplo()">
       <button mat-raised-button color="primary">
         <mat-icon class="icon-add">download</mat-icon
@@ -129,7 +145,9 @@
         cliente: cliente,
         fornecedor: fornecedor,
         file: file,
-        date: date
+        date: date,
+        cnpj: cnpj,
+        celular: celular,
       }"
       cdkFocusInitial
     >

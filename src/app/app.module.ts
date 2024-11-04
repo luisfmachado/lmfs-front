@@ -23,6 +23,7 @@ import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 import { DialogMultipleComponent } from './shared/dialog-multiple/dialog-multiple.component';
 import { RelatorioComponent } from './module/relatorio/relatorio.component';
 
+
 registerLocaleData(localePt);
 
 @NgModule({
