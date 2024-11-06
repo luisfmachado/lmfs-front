@@ -13,7 +13,7 @@
 
     <!-- Adicionar registros -->
     <div class="caixa-adicionar">
-      <p class="txt-adicionar">Matéria-prima</p>
+      <p class="txt-adicionar">Fornecedores</p>
       <div class="botao-adicionar">
         <button mat-raised-button (click)="abrirDialogo()" color="primary">
           <mat-icon class="icon-add">add</mat-icon
@@ -24,40 +24,30 @@
 
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- Coluna Id -->
-      <ng-container matColumnDef="nm_sequenc">
+      <ng-container matColumnDef="id_fornece">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let element">{{ element.nm_sequenc }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.id_fornece }}</td>
       </ng-container>
 
       <!-- Coluna Nome -->
-      <ng-container matColumnDef="no_materia">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descrição</th>
-        <td mat-cell *matCellDef="let element">{{ element.no_materia }}</td>
+      <ng-container matColumnDef="no_fornece">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.no_fornece }}</td>
       </ng-container>
 
-      <!-- Coluna Data -->
-      <ng-container matColumnDef="dt_movimen">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+      <!-- CNPJ -->
+      <ng-container matColumnDef="nm_cnpjfor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CNPJ</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.dt_movimen | date : "dd/MM/yyyy" }}
-        </td>
-      </ng-container>
-
-      <!-- Coluna Valor -->
-      <ng-container matColumnDef="vl_pgtotal">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Custo</th>
-        <td mat-cell *matCellDef="let element">
-          {{
-            element.vl_pgtotal | currency : "BRL" : "symbol" : "1.2-2" : "pt-BR"
-          }}
+          {{ element.nm_cnpjfor | mask : "00.000.000/0000-00" }}
         </td>
       </ng-container>
 
       <!-- Coluna Cor -->
-      <ng-container matColumnDef="no_fornece">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fornecedor</th>
+      <ng-container matColumnDef="nm_celular">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contato:</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.no_fornece }}
+          {{ element.nm_celular | mask : "(00) 000000000" }}
         </td>
       </ng-container>
 
@@ -71,7 +61,7 @@
             >
               <mat-icon>edit</mat-icon>
             </button> -->
-          <button mat-icon-button (click)="excluir(element.nm_sequenc)">
+          <button mat-icon-button (click)="excluir(element.id_fornece)">
             <mat-icon class="btn-deletar">delete</mat-icon>
           </button>
         </td>

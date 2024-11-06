@@ -8,6 +8,8 @@ import { ProdutosComponent } from './module/cadastro/produtos/produtos.component
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
 import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
+import { MateriaPrimaComponent } from './module/cadastro/materia-prima/materia-prima.component';
+import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -50,6 +52,20 @@ const routes: Routes = [
   {
     path: 'cadastro/cliente',
     component: ClienteComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'cadastro/materia-prima',
+    component: MateriaPrimaComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'cadastro/fornecedor',
+    component: FornecedorComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
   },

@@ -3,23 +3,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MateriaPrima, MateriaPrimaVw } from 'src/app/model/materia-prima';
+import { Clientes } from 'src/app/model/clientes';
+import { Fornecedor } from 'src/app/model/fornecedor';
 import { AlertService } from 'src/app/services/alert.service';
-import { MateriaPrimaService } from 'src/app/services/cadastro/materia-prima.service';
+import { ClientesService } from 'src/app/services/cadastro/clientes.service';
+import { FornecedorService } from 'src/app/services/cadastro/fornecedor.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
-
 @Component({
-  selector: 'app-materia-prima',
-  templateUrl: './materia-prima.component.html',
+  selector: 'app-fornecedor',
+  templateUrl: './fornecedor.component.html',
   styleUrls: [
-    './materia-prima.component.scss',
+    './fornecedor.component.scss',
     '../../../styles/animate-fade-slide-in.scss',
     '../../../styles/spinner.scss',
   ],
 })
-export class MateriaPrimaComponent implements OnInit {
+export class FornecedorComponent implements OnInit {
   constructor(
-    private _materiaPrimaService: MateriaPrimaService,
+    private _fornecedorService: FornecedorService,
     public dialogo: MatDialog,
     private alertService: AlertService
   ) {}
@@ -30,21 +31,18 @@ export class MateriaPrimaComponent implements OnInit {
   }
 
   spinnerCarregamento: boolean = false;
-  exibirCamposAdicionais: boolean = false;
 
   //Colunas da tabela
   displayedColumns: string[] = [
-    'nm_sequenc',
-    'no_materia',
-    'dt_movimen',
-    'vl_pgtotal',
+    'id_fornece',
     'no_fornece',
+    'nm_cnpjfor',
+    'nm_celular',
     'acoes',
   ];
 
   //Tabela
-  dataSource: MatTableDataSource<MateriaPrimaVw> =
-    new MatTableDataSource<MateriaPrimaVw>();
+  dataSource: MatTableDataSource<Fornecedor> = new MatTableDataSource<Fornecedor>();
 
   //Chama o paginator
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,8 +50,8 @@ export class MateriaPrimaComponent implements OnInit {
 
   /*----------------------Pegar os dados da tabela---------------------------*/
   private carregaDados() {
-    this._materiaPrimaService.getVw().subscribe({
-      next: (data: MateriaPrimaVw[]) => {
+    this._fornecedorService.get().subscribe({
+      next: (data: Fornecedor[]) => {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -75,17 +73,10 @@ export class MateriaPrimaComponent implements OnInit {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
         maxWidth: '950px',
         data: {
-          titulo: 'Entrada:',
-          descricao: 'Descrição',
-          date: 'Data',
-          fornecedor: 'Fornecedor',
-          valor: 'Custo do material',
-          lg_custoad: 'Gerou custos adicionais?',
-          custoAddValor: 'F',
-          tipoPagamento: 'Pagamento',
-          ds_custoad: 'Descrição de custo adicional',
-          vl_custoad: 'Valor de custo adicional',
-          tp_custoad: 'Responsável por custo adicional',
+          titulo: 'Adicionar:',
+          descricao: 'Nome',
+          cnpj: 'CNPJ',
+          celular: 'Contato',
           cancelar: 'Cancelar',
           confirmar: 'Cadastrar',
         },
@@ -94,29 +85,9 @@ export class MateriaPrimaComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result.descricao) {
           this.spinnerCarregamento = true;
-          console.log(
-            result.descricao,
-            result.date,
-            result.tipoPagamento,
-            result.fornecedor,
-            result.lg_custoad,
-            result.ds_custoadd,
-            result.vl_custoad,
-            result.tp_custoad,
-            result.valor,
-          );
-          this._materiaPrimaService
-            .save(
-              result.descricao,
-              result.date,
-              result.tipoPagamento,
-              result.fornecedor,
-              result.lg_custoad,
-              result.ds_custoadd,
-              result.vl_custoad,
-              result.tp_custoad,
-              result.valor,
-            )
+          console.log(result.descricao, result.cnpj, result.celular);
+          this._fornecedorService
+            .save(result.descricao, result.cnpj, result.celular)
             .subscribe(
               () => {
                 this.carregaDados();
@@ -139,15 +110,10 @@ export class MateriaPrimaComponent implements OnInit {
     }
   }
 
-  onTypeChange(value: string): void {
-    if (value === 'T') {
-    }
-  }
-
   /*----------------------Excluir da tabela---------------------------*/
-  public excluir(nm_sequenc: number): void {
+  public excluir(id_fornece: number): void {
     this.spinnerCarregamento = true;
-    this._materiaPrimaService.delete(nm_sequenc).subscribe({
+    this._fornecedorService.delete(id_fornece).subscribe({
       next: (res) => {
         if (res.status) {
           this.carregaDados();

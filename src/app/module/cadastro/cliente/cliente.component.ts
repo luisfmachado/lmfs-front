@@ -70,6 +70,7 @@ export class ClienteComponent implements OnInit {
     const user = localStorage.getItem('name');
     if (user) {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        maxWidth: '950px',
         data: {
           titulo: 'Novo cliente:',
           descricao: 'Nome',

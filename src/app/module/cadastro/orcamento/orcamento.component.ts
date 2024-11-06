@@ -82,6 +82,7 @@ export class OrcamentoComponent implements OnInit {
     const user = localStorage.getItem('name');
     if (user) {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        maxWidth: '950px',
         data: {
           titulo: 'Importar:',
           file: 'File',
@@ -122,11 +123,65 @@ export class OrcamentoComponent implements OnInit {
             );
         } else {
           this.spinnerCarregamento = false;
-          this.alertService.show(
-            'Ação cancelada ou dados incompletos.',
-            'Fechar'
-          );
         }
+      });
+    }
+  }
+
+  public abrirFat(id_orcamen: number, lg_faturad: string): void {
+    if (lg_faturad === 'F') {
+      const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        maxWidth: '950px',
+        data: {
+          titulo: 'Faturar:',
+          date: 'Data',
+          tipoPagamento: 'Forma de pagamento',
+          pagamentoParcelado: 'Parcelamento',
+          cancelar: 'Cancelar',
+          confirmar: 'Cadastrar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result.pagamentoParceladoId == undefined) {
+          result.pagamentoParceladoId = 1;
+        }
+        console.log(result.tipoPagamentoId && result.date)
+        if (result.tipoPagamentoId && result.date) {
+          this.spinnerCarregamento = true;
+          console.log(id_orcamen, result.tipoPagamentoId, result.pagamentoParceladoId, result.date);
+          this._faturamentoService
+            .updatePagamento(id_orcamen, result.tipoPagamentoId, result.pagamentoParceladoId, result.date)
+            .subscribe(
+              () => {
+                this.carregaDados();
+                this.spinnerCarregamento = false;
+                this.alertService.show('Faturado com sucesso!', 'Fechar');
+              },
+              (error) => {
+                this.spinnerCarregamento = false;
+                this.alertService.show('Erro ao faturar.', 'Fechar');
+                console.error('Erro:', error);
+              }
+            );
+        } else {
+          this.spinnerCarregamento = false;
+          console.log("não foi");
+        }
+      });
+    } else if (lg_faturad === 'T') {
+      this._faturamentoService.updtFo(id_orcamen, 0).subscribe({
+        next: (res) => {
+          if (res.status) {
+            this.carregaDados();
+            this.spinnerCarregamento = false;
+            this.alertService.show('Faturamento removido com sucesso!', 'Fechar');
+          } else {
+            this.carregaDados();
+            this.spinnerCarregamento = false;
+            this.alertService.show('Erro!', 'Fechar');
+          }
+        },
       });
     }
   }
@@ -164,37 +219,45 @@ export class OrcamentoComponent implements OnInit {
   }
 
   /*----------------------Faturar---------------------------*/
-  gerarFat(id_orcamen: number, lg_faturad: string): void {
+  // gerarFat(id_orcamen: number, lg_faturad: string): void {
+  //   this.spinnerCarregamento = true;
+  //   if (lg_faturad === 'T') {
+  //     this._faturamentoService.updtFo(id_orcamen, 0).subscribe({
+  //       next: (res) => {
+  //         if (res.status) {
+  //           this.carregaDados();
+  //           this.spinnerCarregamento = false;
+  //           this.alertService.show('Faturamento removido com sucesso!', 'Fechar');
+  //         } else {
+  //           this.carregaDados();
+  //           this.spinnerCarregamento = false;
+  //           this.alertService.show('Erro!', 'Fechar');
+  //         }
+  //       },
+  //     });
+  //   } else if (lg_faturad === 'F') {
+  //     console.log("entrou");
+  //     this._faturamentoService.updtFo(id_orcamen, 1).subscribe({
+  //       next: (res) => {
+  //         if (res.status) {
+  //           this.carregaDados();
+  //           this.spinnerCarregamento = false;
+  //           this.alertService.show('Faturado com sucesso!', 'Fechar');
+  //         } else {
+  //           this.carregaDados();
+  //           this.spinnerCarregamento = false;
+  //           this.alertService.show('Erro!', 'Fechar');
+  //         }
+  //       },
+  //     });
+  //   }
+  // }
+
+  gerarNFE(id_orcamen: number, lg_faturad: string) {
     this.spinnerCarregamento = true;
-    if (lg_faturad === 'T') {
-      this._faturamentoService.updtFo(id_orcamen, 0).subscribe({
-        next: (res) => {
-          if (res.status) {
-            this.carregaDados();
-            this.spinnerCarregamento = false;
-            this.alertService.show('Faturamento removido com sucesso!', 'Fechar');
-          } else {
-            this.carregaDados();
-            this.spinnerCarregamento = false;
-            this.alertService.show('Erro!', 'Fechar');
-          }
-        },
-      });
-    } else if (lg_faturad === 'F') {
-      console.log("entrou");
-      this._faturamentoService.updtFo(id_orcamen, 1).subscribe({
-        next: (res) => {
-          if (res.status) {
-            this.carregaDados();
-            this.spinnerCarregamento = false;
-            this.alertService.show('Faturado com sucesso!', 'Fechar');
-          } else {
-            this.carregaDados();
-            this.spinnerCarregamento = false;
-            this.alertService.show('Erro!', 'Fechar');
-          }
-        },
-      });
+    if (lg_faturad === 'F') {
+      this.spinnerCarregamento = false;
+      this.alertService.show('Não é possível gerar NFE de uma venda não faturada!', 'Fechar');
     }
   }
 }

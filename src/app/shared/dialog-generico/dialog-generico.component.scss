@@ -2,9 +2,67 @@ mat-form-field {
   width: 100%;
 }
 
+mat-dialog-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 40px;
+}
+
+button {
+  width: 220px;
+}
+
+.titulo {
+  font-size: 25px;
+}
+
 .caixa-dialogo {
-  width: 400px;
   margin: 10px 10px 10px 10px;
+}
+
+.descricao, .descricao-adicional {
+  max-width: 400px;
+}
+
+.id {
+  max-width: 140px;
+}
+
+.data {
+  max-width: 190px;
+}
+
+.valor, .valor-adicional, .valor-custo {
+  max-width: 210px;
+}
+
+.fornecedor {
+  max-width: 300px;
+}
+
+.cor {
+  max-width: 200px;
+}
+
+.cliente {
+  max-width: 300px;
+}
+
+.tipo {
+  max-width: 200px;
+}
+
+.pagamento-adicional {
+  max-width: 320px;
+}
+
+.cnpj {
+  max-width: 200px;
+}
+
+.celular {
+  max-width: 150px;
 }
 
 .btn-confirmar {
@@ -44,4 +102,9 @@ mat-form-field {
 
 .files.dragover {
   background-color: #f0f0f0;
+}
+
+.radio-button {
+  display: flex;
+  flex-direction: column;
 }

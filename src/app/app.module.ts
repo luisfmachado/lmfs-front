@@ -26,8 +26,9 @@ import { ManualComponent } from './module/relatorio/manual/manual.component';
 import { AutomaticoComponent } from './module/relatorio/automatico/automatico.component';
 import { PerfilComponent } from './module/funcionario/perfil/perfil.component';
 import { StatusComponent } from './module/funcionario/status/status.component';
-import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
 import { VisualizarComponent } from './module/ponto/visualizar/visualizar.component';
+import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.component';
+import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
 
 
 registerLocaleData(localePt);
@@ -50,8 +51,9 @@ registerLocaleData(localePt);
     AutomaticoComponent,
     PerfilComponent,
     StatusComponent,
-    RegistrarComponent,
-    VisualizarComponent
+    VisualizarComponent,
+    FornecedorComponent,
+    RegistrarComponent
   ],
   imports: [
     BrowserModule,

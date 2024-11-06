@@ -61,6 +61,7 @@ export class ProdutosComponent implements OnInit {
     const user = localStorage.getItem('name');
     if (user) {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        maxWidth: '950px',
         data: {
           titulo: 'Novo produto:',
           id: 'ID (Opcional)',

@@ -46,6 +46,15 @@
       </div>
 
       <div *ngIf="showSubmenu('cadastros')">
+        <mat-list-item [routerLink]="'/cadastro/fornecedor'">
+          <div class="item-submenu">
+            <mat-icon>engineering</mat-icon>
+            <span>Fornecedores</span>
+          </div>
+        </mat-list-item>
+      </div>
+
+      <div *ngIf="showSubmenu('cadastros')">
         <mat-list-item [routerLink]="'/cadastro/produtos'">
           <div class="item-submenu">
             <mat-icon>shopping_cart</mat-icon>
@@ -58,7 +67,7 @@
         <mat-list-item [routerLink]="'/cadastro/orcamento'">
           <div class="item-submenu">
             <mat-icon>payments</mat-icon>
-            <span>Orçamento</span>
+            <span>Vendas</span>
           </div>
         </mat-list-item>
       </div>
@@ -73,7 +82,7 @@
       </div>
 
       <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/estoque'">
+        <mat-list-item [routerLink]="'/cadastro/materia-prima'">
           <div class="item-submenu">
             <mat-icon>inventory</mat-icon>
             <span>Matéria-prima</span>
