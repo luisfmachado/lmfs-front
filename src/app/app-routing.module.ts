@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './module/home/home.component';
 import { LoginComponent } from './module/login/login.component';
-import { AdminGuard } from './guards/admin.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.component';
 import { ProdutosComponent } from './module/cadastro/produtos/produtos.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';

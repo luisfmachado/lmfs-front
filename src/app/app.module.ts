@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { ProdutosComponent } from './module/cadastro/produtos/produtos.component';
 import { HomeComponent } from './module/home/home.component';
 import { LoginComponent } from './module/login/login.component';
-import { AuthInterceptor } from './services/auth-interceptor.service';
+import { AuthInterceptor } from './core/auth-interceptor.service';
 import { DialogGenericoComponent } from './shared/dialog-generico/dialog-generico.component';
 import { MaterialModule } from './shared/material.module';
 import { CurrencyMaskModule } from 'ng2-currency-mask';

@@ -1,15 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Faturamento } from 'src/app/model/faturamento';
+import { SystemConstants } from 'src/app/config/system.constants';
 import { Resposta } from 'src/app/model/resposta';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FaturamentoService {
-  protected readonly baseURL = environment.URL_API + '/faturamento';
+  protected readonly baseURL = `${SystemConstants.api.url}/faturamento`;
 
   constructor(private http: HttpClient) {}
 

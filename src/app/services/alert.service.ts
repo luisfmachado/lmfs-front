@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { SystemConstants } from '../config/system.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class AlertService {
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
-  protected readonly baseURL = environment.URL_API + '/email';
+  protected readonly baseURL = `${SystemConstants.api.url}/email`;
 
   show(message: string, action: string = 'Fechar'): void {
     this.snackBar.open(message, action, {

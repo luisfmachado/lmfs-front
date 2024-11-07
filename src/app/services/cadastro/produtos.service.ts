@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SystemConstants } from 'src/app/config/system.constants';
 import { Produtos } from 'src/app/model/produtos';
 import { Resposta } from 'src/app/model/resposta';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProdutosService {
-  protected readonly baseURL = environment.URL_API + '/produtos';
+  protected readonly baseURL = `${SystemConstants.api.url}/produtos`;
 
   constructor(private http: HttpClient) {}
 

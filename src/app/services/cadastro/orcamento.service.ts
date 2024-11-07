@@ -1,16 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SystemConstants } from 'src/app/config/system.constants';
 import { Orcamento, OrcamentoVW } from 'src/app/model/orcamento';
 import { Resposta } from 'src/app/model/resposta';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrcamentoService {
-
-  protected readonly baseURL = environment.URL_API + '/orcamento';
+  protected readonly baseURL = `${SystemConstants.api.url}/orcamento`;
 
   constructor(private http: HttpClient) {}
 

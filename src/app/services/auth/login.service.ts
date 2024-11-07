@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from 'src/environments/environment';
+import { SystemConstants } from '../../config/system.constants';
 
 interface CustomJwtPayload {
   iss: string;
@@ -17,7 +18,7 @@ interface CustomJwtPayload {
   providedIn: 'root',
 })
 export class LoginService {
-  private loginUrl = environment.URL_API_FWT + '/auth/login';
+  protected readonly loginUrl = `${SystemConstants.api.fwt}/auth/login`;
 
   constructor(private http: HttpClient) {
     this.checkAndClearLocalStorage();

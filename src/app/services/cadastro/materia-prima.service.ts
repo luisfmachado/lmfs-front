@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SystemConstants } from 'src/app/config/system.constants';
 import { MateriaPrima, MateriaPrimaVw } from 'src/app/model/materia-prima';
 import { Resposta } from 'src/app/model/resposta';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MateriaPrimaService {
-  protected readonly baseURL = environment.URL_API + '/materia';
+  protected readonly baseURL = `${SystemConstants.api.url}/materia`;
 
   constructor(private http: HttpClient) {}
 
