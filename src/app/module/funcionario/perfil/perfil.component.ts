@@ -4,10 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  BehaviorSubject,
   catchError,
   filter,
-  map,
   Observable,
   of,
   shareReplay,
@@ -15,8 +13,7 @@ import {
   tap,
 } from 'rxjs';
 import { AlertService } from 'src/app/core/alert.service';
-import { NotificationService } from 'src/app/core/notification.service';
-import { Funcionario, FuncionarioVw } from 'src/app/model/funcionario';
+import { FuncionarioVw } from 'src/app/model/funcionario';
 import { FuncionarioService } from 'src/app/services/cadastro/funcionario.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
 import { DialogVerificacaoComponent } from 'src/app/shared/dialog-verificacao/dialog-verificacao.component';

@@ -1,1 +1,45 @@
-<p>registrar works!</p>
+<mat-card class="animate-fade-slide-in">
+  <mat-card-content>
+    <!-- Adicionar registros -->
+    <div class="caixa-adicionar">
+      <p class="txt-adicionar">Registro de pontos</p>
+      <p class="txt-adicionar">Horário atual: {{ horaAtual }}</p>
+      <div class="botao-adicionar">
+        <button mat-raised-button color="primary" (click)="abrirDialogo()">
+          <mat-icon class="icon-add">add</mat-icon>
+          <span class="text-add">Bater ponto</span>
+        </button>
+      </div>
+    </div>
+
+    <ng-template #tabela>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Coluna Id -->
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+          <td mat-cell *matCellDef="let element">{{ element.tipo }}</td>
+        </ng-container>
+
+        <!-- Coluna Descrição -->
+        <ng-container matColumnDef="horario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Horário</th>
+          <td mat-cell *matCellDef="let element">{{ element.horario }}</td>
+        </ng-container>
+
+        <!-- Definindo as colunas a serem exibidas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </ng-template>
+
+    <div *ngIf="!dataSource.data.length; else tabela">
+      <p class="mensagem">Sem registros de ponto no dia de hoje!</p>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+<!-- Spinner de carregamento -->
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
