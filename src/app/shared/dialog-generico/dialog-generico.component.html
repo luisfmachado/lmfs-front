@@ -37,6 +37,19 @@
       />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.valor2" class="valor-custo">
+      <mat-label>{{ data.valor2 }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="valor2"
+        required
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+        currencyMask
+        maxlength="10"
+        class="custom-text-align-left"
+      />
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.date" class="data">
       <mat-label>{{ data.date }}</mat-label>
       <input
@@ -99,6 +112,28 @@
       />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.rg" class="cnpj">
+      <mat-label>{{ data.rg }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="rg"
+        maxlength="12"
+        mask="00.000.000-0"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.cpf" class="cnpj">
+      <mat-label>{{ data.cpf }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="cpf"
+        maxlength="14"
+        mask="000.000.000/00"
+        required
+      />
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.celular" class="celular">
       <mat-label>{{ data.celular }}</mat-label>
       <input matInput [(ngModel)]="celular" required maxlength="11" />
@@ -130,6 +165,32 @@
       </button>
       <span>{{ selectedFileName || "Nenhum arquivo selecionado" }}</span>
     </div>
+
+    <mat-form-field *ngIf="data.descricao2" class="descricao2">
+      <mat-label>{{ data.descricao2 }}</mat-label>
+      <input matInput [(ngModel)]="descricao2" required />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.descricao3" class="descricao2">
+      <mat-label>{{ data.descricao3 }}</mat-label>
+      <input matInput [(ngModel)]="descricao3" required />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="data.date2" class="data">
+      <mat-label>{{ data.date2 }}</mat-label>
+      <input
+        matInput
+        [(ngModel)]="date2"
+        required
+        readonly="true"
+        [matDatepicker]="picker"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
     <mat-form-field *ngIf="data.tipoPagamento" class="tipo">
       <mat-label>{{ data.tipoPagamento }}</mat-label>
@@ -201,14 +262,20 @@
       [mat-dialog-close]="{
         id: id,
         descricao: descricao,
+        descricao2: descricao2,
+        descricao3: descricao3,
         valor: valor,
+        valor2: valor2,
         valorCusto: valorCusto,
         cor: cor,
         cliente: cliente,
         fornecedor: fornecedor,
         file: file,
         date: date,
+        date2: date2,
         cnpj: cnpj,
+        rg: rg,
+        cpf: cpf,
         celular: celular,
         tipoPagamentoId: tipoPagamentoId,
         lg_custoad: lg_custoad,

@@ -10,6 +10,8 @@ import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
 import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
 import { MateriaPrimaComponent } from './module/cadastro/materia-prima/materia-prima.component';
 import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.component';
+import { PerfilComponent } from './module/funcionario/perfil/perfil.component';
+import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -66,6 +68,20 @@ const routes: Routes = [
   {
     path: 'cadastro/fornecedor',
     component: FornecedorComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'funcionario/perfil',
+    component: PerfilComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'ponto/registrar',
+    component: RegistrarComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
   },

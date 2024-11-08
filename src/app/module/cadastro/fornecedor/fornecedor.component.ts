@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Clientes } from 'src/app/model/clientes';
 import { Fornecedor } from 'src/app/model/fornecedor';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/core/alert.service';
 import { ClientesService } from 'src/app/services/cadastro/clientes.service';
 import { FornecedorService } from 'src/app/services/cadastro/fornecedor.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';

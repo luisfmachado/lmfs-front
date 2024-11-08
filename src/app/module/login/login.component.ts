@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/core/alert.service';
 import { LoginService } from 'src/app/services/auth/login.service';
 
 @Component({

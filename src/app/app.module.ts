@@ -29,6 +29,8 @@ import { StatusComponent } from './module/funcionario/status/status.component';
 import { VisualizarComponent } from './module/ponto/visualizar/visualizar.component';
 import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.component';
 import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
+import { ToastrModule } from 'ngx-toastr';
+import { DialogVerificacaoComponent } from './shared/dialog-verificacao/dialog-verificacao.component';
 
 
 registerLocaleData(localePt);
@@ -53,7 +55,8 @@ registerLocaleData(localePt);
     StatusComponent,
     VisualizarComponent,
     FornecedorComponent,
-    RegistrarComponent
+    RegistrarComponent,
+    DialogVerificacaoComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ registerLocaleData(localePt);
     HttpClientModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

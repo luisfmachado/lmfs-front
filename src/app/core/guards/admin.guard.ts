@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
-import { AlertService } from '../../services/alert.service';
+import { AlertService } from '../alert.service';
 
 @Injectable({
   providedIn: 'root',

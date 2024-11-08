@@ -1,1 +1,84 @@
-<p>perfil works!</p>
+<mat-card class="animate-fade-slide-in">
+  <mat-card-content>
+    <!-- Caixa de Pesquisa -->
+    <mat-form-field appearance="fill" class="caixa-pesquisa">
+      <mat-label>Pesquisar</mat-label>
+      <input
+        type="text"
+        (keyup)="applyFilter($event)"
+        matInput
+        placeholder="Pesquisar"
+      />
+    </mat-form-field>
+
+    <!-- Adicionar registros -->
+    <div class="caixa-adicionar">
+      <p class="txt-adicionar">Funcionários</p>
+      <div class="botao-adicionar">
+        <button mat-raised-button color="primary" (click)="abrirDialogo()">
+          <mat-icon class="icon-add">add</mat-icon>
+          <span class="text-add">Adicionar</span>
+        </button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="funcionarios$ | async as funcionarios">
+      <table mat-table [dataSource]="funcionarios" matSort>
+        <!-- Coluna Id -->
+        <ng-container matColumnDef="cd_usuario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.cd_usuario }}</td>
+        </ng-container>
+
+        <!-- Coluna Nome -->
+        <ng-container matColumnDef="no_funcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let element">{{ element.no_funcion }}</td>
+        </ng-container>
+
+        <!-- Coluna Data de Contratação: -->
+        <ng-container matColumnDef="dt_emissao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data de entrada</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.dt_emissao | date : "dd/MM/yyyy" }}
+          </td>
+        </ng-container>
+
+        <!-- Coluna Contato -->
+        <ng-container matColumnDef="no_cargofu">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cargo:</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.no_cargofu }}
+          </td>
+        </ng-container>
+
+        <!-- Coluna Ações -->
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="delete(element.cd_usuario)">
+              <mat-icon class="btn-deletar">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Definindo as colunas a serem exibidas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </ng-container>
+
+    <!-- Paginator -->
+    <mat-paginator
+      [length]="(funcionarios$ | async)?.length || 0"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<!-- Spinner de carregamento -->
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

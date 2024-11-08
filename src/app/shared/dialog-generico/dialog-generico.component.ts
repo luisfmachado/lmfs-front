@@ -36,14 +36,20 @@ export class DialogGenericoComponent implements OnInit {
   id: number | null = null;
   titulo: string = '';
   descricao: string = '';
-  valor!: number;
-  valorCusto!: number;
+  descricao2: string = '';
+  descricao3: string = '';
+  valor: number = 0;
+  valor2: number = 0;
+  valorCusto: number = 0;
   cor: string = '';
   cliente: number | null = null;
   fornecedor: number | null = null;
   file!: File;
   date: Date | null = null;
+  date2: Date | null = null;
   cnpj: string | null = null;
+  rg: string | null = null;
+  cpf: string | null = null;
   celular!: string;
   tipoPagamentoId!: number;
   lg_custoad: string = this.data.custoAddValor || 'F';
@@ -103,14 +109,20 @@ export class DialogGenericoComponent implements OnInit {
     this.dialogRef.close({
       id: this.id,
       descricao: this.descricao,
+      descricao2: this.descricao2,
+      descricao3: this.descricao3,
       valor: this.valor,
+      valor2: this.valor2,
       valorCusto: this.valorCusto,
       cor: this.cor,
       cliente: this.cliente,
       fornecedor: this.fornecedor,
       file: this.file,
       date: this.date,
+      date2: this.date2,
       cnpj: this.cnpj,
+      rg: this.rg,
+      cpf: this.cpf,
       celular: this.celular,
       tipoPagamentoId: this.tipoPagamentoId,
       lg_custoad: this.lg_custoad,

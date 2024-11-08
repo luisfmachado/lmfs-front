@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Produtos } from 'src/app/model/produtos';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/core/alert.service';
 import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
 import { DialogEdicaoComponent } from 'src/app/shared/dialog-edicao/dialog-edicao.component';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';

@@ -127,10 +127,10 @@
       </mat-list-item>
 
       <div *ngIf="showSubmenu('funcionarios')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
+        <mat-list-item [routerLink]="'funcionario/perfil'">
           <div class="item-submenu">
             <mat-icon>badge</mat-icon>
-            <span>Perfil</span>
+            <span>Cadastro</span>
           </div>
         </mat-list-item>
       </div>
@@ -154,7 +154,7 @@
       </mat-list-item>
 
       <div *ngIf="showSubmenu('ponto')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
+        <mat-list-item [routerLink]="'/ponto/registrar'">
           <div class="item-submenu">
             <mat-icon>radio_button_checked</mat-icon>
             <span>Registrar</span>

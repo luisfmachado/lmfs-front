@@ -4,7 +4,7 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/core/alert.service';
 import { OrcamentoService } from 'src/app/services/cadastro/orcamento.service';
 import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
