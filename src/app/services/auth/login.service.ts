@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from 'src/environments/environment';
@@ -20,6 +20,9 @@ interface CustomJwtPayload {
 export class LoginService {
   protected readonly loginUrl = `${SystemConstants.api.fwt}/auth/login`;
 
+  private _isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLoggedIn());
+  public isLoggedIn$: Observable<boolean> = this._isLoggedInSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.checkAndClearLocalStorage();
   }
@@ -28,25 +31,24 @@ export class LoginService {
     return this.http.post<any>(this.loginUrl, { email, password }).pipe(
       map((response) => {
         localStorage.setItem('token', response.token);
-        const decodedToken: CustomJwtPayload = jwtDecode<CustomJwtPayload>(
-          response.token
-        );
+        const decodedToken: CustomJwtPayload = jwtDecode<CustomJwtPayload>(response.token);
         localStorage.setItem('name', response.name);
         localStorage.setItem('roles', JSON.stringify(decodedToken.roles));
+
+        this._isLoggedInSubject.next(true);
+
         setTimeout(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('roles');
-          localStorage.removeItem('name');
-        }, 5 * 60 * 60 * 1000); // 5 horas
+          this.clearLocalStorage();
+        }, 5 * 60 * 60 * 1000);
+
         return response;
       })
     );
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('roles');
-    localStorage.removeItem('name');
+    this.clearLocalStorage();
+    this._isLoggedInSubject.next(false);
   }
 
   public get userRoles(): string[] {
@@ -59,7 +61,7 @@ export class LoginService {
     return token !== null && token !== '';
   }
 
-  private readonly clearInterval = 3 * 60 * 60 * 1000; // 3 horas em milissegundos
+  private readonly clearInterval = 3 * 60 * 60 * 1000;
   private readonly lastClearKey = 'lastClearTime';
 
   private checkAndClearLocalStorage(): void {
@@ -78,7 +80,10 @@ export class LoginService {
   }
 
   private clearLocalStorage(): void {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('name');
     localStorage.setItem(this.lastClearKey, Date.now().toString());
+    localStorage.clear();
   }
 }

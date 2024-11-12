@@ -12,6 +12,7 @@ import { MateriaPrimaComponent } from './module/cadastro/materia-prima/materia-p
 import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.component';
 import { PerfilComponent } from './module/funcionario/perfil/perfil.component';
 import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
+import { VisualizarComponent } from './module/ponto/visualizar/visualizar.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -82,6 +83,13 @@ const routes: Routes = [
   {
     path: 'ponto/registrar',
     component: RegistrarComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'ponto/visualizar',
+    component: VisualizarComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
   },

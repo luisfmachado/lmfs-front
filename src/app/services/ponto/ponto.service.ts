@@ -15,15 +15,25 @@ export class PontoService {
     return this.api.get<any[]>(`${this.baseURL}/${dt_movimen}`);
   }
 
+  public getAllPontos(): Observable<any[]> {
+    const role = localStorage.getItem('roles');
+    if (role == '"ADMIN"') {
+      return this.api.get<any[]>(`${this.baseURL}/all`);
+    }
+    return this.api.get<any[]>(`${this.baseURL}/allu`);
+  }
+
   public save(
     dt_movimen: string,
     hr_entrada: string,
-    hr_partida: string
+    hr_partida: string,
+    ds_localiz: string
   ): Observable<any[]> {
     const body = {
       dt_movimen: dt_movimen,
       hr_entrada: hr_entrada,
-      hr_partida: hr_partida
+      hr_partida: hr_partida,
+      ds_localiz: ds_localiz,
     };
     return this.api.post<any[]>(`${this.baseURL}/save`, body);
   }

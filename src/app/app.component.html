@@ -19,14 +19,14 @@
     </div>
 
     <mat-nav-list>
-      <mat-list-item routerLink="/home">
+      <mat-list-item routerLink="/home" *ngIf="isAdmin">
         <div class="item-menu">
           <span>Página Principal</span>
           <mat-icon class="mat-18">home</mat-icon>
         </div>
       </mat-list-item>
       <!-- Cadastros -->
-      <mat-list-item (click)="toggleSubmenu('cadastros')" onkeyup="">
+      <mat-list-item (click)="toggleSubmenu('cadastros')" onkeyup="" *ngIf="isAdmin">
         <div class="item-menu">
           <span>Cadastros</span>
           <mat-icon [@rotateIcon]="showSubmenu('cadastros') ? 'open' : 'closed'"
@@ -90,7 +90,7 @@
         </mat-list-item>
       </div>
       
-      <mat-list-item (click)="toggleSubmenu('relatorios')" onkeyup="">
+      <mat-list-item (click)="toggleSubmenu('relatorios')" onkeyup="" *ngIf="isAdmin">
         <div class="item-menu">
           <span>Relatórios</span>
           <mat-icon [@rotateIcon]="showSubmenu('relatorios') ? 'open' : 'closed'"
@@ -117,7 +117,7 @@
         </mat-list-item>
       </div>
 
-      <mat-list-item (click)="toggleSubmenu('funcionarios')" onkeyup="">
+      <mat-list-item (click)="toggleSubmenu('funcionarios')" onkeyup="" *ngIf="isAdmin">
         <div class="item-menu">
           <span>Funcionários</span>
           <mat-icon [@rotateIcon]="showSubmenu('funcionarios') ? 'open' : 'closed'"
@@ -163,7 +163,7 @@
       </div>
 
       <div *ngIf="showSubmenu('ponto')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
+        <mat-list-item [routerLink]="'/ponto/visualizar'">
           <div class="item-submenu">
             <mat-icon>topics</mat-icon>
             <span>Visualizar</span>
@@ -171,7 +171,7 @@
         </mat-list-item>
       </div>
 
-      <mat-list-item (click)="toggleSubmenu('integracao')" onkeyup="">
+      <mat-list-item (click)="toggleSubmenu('integracao')" onkeyup="" *ngIf="isAdmin">
         <div class="item-menu">
           <span>Integrações</span>
           <mat-icon [@rotateIcon]="showSubmenu('integracao') ? 'open' : 'closed'"

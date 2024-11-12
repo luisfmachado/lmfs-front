@@ -1,13 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './services/auth/login.service';
 import { AlertService } from './core/alert.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss', './styles/animate-fade-slide-in.scss', './styles/spinner.scss'],
+  styleUrls: [
+    './app.component.scss',
+    './styles/animate-fade-slide-in.scss',
+    './styles/spinner.scss',
+  ],
   animations: [
     trigger('rotateMenuIcon', [
       state('closed', style({ transform: 'rotate(0deg)' })),
@@ -22,17 +32,15 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     trigger('submenuAnimation', [
       state('open', style({ height: '*', opacity: 1 })),
       state('closed', style({ height: '0', opacity: 0 })),
-      transition('closed <=> open', [
-        animate('300ms ease-in-out')
-      ]),
-    ])
+      transition('closed <=> open', [animate('300ms ease-in-out')]),
+    ]),
   ],
 })
 export class AppComponent implements OnInit {
   constructor(
     private router: Router,
-    private loginService: LoginService,
-    private alertService: AlertService
+    private cdr: ChangeDetectorRef,
+    private _authService: LoginService
   ) {}
 
   title = 'lmfs';
@@ -41,11 +49,16 @@ export class AppComponent implements OnInit {
 
   nome: string | null = '';
   role: string | null = '';
-  
+  isAdmin: boolean = false;
+
   isMenuOpen = true;
 
   ngOnInit(): void {
-    this.getNome();
+    this._authService.isLoggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.getNome();
+      }
+    });
   }
 
   getNome() {
@@ -53,9 +66,11 @@ export class AppComponent implements OnInit {
     const regra = localStorage.getItem('roles');
     if (regra === '"ADMIN"') {
       this.role = 'Administrador';
+      this.isAdmin = true;
     } else if (regra === '"USER"') {
       this.role = 'Usuário';
     }
+    console.log(this.isAdmin);
   }
 
   toggleMenu(sidenav: any) {
@@ -85,6 +100,9 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     localStorage.removeItem('name');
+    this.isAdmin = false;
+    this.role = null;
+    this.nome = null;
     this.spinnerCarregamento = false;
     this.router.navigate(['/login']);
   }

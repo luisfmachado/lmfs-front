@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { catchError, filter, interval, of, Subscription, switchMap, tap } from 'rxjs';
 import { AlertService } from 'src/app/core/alert.service';
-import { PontoVw, Registro } from 'src/app/model/ponto';
+import { PontoLista, Registro } from 'src/app/model/ponto';
 import { PontoService } from 'src/app/services/ponto/ponto.service';
 import { DialogVerificacaoComponent } from 'src/app/shared/dialog-verificacao/dialog-verificacao.component';
 
@@ -24,6 +24,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
   horaAtual!: string;
   private horarioSubscription!: Subscription;
+  localizacao!: { latitude: number; longitude: number } | null;
 
   constructor(
     private _pontoService: PontoService,
@@ -50,7 +51,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     const date = this._datePipe.transform(new Date(), 'yyyy-MM-dd');
     if (date) {
       this._pontoService.get(date).subscribe({
-        next: (data: PontoVw[]) => {
+        next: (data: PontoLista[]) => {
           this.dataSource.data = data
             .sort((a, b) => b.nm_sequenc - a.nm_sequenc)
             .map((item) => {
@@ -71,49 +72,58 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
   /*----------------------Bater ponto---------------------------*/
   public abrirDialogo(): void {
-    const dialogRef = this._dialog.open(DialogVerificacaoComponent, {
-      maxWidth: '450px',
-      data: {
-        title: 'Ponto',
-        msg: 'Deseja realmente bater o ponto?',
-      }
-    });
-  
-    const date = this._datePipe.transform(new Date(), 'yyyy-MM-dd');
-    const agora = new Date().toLocaleTimeString();
-  
-    if (date) {
-      dialogRef.afterClosed().pipe(
-        filter((result) => result === true),
-        tap(() => (this.spinnerCarregamento = true)),
-        switchMap(() => {
-          const ultimoRegistro = this.dataSource.data[0];
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.localizacao = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
 
-          if (ultimoRegistro == undefined || ultimoRegistro.tipo === 'Saída') {
-            const hr_entrada = agora;
-            const hr_partida = "";
-            return this._pontoService.save(date, hr_entrada, hr_partida);
-          } else {
-            const hr_entrada = "";
-            const hr_partida = agora;
-            return this._pontoService.save(date, hr_entrada, hr_partida);
-          }
-          
-        }),
-        tap(() => this._notificationService.show('Ponto batido com sucesso!')),
-        tap(() => {
-          this.spinnerCarregamento = false;
-          this.carregaDados();
-        }),
-        catchError((error) => {
-          console.error(error);
-          this.spinnerCarregamento = false;
-          this._notificationService.show('Erro ao bater ponto!');
-          return of([]);
-        })
-      ).subscribe();
-    }
-  }  
+        const latitude = this.localizacao.latitude;
+        const longitude = this.localizacao.longitude;
+        const local = latitude + " / " + longitude;
+
+        const dialogRef = this._dialog.open(DialogVerificacaoComponent, {
+          maxWidth: '450px',
+          data: {
+            title: 'Ponto',
+            msg: 'Deseja realmente bater o ponto?',
+          },
+        });
+
+        const date = this._datePipe.transform(new Date(), 'yyyy-MM-dd');
+        const agora = new Date().toLocaleTimeString();
+
+        if (date) {
+          dialogRef.afterClosed().pipe(
+            filter((result) => result === true),
+            tap(() => (this.spinnerCarregamento = true)),
+            switchMap(() => {
+              const ultimoRegistro = this.dataSource.data[0];
+              const hr_entrada = ultimoRegistro == undefined || ultimoRegistro.tipo === 'Saída' ? agora : "";
+              const hr_partida = hr_entrada === "" ? agora : "";
+              return this._pontoService.save(date, hr_entrada, hr_partida, local);
+            }),
+            tap(() => this._notificationService.show('Ponto batido com sucesso!')),
+            tap(() => {
+              this.spinnerCarregamento = false;
+              this.carregaDados();
+            }),
+            catchError((error) => {
+              console.error(error);
+              this.spinnerCarregamento = false;
+              this._notificationService.show('Erro ao bater ponto!');
+              return of([]);
+            })
+          ).subscribe();
+        }
+      },
+      (error) => {
+        console.error('Erro ao obter localização:', error);
+        this._notificationService.show('Erro ao obter localização.');
+      }
+    );
+  }
 
   /*----------------------Mostra hora em tempo real------------------------*/
   atualizarHorario(): void {

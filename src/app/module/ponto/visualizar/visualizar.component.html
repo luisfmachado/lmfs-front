@@ -1,1 +1,129 @@
-<p>visualizar works!</p>
+<mat-card class="animate-fade-slide-in">
+  <mat-card-content>
+    <!-- Caixa de Pesquisa -->
+    <mat-form-field appearance="fill" class="caixa-pesquisa">
+      <mat-label>Pesquisar</mat-label>
+      <input
+        type="text"
+        (keyup)="applyFilter($event)"
+        matInput
+        placeholder="Pesquisar"
+      />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Coluna Data -->
+      <ng-container matColumnDef="dt_movimen">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dt_movimen | date : "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+
+      <!-- Coluna Nome -->
+      <ng-container matColumnDef="nm_usuario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.nm_usuario }}</td>
+      </ng-container>
+
+      <!-- Hora entrada -->
+      <ng-container matColumnDef="hr_entrada1">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Entrada</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_entrada1 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora saída -->
+      <ng-container matColumnDef="hr_partida1">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Saída</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_partida1 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora entrada -->
+      <ng-container matColumnDef="hr_entrada2">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Entrada</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_entrada2 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora saída -->
+      <ng-container matColumnDef="hr_partida2">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Saída</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_partida2 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora entrada -->
+      <ng-container matColumnDef="hr_entrada3">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Entrada</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_entrada3 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora saída -->
+      <ng-container matColumnDef="hr_partida3">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Saída</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_partida3 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora entrada -->
+      <ng-container matColumnDef="hr_entrada4">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Entrada</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_entrada4 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora saída -->
+      <ng-container matColumnDef="hr_partida4">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Saída</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_partida4 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora entrada -->
+      <ng-container matColumnDef="hr_entrada5">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Entrada</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_entrada5 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Hora saída -->
+      <ng-container matColumnDef="hr_partida5">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Saída</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.hr_partida5 | slice : 0 : 8 }}
+        </td>
+      </ng-container>
+
+      <!-- Definindo as colunas a serem exibidas -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <!-- Paginator -->
+    <mat-paginator
+      [length]="dataSource.data.length"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </mat-card-content>
+
+</mat-card>
+
+<!-- Spinner de carregamento -->
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
