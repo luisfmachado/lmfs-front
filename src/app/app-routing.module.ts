@@ -13,6 +13,7 @@ import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.com
 import { PerfilComponent } from './module/funcionario/perfil/perfil.component';
 import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
 import { VisualizarComponent } from './module/ponto/visualizar/visualizar.component';
+import { ManualComponent } from './module/relatorio/manual/manual.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -28,56 +29,56 @@ const routes: Routes = [
     path: 'cadastro/orcamento',
     component: OrcamentoComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'cadastro/produtos',
     component: ProdutosComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'cadastro/orcamento-manual',
     component: OrcamentoManualComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'cadastro/estoque',
     component: EstoqueComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'cadastro/cliente',
     component: ClienteComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'cadastro/materia-prima',
     component: MateriaPrimaComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'cadastro/fornecedor',
     component: FornecedorComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
     path: 'funcionario/perfil',
     component: PerfilComponent,
     canActivate: [AdminGuard],
-    data: { roles: ['USER', 'ADMIN'] },
+    data: { roles: ['ADMIN'] },
   },
 
   {
@@ -92,6 +93,13 @@ const routes: Routes = [
     component: VisualizarComponent,
     canActivate: [AdminGuard],
     data: { roles: ['USER', 'ADMIN'] },
+  },
+
+  {
+    path: 'relatorio/geram',
+    component: ManualComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['ADMIN'] },
   },
 
   { path: 'login', component: LoginComponent },

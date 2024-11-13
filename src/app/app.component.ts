@@ -70,7 +70,6 @@ export class AppComponent implements OnInit {
     } else if (regra === '"USER"') {
       this.role = 'Usuário';
     }
-    console.log(this.isAdmin);
   }
 
   toggleMenu(sidenav: any) {
