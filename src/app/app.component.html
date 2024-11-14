@@ -1,204 +1,225 @@
 <mat-sidenav-container *ngIf="!isLoginRoute()">
   <mat-sidenav mode="side" #sidenav [opened]="false">
-    <div class="usuario">
-      <img
-        class="foto_usuario"
-        src="../assets/mat-card-avatar.svg"
-        alt="Foto do Usuário"
-      />
-      <div class="info-usuario" [routerLink]="'/meuPerfil'">
-        <p class="txt_nome_usuario">{{ nome }}</p>
-        <p class="txt_nivel_usuario">{{ role }}</p>
-      </div>
-      <button mat-icon-button (click)="logout()">
-        <mat-icon>logout</mat-icon>
-      </button>
-      <!-- <button mat-icon-button>
+    <div class="sidenav-content">
+      <div class="usuario">
+        <img
+          class="foto_usuario"
+          src="../assets/mat-card-avatar.svg"
+          alt="Foto do Usuário"
+        />
+        <div class="info-usuario" [routerLink]="'/meuPerfil'">
+          <p class="txt_nome_usuario">{{ nome }}</p>
+          <p class="txt_nivel_usuario">{{ role }}</p>
+        </div>
+        <button mat-icon-button (click)="logout()">
+          <mat-icon>logout</mat-icon>
+        </button>
+        <!-- <button mat-icon-button>
         <mat-icon>settings</mat-icon>
       </button> -->
+      </div>
+
+      <mat-nav-list>
+        <mat-list-item routerLink="/home" *ngIf="isAdmin">
+          <div class="item-menu">
+            <span>Página Principal</span>
+            <mat-icon class="mat-18">home</mat-icon>
+          </div>
+        </mat-list-item>
+        <!-- Cadastros -->
+        <mat-list-item
+          (click)="toggleSubmenu('cadastros')"
+          onkeyup=""
+          *ngIf="isAdmin"
+        >
+          <div class="item-menu">
+            <span>Cadastros</span>
+            <mat-icon
+              [@rotateIcon]="showSubmenu('cadastros') ? 'open' : 'closed'"
+              >expand_more</mat-icon
+            >
+          </div>
+        </mat-list-item>
+
+        <!-- escolas -->
+        <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/cliente'">
+            <div class="item-submenu">
+              <mat-icon>group</mat-icon>
+              <span>Clientes</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/fornecedor'">
+            <div class="item-submenu">
+              <mat-icon>engineering</mat-icon>
+              <span>Fornecedores</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/produtos'">
+            <div class="item-submenu">
+              <mat-icon>shopping_cart</mat-icon>
+              <span>Produtos</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/orcamento'">
+            <div class="item-submenu">
+              <mat-icon>payments</mat-icon>
+              <span>Vendas</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/estoque'">
+            <div class="item-submenu">
+              <mat-icon>production_quantity_limits</mat-icon>
+              <span>Entr. Estoque</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/materia-prima'">
+            <div class="item-submenu">
+              <mat-icon>inventory</mat-icon>
+              <span>Matéria-prima</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <mat-list-item
+          (click)="toggleSubmenu('relatorios')"
+          onkeyup=""
+          *ngIf="isAdmin"
+        >
+          <div class="item-menu">
+            <span>Relatórios</span>
+            <mat-icon
+              [@rotateIcon]="showSubmenu('relatorios') ? 'open' : 'closed'"
+              >expand_more</mat-icon
+            >
+          </div>
+        </mat-list-item>
+
+        <div *ngIf="showSubmenu('relatorios')">
+          <mat-list-item [routerLink]="'/relatorio/geram'">
+            <div class="item-submenu">
+              <mat-icon>summarize</mat-icon>
+              <span>Ger. Manual</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('relatorios')">
+          <mat-list-item [routerLink]="'/cadastro/orcamento'">
+            <div class="item-submenu">
+              <mat-icon>summarize</mat-icon>
+              <span>Ger. Automática</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <mat-list-item
+          (click)="toggleSubmenu('funcionarios')"
+          onkeyup=""
+          *ngIf="isAdmin"
+        >
+          <div class="item-menu">
+            <span>Funcionários</span>
+            <mat-icon
+              [@rotateIcon]="showSubmenu('funcionarios') ? 'open' : 'closed'"
+              >expand_more</mat-icon
+            >
+          </div>
+        </mat-list-item>
+
+        <div *ngIf="showSubmenu('funcionarios')">
+          <mat-list-item [routerLink]="'funcionario/perfil'">
+            <div class="item-submenu">
+              <mat-icon>badge</mat-icon>
+              <span>Cadastro</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('funcionarios')">
+          <mat-list-item [routerLink]="'/cadastro/orcamento'">
+            <div class="item-submenu">
+              <mat-icon>description</mat-icon>
+              <span>Status</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <mat-list-item (click)="toggleSubmenu('ponto')" onkeyup="">
+          <div class="item-menu">
+            <span>Ponto Online</span>
+            <mat-icon [@rotateIcon]="showSubmenu('ponto') ? 'open' : 'closed'"
+              >expand_more</mat-icon
+            >
+          </div>
+        </mat-list-item>
+
+        <div *ngIf="showSubmenu('ponto')">
+          <mat-list-item [routerLink]="'/ponto/registrar'">
+            <div class="item-submenu">
+              <mat-icon>radio_button_checked</mat-icon>
+              <span>Registrar</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('ponto')">
+          <mat-list-item [routerLink]="'/ponto/visualizar'">
+            <div class="item-submenu">
+              <mat-icon>topics</mat-icon>
+              <span>Visualizar</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <mat-list-item
+          (click)="toggleSubmenu('integracao')"
+          onkeyup=""
+          *ngIf="isAdmin"
+        >
+          <div class="item-menu">
+            <span>Integrações</span>
+            <mat-icon
+              [@rotateIcon]="showSubmenu('integracao') ? 'open' : 'closed'"
+              >expand_more</mat-icon
+            >
+          </div>
+        </mat-list-item>
+
+        <div *ngIf="showSubmenu('integracao')">
+          <mat-list-item [routerLink]="'/cadastro/orcamento'">
+            <div class="item-submenu">
+              <mat-icon>radio_button_checked</mat-icon>
+              <span>Mercado Livre</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <div *ngIf="showSubmenu('integracao')">
+          <mat-list-item [routerLink]="'/cadastro/orcamento'">
+            <div class="item-submenu">
+              <mat-icon>radio_button_checked</mat-icon>
+              <span>Shopee</span>
+            </div>
+          </mat-list-item>
+        </div>
+      </mat-nav-list>
     </div>
-
-    <mat-nav-list>
-      <mat-list-item routerLink="/home" *ngIf="isAdmin">
-        <div class="item-menu">
-          <span>Página Principal</span>
-          <mat-icon class="mat-18">home</mat-icon>
-        </div>
-      </mat-list-item>
-      <!-- Cadastros -->
-      <mat-list-item (click)="toggleSubmenu('cadastros')" onkeyup="" *ngIf="isAdmin">
-        <div class="item-menu">
-          <span>Cadastros</span>
-          <mat-icon [@rotateIcon]="showSubmenu('cadastros') ? 'open' : 'closed'"
-            >expand_more</mat-icon
-          >
-        </div>
-      </mat-list-item>
-
-      <!-- escolas -->
-      <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/cliente'">
-          <div class="item-submenu">
-            <mat-icon>group</mat-icon>
-            <span>Clientes</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/fornecedor'">
-          <div class="item-submenu">
-            <mat-icon>engineering</mat-icon>
-            <span>Fornecedores</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/produtos'">
-          <div class="item-submenu">
-            <mat-icon>shopping_cart</mat-icon>
-            <span>Produtos</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
-          <div class="item-submenu">
-            <mat-icon>payments</mat-icon>
-            <span>Vendas</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/estoque'">
-          <div class="item-submenu">
-            <mat-icon>production_quantity_limits</mat-icon>
-            <span>Entr. Estoque</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('cadastros')">
-        <mat-list-item [routerLink]="'/cadastro/materia-prima'">
-          <div class="item-submenu">
-            <mat-icon>inventory</mat-icon>
-            <span>Matéria-prima</span>
-          </div>
-        </mat-list-item>
-      </div>
-      
-      <mat-list-item (click)="toggleSubmenu('relatorios')" onkeyup="" *ngIf="isAdmin">
-        <div class="item-menu">
-          <span>Relatórios</span>
-          <mat-icon [@rotateIcon]="showSubmenu('relatorios') ? 'open' : 'closed'"
-            >expand_more</mat-icon
-          >
-        </div>
-      </mat-list-item>
-
-      <div *ngIf="showSubmenu('relatorios')">
-        <mat-list-item [routerLink]="'/relatorio/geram'">
-          <div class="item-submenu">
-            <mat-icon>summarize</mat-icon>
-            <span>Ger. Manual</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('relatorios')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
-          <div class="item-submenu">
-            <mat-icon>summarize</mat-icon>
-            <span>Ger. Automática</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <mat-list-item (click)="toggleSubmenu('funcionarios')" onkeyup="" *ngIf="isAdmin">
-        <div class="item-menu">
-          <span>Funcionários</span>
-          <mat-icon [@rotateIcon]="showSubmenu('funcionarios') ? 'open' : 'closed'"
-            >expand_more</mat-icon
-          >
-        </div>
-      </mat-list-item>
-
-      <div *ngIf="showSubmenu('funcionarios')">
-        <mat-list-item [routerLink]="'funcionario/perfil'">
-          <div class="item-submenu">
-            <mat-icon>badge</mat-icon>
-            <span>Cadastro</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('funcionarios')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
-          <div class="item-submenu">
-            <mat-icon>description</mat-icon>
-            <span>Status</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <mat-list-item (click)="toggleSubmenu('ponto')" onkeyup="">
-        <div class="item-menu">
-          <span>Ponto Online</span>
-          <mat-icon [@rotateIcon]="showSubmenu('ponto') ? 'open' : 'closed'"
-            >expand_more</mat-icon
-          >
-        </div>
-      </mat-list-item>
-
-      <div *ngIf="showSubmenu('ponto')">
-        <mat-list-item [routerLink]="'/ponto/registrar'">
-          <div class="item-submenu">
-            <mat-icon>radio_button_checked</mat-icon>
-            <span>Registrar</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('ponto')">
-        <mat-list-item [routerLink]="'/ponto/visualizar'">
-          <div class="item-submenu">
-            <mat-icon>topics</mat-icon>
-            <span>Visualizar</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <mat-list-item (click)="toggleSubmenu('integracao')" onkeyup="" *ngIf="isAdmin">
-        <div class="item-menu">
-          <span>Integrações</span>
-          <mat-icon [@rotateIcon]="showSubmenu('integracao') ? 'open' : 'closed'"
-            >expand_more</mat-icon
-          >
-        </div>
-      </mat-list-item>
-
-      <div *ngIf="showSubmenu('integracao')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
-          <div class="item-submenu">
-            <mat-icon>radio_button_checked</mat-icon>
-            <span>Mercado Livre</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-      <div *ngIf="showSubmenu('integracao')">
-        <mat-list-item [routerLink]="'/cadastro/orcamento'">
-          <div class="item-submenu">
-            <mat-icon>radio_button_checked</mat-icon>
-            <span>Shopee</span>
-          </div>
-        </mat-list-item>
-      </div>
-
-    </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content class="bg-color-default">

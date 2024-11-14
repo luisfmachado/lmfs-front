@@ -4,8 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Relatorio } from 'src/app/model/relatorio';
 import { RelatorioService } from 'src/app/services/relatorio/relatorio.service';
-import { saveAs } from 'file-saver';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-manual',
@@ -18,8 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ManualComponent implements OnInit {
   constructor(
-    private _relatorioService: RelatorioService,
-    private http: HttpClient
+    private readonly _relatorioService: RelatorioService
   ) {}
 
   public ngOnInit(): void {
@@ -60,6 +57,7 @@ export class ManualComponent implements OnInit {
 
   /*----------------------Download Arquivo---------------------------*/
   gerarRelatorio(cd_relator: number) {
+    this.spinnerCarregamento = true;
     this._relatorioService.gerarRelatorio(cd_relator).subscribe(
       (response: Blob) => {
         const blob = new Blob([response], { type: 'application/pdf' });
@@ -67,9 +65,11 @@ export class ManualComponent implements OnInit {
         link.href = URL.createObjectURL(blob);
         link.download = 'relatorio.pdf';
         link.click();
+        this.spinnerCarregamento = false;
       },
       (error) => {
         console.error('Erro ao gerar o relatório', error);
+        this.spinnerCarregamento = false;
       }
     );
   }
