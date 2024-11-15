@@ -32,6 +32,7 @@ export class FuncionarioService {
     valor: number,
     valorCusto: number,
     valor2: number,
+    descricao4: string,
   ): Observable<Funcionario> {
     const body = {
       no_funcion: descricao,
@@ -44,7 +45,8 @@ export class FuncionarioService {
       no_cargofu: descricao3,
       vl_salario: valor,
       vl_refeica: valorCusto,
-      vl_transpo: valor2
+      vl_transpo: valor2,
+      ds_emailfu: descricao4
     };
     return this.api.post(`${this.baseURL}/save`, body);
   }

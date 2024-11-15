@@ -14,6 +14,7 @@ import {
 } from 'rxjs';
 import { AlertService } from 'src/app/core/alert.service';
 import { FuncionarioVw } from 'src/app/model/funcionario';
+import { RegisterService } from 'src/app/services/auth/register.service';
 import { FuncionarioService } from 'src/app/services/cadastro/funcionario.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 import { DialogVerificacaoComponent } from 'src/app/shared/dialog/dialog-verificacao/dialog-verificacao.component';
@@ -30,6 +31,7 @@ import { DialogVerificacaoComponent } from 'src/app/shared/dialog/dialog-verific
 export class PerfilComponent implements OnInit {
   constructor(
     private _funcionarioService: FuncionarioService,
+    private _registerService: RegisterService,
     public _dialog: MatDialog,
     private _notificationService: AlertService
   ) {}
@@ -48,6 +50,7 @@ export class PerfilComponent implements OnInit {
     'no_funcion',
     'dt_emissao',
     'no_cargofu',
+    'ds_emailfu',
     'acoes',
   ];
 
@@ -96,71 +99,123 @@ export class PerfilComponent implements OnInit {
         valor: 'Salário base',
         valor2: 'VT',
         valorCusto: 'VR',
+        descricao4: 'Email',
         cancelar: 'Cancelar',
         confirmar: 'Cadastrar',
       },
     });
-  
-    dialogRef.afterClosed().pipe(
-      filter((result) => !!result),
-      tap(() => (this.spinnerCarregamento = true)),
-      switchMap((result) =>
-        this._funcionarioService.save(
-          result.descricao,
-          result.rg,
-          result.cpf,
-          result.date,
-          result.celular,
-          result.descricao2,
-          result.date2,
-          result.descricao3,
-          result.valor,
-          result.valorCusto,
-          result.valor2
-        ).pipe(
-          tap(() => this._notificationService.show('Cadastrado com sucesso!')),
-          switchMap(() => this._funcionarioService.get()),
-          tap((funcionarios) => {
-            this.funcionarios$ = of(funcionarios);
-            this.spinnerCarregamento = false;
-          })
-        )
-      ),
-      catchError((error) => {
-        console.error(error);
-        this.spinnerCarregamento = false;
-        this._notificationService.show('Erro ao cadastrar!');
-        return of([]);
-      })
-    ).subscribe();
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((result) => !!result),
+        tap(() => (this.spinnerCarregamento = true)),
+        switchMap((result) =>
+          this._funcionarioService
+            .save(
+              result.descricao,
+              result.rg,
+              result.cpf,
+              result.date,
+              result.celular,
+              result.descricao2,
+              result.date2,
+              result.descricao3,
+              result.valor,
+              result.valorCusto,
+              result.valor2,
+              result.descricao4
+            )
+            .pipe(
+              switchMap(() =>
+                this._registerService
+                  .save(
+                    result.descricao4,
+                    '12345678',
+                    'USER',
+                    result.descricao,
+                    result.rg
+                  )
+                  .pipe(
+                    catchError((error) => {
+                      console.error(
+                        'Erro ao cadastrar no RegisterService:',
+                        error
+                      );
+                      this.spinnerCarregamento = false;
+                      this._notificationService.show(
+                        'Erro ao cadastrar no registro!'
+                      );
+                      return of([]);
+                    })
+                  )
+              ),
+              tap(() =>
+                this._notificationService.show('Cadastrado com sucesso!')
+              ),
+              switchMap(() => this._funcionarioService.get()),
+              tap((funcionarios) => {
+                this.funcionarios$ = of(funcionarios);
+                this.spinnerCarregamento = false;
+              })
+            )
+        ),
+        catchError((error) => {
+          console.error('Erro ao cadastrar o funcionário:', error);
+          this.spinnerCarregamento = false;
+          this._notificationService.show('Erro ao cadastrar funcionário!');
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   /*----------------------Excluir da tabela---------------------------*/
-  public delete(cd_usuario: number): void {
+  public delete(cd_usuario: number, ds_emailfu: string): void {
     const dialogRef = this._dialog.open(DialogVerificacaoComponent, {
       maxWidth: '450px',
       data: {
         title: 'Excluir funcionário',
         msg: 'Deseja realmente excluir esta funcionário?',
-      }
+      },
     });
-  
-    dialogRef.afterClosed().pipe(
-      filter((result) => result === true),
-      tap(() => (this.spinnerCarregamento = true)),
-      switchMap(() => this._funcionarioService.delete(cd_usuario)),
-      tap(() => this._notificationService.show('Funcionário excluído com sucesso!')), 
-      switchMap(() => this._funcionarioService.get()),
-      tap((funcionarios) => {
-        this.funcionarios$ = of(funcionarios);
-        this.spinnerCarregamento = false;
-      }),
-      catchError((error) => {
-        console.error(error);
-        this.spinnerCarregamento = false;
-        this._notificationService.show('Erro ao excluir!');
-        return of([]);
-      })
-    ).subscribe();
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        filter((result) => result === true),
+        tap(() => (this.spinnerCarregamento = true)),
+        switchMap(() =>
+          this._funcionarioService.delete(cd_usuario).pipe(
+            switchMap(() =>
+              this._registerService.delete(ds_emailfu).pipe(
+                catchError((error) => {
+                  console.error('Erro ao excluir', error);
+                  this.spinnerCarregamento = false;
+                  this._notificationService.show(
+                    'Erro ao excluir!'
+                  );
+                  return of([]);
+                })
+              )
+            )
+          )
+        ),
+        tap(() =>
+          this._notificationService.show('Funcionário excluído com sucesso!')
+        ),
+        switchMap(() => this._funcionarioService.get()),
+        tap((funcionarios) => {
+          this.funcionarios$ = of(funcionarios);
+          this.spinnerCarregamento = false;
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.spinnerCarregamento = false;
+          this._notificationService.show('Erro ao excluir!');
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 }

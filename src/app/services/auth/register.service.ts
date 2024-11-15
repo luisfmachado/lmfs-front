@@ -1,26 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
-import { Usuarios } from '../model/users';
-import { Resposta } from '../model/resposta';
+import { SystemConstants } from 'src/app/config/system.constants';
+import { Resposta } from 'src/app/model/resposta';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RegisterService {
-  private baseURL = environment.URL_API_FWT + '/auth';
+  protected readonly baseURL = `${SystemConstants.api.fwt}/auth`;
 
   constructor(private http: HttpClient) {}
-
-  /*----------------------Buscar---------------------------*/
-  public get(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>(`${this.baseURL}/users`);
-  }
-
-  public getAdmin(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>(`${this.baseURL}/admins`);
-  }
 
   /*----------------------Salvar---------------------------*/
   public save(
@@ -28,19 +18,22 @@ export class RegisterService {
     senha: string,
     role: string,
     nome: string,
-    rg: string,
-    headers: HttpHeaders
+    rg: string
   ): Observable<Resposta> {
+    console.log('descricao - ', descricao);
+    console.log('senha - ',senha);
+    console.log('role - ',role);
+    console.log('nome - ',nome);
+    console.log('rg - ',rg);
     return this.http.post<Resposta>(
       `${this.baseURL}/register`,
       {
-        name: nome,
         email: descricao,
         password: senha,
         role: role,
+        name: nome,
         rg: rg,
-      },
-      { headers: headers }
+      }
     );
   }
 
@@ -50,14 +43,14 @@ export class RegisterService {
   }
 
   /*----------------------Alterar senha---------------------------*/
-  public update(senhaAntiga: string, senhaNova: string, token: string): Observable<Resposta> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    const body = {
-      oldPassword: senhaAntiga,
-      newPassword: senhaNova
-    };
-    return this.http.post<Resposta>(`${this.baseURL}/updatepass`, body, { headers: headers });
-  }
+  // public update(senhaAntiga: string, senhaNova: string, token: string): Observable<Resposta> {
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${token}`
+  //   });
+  //   const body = {
+  //     oldPassword: senhaAntiga,
+  //     newPassword: senhaNova
+  //   };
+  //   return this.http.post<Resposta>(`${this.baseURL}/updatepass`, body, { headers: headers });
+  // }
 }

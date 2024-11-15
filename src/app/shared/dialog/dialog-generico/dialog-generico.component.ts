@@ -38,6 +38,7 @@ export class DialogGenericoComponent implements OnInit {
   descricao: string = '';
   descricao2: string = '';
   descricao3: string = '';
+  descricao4: string = '';
   valor: number = 0;
   valor2: number = 0;
   valorCusto: number = 0;
@@ -111,6 +112,7 @@ export class DialogGenericoComponent implements OnInit {
       descricao: this.descricao,
       descricao2: this.descricao2,
       descricao3: this.descricao3,
+      descricao4: this.descricao4,
       valor: this.valor,
       valor2: this.valor2,
       valorCusto: this.valorCusto,

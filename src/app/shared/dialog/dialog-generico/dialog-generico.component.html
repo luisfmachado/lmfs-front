@@ -176,6 +176,11 @@
       <input matInput [(ngModel)]="descricao3" required />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.descricao4" class="descricao">
+      <mat-label>{{ data.descricao4 }}</mat-label>
+      <input matInput [(ngModel)]="descricao4" required />
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.date2" class="data">
       <mat-label>{{ data.date2 }}</mat-label>
       <input
@@ -264,6 +269,7 @@
         descricao: descricao,
         descricao2: descricao2,
         descricao3: descricao3,
+        descricao4: descricao4,
         valor: valor,
         valor2: valor2,
         valorCusto: valorCusto,
