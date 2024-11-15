@@ -17,8 +17,8 @@ export class RelatorioService {
     return this.api.get<any[]>(`${this.baseURL}`);
   }
 
-  public gerarRelatorio(cd_relator: number, startDate: string, endDate: string): Observable<Blob> {
+  public gerarRelatorio(cd_relator: number, startDate: string, endDate: string, nm_usuario: string): Observable<Blob> {
     const options = { responseType: 'blob' as 'json' };
-    return this.http.get<Blob>(`${this.baseURL}/export/${cd_relator}/${startDate}/${endDate}`, options);
+    return this.http.get<Blob>(`${this.baseURL}/export/${cd_relator}/${startDate}/${endDate}/${nm_usuario}`, options);
   }  
 }

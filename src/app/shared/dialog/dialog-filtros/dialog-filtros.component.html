@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>
   <form [formGroup]="range">
-    <mat-form-field *ngIf="data.date">
+    <mat-form-field *ngIf="data.date" class="data">
       <mat-label>Período:</mat-label>
       <mat-date-range-input [rangePicker]="picker">
         <input matStartDate formControlName="start" placeholder="Start date" />
@@ -14,11 +14,21 @@
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
   </form>
+
+  <mat-form-field *ngIf="data.funcionario" class="cliente">
+    <mat-label>{{ data.funcionario }}</mat-label>
+    <mat-select [(ngModel)]="funcionario">
+      <mat-option *ngFor="let nome of listaFuncionario" [value]="nome.value">
+        {{ nome.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
   <button
-    class="btn-confirmar"
+    class="btn-gerar"
     mat-button
     [mat-dialog-close]="true"
     (click)="dadosInput()"

@@ -66,6 +66,7 @@ export class ManualComponent implements OnInit {
       data: {
         title: 'Filtros',
         date: 'Data',
+        funcionario: 'Funcionário',
         cancelar: 'Cancelar',
         confirmar: 'Gerar',
       },
@@ -77,6 +78,7 @@ export class ManualComponent implements OnInit {
 
         let startDate = result.range.start;
         let endDate = result.range.end;
+        let nm_usuario = result.funcionario;
 
         if (result.range.start != null) {
           startDate = formatInTimeZone(
@@ -90,9 +92,15 @@ export class ManualComponent implements OnInit {
             'ddMMyyyy'
           );
         }
+        
+        if (nm_usuario == '') {
+          nm_usuario = null;
+        }
+
+        console.log(nm_usuario);
 
         this._relatorioService
-          .gerarRelatorio(cd_relator, startDate, endDate)
+          .gerarRelatorio(cd_relator, startDate, endDate, nm_usuario)
           .subscribe(
             (response: Blob) => {
               const blob = new Blob([response], { type: 'application/pdf' });

@@ -16,6 +16,10 @@ export class FuncionarioService {
     return this.api.get<any[]>(`${this.baseURL}`);
   }
 
+  public getName(): Observable<any[]> {
+    return this.api.get<any[]>(`${this.baseURL}/name`);
+  }
+
   public save(
     descricao: string,
     rg: string,
