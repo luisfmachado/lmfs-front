@@ -14,6 +14,7 @@ import { PerfilComponent } from './module/funcionario/perfil/perfil.component';
 import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
 import { VisualizarComponent } from './module/ponto/visualizar/visualizar.component';
 import { ManualComponent } from './module/relatorio/manual/manual.component';
+import { ShopeeComponent } from './module/integracao/shopee/shopee.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -101,6 +102,14 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     data: { roles: ['ADMIN'] },
   },
+
+  {
+    path: 'integracao/shopee',
+    component: ShopeeComponent,
+    canActivate: [AdminGuard],
+    data: { roles: ['ADMIN'] },
+  },
+
 
   { path: 'login', component: LoginComponent },
 ];

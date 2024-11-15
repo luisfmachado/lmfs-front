@@ -32,6 +32,8 @@ import { RegistrarComponent } from './module/ponto/registrar/registrar.component
 import { ToastrModule } from 'ngx-toastr';
 import { DialogVerificacaoComponent } from './shared/dialog/dialog-verificacao/dialog-verificacao.component';
 import { DialogFiltrosComponent } from './shared/dialog/dialog-filtros/dialog-filtros.component';
+import { ShopeeComponent } from './module/integracao/shopee/shopee.component';
+import { MercadoLivreComponent } from './module/integracao/mercado-livre/mercado-livre.component';
 
 
 registerLocaleData(localePt);
@@ -58,7 +60,9 @@ registerLocaleData(localePt);
     FornecedorComponent,
     RegistrarComponent,
     DialogVerificacaoComponent,
-    DialogFiltrosComponent
+    DialogFiltrosComponent,
+    ShopeeComponent,
+    MercadoLivreComponent
   ],
   imports: [
     BrowserModule,
