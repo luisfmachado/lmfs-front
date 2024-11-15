@@ -6,8 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Produtos } from 'src/app/model/produtos';
 import { AlertService } from 'src/app/core/alert.service';
 import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
-import { DialogEdicaoComponent } from 'src/app/shared/dialog-edicao/dialog-edicao.component';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogEdicaoComponent } from 'src/app/shared/dialog/dialog-edicao/dialog-edicao.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 
 @Component({
   selector: 'app-produtos',

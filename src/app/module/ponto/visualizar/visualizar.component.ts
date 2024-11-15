@@ -1,8 +1,10 @@
+import { formatInTimeZone } from 'date-fns-tz';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { format } from 'date-fns';
 import { AlertService } from 'src/app/core/alert.service';
 import { PontoVw } from 'src/app/model/ponto';
 import { PontoService } from 'src/app/services/ponto/ponto.service';
@@ -40,7 +42,8 @@ export class VisualizarComponent implements OnInit {
 
   /*----------------------Pegar os dados da tabela---------------------------*/
   private carregaDados() {
-    this._pontoService.getAllPontos().subscribe({
+    const date = formatInTimeZone(new Date(), 'America/Sao_Paulo', 'yyyy-MM-dd');
+    this._pontoService.getAllPontosDay(date).subscribe({
       next: (data: PontoVw[]) => {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;

@@ -8,7 +8,7 @@ import { Fornecedor } from 'src/app/model/fornecedor';
 import { AlertService } from 'src/app/core/alert.service';
 import { ClientesService } from 'src/app/services/cadastro/clientes.service';
 import { FornecedorService } from 'src/app/services/cadastro/fornecedor.service';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 @Component({
   selector: 'app-fornecedor',
   templateUrl: './fornecedor.component.html',

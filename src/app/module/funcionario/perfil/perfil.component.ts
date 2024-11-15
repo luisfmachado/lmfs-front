@@ -15,8 +15,8 @@ import {
 import { AlertService } from 'src/app/core/alert.service';
 import { FuncionarioVw } from 'src/app/model/funcionario';
 import { FuncionarioService } from 'src/app/services/cadastro/funcionario.service';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
-import { DialogVerificacaoComponent } from 'src/app/shared/dialog-verificacao/dialog-verificacao.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
+import { DialogVerificacaoComponent } from 'src/app/shared/dialog/dialog-verificacao/dialog-verificacao.component';
 
 @Component({
   selector: 'app-perfil',

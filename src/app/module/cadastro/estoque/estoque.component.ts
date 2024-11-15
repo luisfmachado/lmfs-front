@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EstoqueVw } from 'src/app/model/estoque';
 import { AlertService } from 'src/app/core/alert.service';
 import { EstoqueService } from 'src/app/services/cadastro/estoque.service';
-import { DialogMultipleComponent } from 'src/app/shared/dialog-multiple/dialog-multiple.component';
+import { DialogMultipleComponent } from 'src/app/shared/dialog/dialog-multiple/dialog-multiple.component';
 
 @Component({
   selector: 'app-estoque',

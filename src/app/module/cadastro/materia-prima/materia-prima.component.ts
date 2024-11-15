@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MateriaPrima, MateriaPrimaVw } from 'src/app/model/materia-prima';
 import { AlertService } from 'src/app/core/alert.service';
 import { MateriaPrimaService } from 'src/app/services/cadastro/materia-prima.service';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 
 @Component({
   selector: 'app-materia-prima',

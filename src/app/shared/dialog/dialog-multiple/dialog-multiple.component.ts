@@ -7,7 +7,7 @@ import {
 import { AlertService } from 'src/app/core/alert.service';
 import { OrcamentoService } from 'src/app/services/cadastro/orcamento.service';
 import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 import { Observable } from 'rxjs';
 import { EstoqueService } from 'src/app/services/cadastro/estoque.service';
 import { Estoque, Produtos } from 'src/app/model/estoque';
@@ -20,7 +20,7 @@ interface Opcao {
 @Component({
   selector: 'app-dialog-multiple',
   templateUrl: './dialog-multiple.component.html',
-  styleUrls: ['./dialog-multiple.component.scss', '../../styles/spinner.scss'],
+  styleUrls: ['./dialog-multiple.component.scss', '../../../styles/spinner.scss'],
 })
 export class DialogMultipleComponent implements OnInit {
   produtos: Produtos[] = [{ id_produto: 0, qt_produto: 1, id_estoque: 1 }];

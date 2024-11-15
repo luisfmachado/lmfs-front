@@ -12,15 +12,15 @@ import { ProdutosComponent } from './module/cadastro/produtos/produtos.component
 import { HomeComponent } from './module/home/home.component';
 import { LoginComponent } from './module/login/login.component';
 import { AuthInterceptor } from './core/auth-interceptor.service';
-import { DialogGenericoComponent } from './shared/dialog-generico/dialog-generico.component';
+import { DialogGenericoComponent } from './shared/dialog/dialog-generico/dialog-generico.component';
 import { MaterialModule } from './shared/material.module';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { OrcamentoComponent } from './module/cadastro/orcamento/orcamento.component';
 import { ClienteComponent } from './module/cadastro/cliente/cliente.component';
 import { OrcamentoManualComponent } from './module/cadastro/orcamento-manual/orcamento-manual.component';
-import { DialogEdicaoComponent } from './shared/dialog-edicao/dialog-edicao.component';
+import { DialogEdicaoComponent } from './shared/dialog/dialog-edicao/dialog-edicao.component';
 import { EstoqueComponent } from './module/cadastro/estoque/estoque.component';
-import { DialogMultipleComponent } from './shared/dialog-multiple/dialog-multiple.component';
+import { DialogMultipleComponent } from './shared/dialog/dialog-multiple/dialog-multiple.component';
 import { MateriaPrimaComponent } from './module/cadastro/materia-prima/materia-prima.component';
 import { ManualComponent } from './module/relatorio/manual/manual.component';
 import { AutomaticoComponent } from './module/relatorio/automatico/automatico.component';
@@ -30,7 +30,8 @@ import { VisualizarComponent } from './module/ponto/visualizar/visualizar.compon
 import { FornecedorComponent } from './module/cadastro/fornecedor/fornecedor.component';
 import { RegistrarComponent } from './module/ponto/registrar/registrar.component';
 import { ToastrModule } from 'ngx-toastr';
-import { DialogVerificacaoComponent } from './shared/dialog-verificacao/dialog-verificacao.component';
+import { DialogVerificacaoComponent } from './shared/dialog/dialog-verificacao/dialog-verificacao.component';
+import { DialogFiltrosComponent } from './shared/dialog/dialog-filtros/dialog-filtros.component';
 
 
 registerLocaleData(localePt);
@@ -56,7 +57,8 @@ registerLocaleData(localePt);
     VisualizarComponent,
     FornecedorComponent,
     RegistrarComponent,
-    DialogVerificacaoComponent
+    DialogVerificacaoComponent,
+    DialogFiltrosComponent
   ],
   imports: [
     BrowserModule,

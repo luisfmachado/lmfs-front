@@ -6,7 +6,7 @@ import { catchError, filter, interval, of, Subscription, switchMap, tap } from '
 import { AlertService } from 'src/app/core/alert.service';
 import { PontoLista, Registro } from 'src/app/model/ponto';
 import { PontoService } from 'src/app/services/ponto/ponto.service';
-import { DialogVerificacaoComponent } from 'src/app/shared/dialog-verificacao/dialog-verificacao.component';
+import { DialogVerificacaoComponent } from 'src/app/shared/dialog/dialog-verificacao/dialog-verificacao.component';
 
 @Component({
   selector: 'app-registrar',

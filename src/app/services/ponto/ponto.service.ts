@@ -23,6 +23,10 @@ export class PontoService {
     return this.api.get<any[]>(`${this.baseURL}/allu`);
   }
 
+  public getAllPontosDay(dt_movimen: string): Observable<any[]> {
+    return this.api.get<any[]>(`${this.baseURL}/alld/${dt_movimen}`);
+  }
+
   public save(
     dt_movimen: string,
     hr_entrada: string,

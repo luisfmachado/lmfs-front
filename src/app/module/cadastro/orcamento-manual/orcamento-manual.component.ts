@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AlertService } from 'src/app/core/alert.service';
 import { OrcamentoService } from 'src/app/services/cadastro/orcamento.service';
 import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 
 interface Produto {
   id_produto: number;

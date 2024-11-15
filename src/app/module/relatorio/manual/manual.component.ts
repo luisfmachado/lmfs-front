@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { formatInTimeZone } from 'date-fns-tz';
 import { Relatorio } from 'src/app/model/relatorio';
 import { RelatorioService } from 'src/app/services/relatorio/relatorio.service';
+import { DialogFiltrosComponent } from 'src/app/shared/dialog/dialog-filtros/dialog-filtros.component';
 
 @Component({
   selector: 'app-manual',
@@ -16,7 +19,8 @@ import { RelatorioService } from 'src/app/services/relatorio/relatorio.service';
 })
 export class ManualComponent implements OnInit {
   constructor(
-    private readonly _relatorioService: RelatorioService
+    private readonly _relatorioService: RelatorioService,
+    public dialogo: MatDialog
   ) {}
 
   public ngOnInit(): void {
@@ -57,20 +61,53 @@ export class ManualComponent implements OnInit {
 
   /*----------------------Download Arquivo---------------------------*/
   gerarRelatorio(cd_relator: number) {
-    this.spinnerCarregamento = true;
-    this._relatorioService.gerarRelatorio(cd_relator).subscribe(
-      (response: Blob) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'relatorio.pdf';
-        link.click();
-        this.spinnerCarregamento = false;
+    const dialogRef = this.dialogo.open(DialogFiltrosComponent, {
+      maxWidth: '950px',
+      data: {
+        title: 'Filtros',
+        date: 'Data',
+        cancelar: 'Cancelar',
+        confirmar: 'Gerar',
       },
-      (error) => {
-        console.error('Erro ao gerar o relatório', error);
-        this.spinnerCarregamento = false;
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.spinnerCarregamento = true;
+
+        let startDate = result.range.start;
+        let endDate = result.range.end;
+
+        if (result.range.start != null) {
+          startDate = formatInTimeZone(
+            result.range.start,
+            'America/Sao_Paulo',
+            'ddMMyyyy'
+          );
+          endDate = formatInTimeZone(
+            result.range.end,
+            'America/Sao_Paulo',
+            'ddMMyyyy'
+          );
+        }
+
+        this._relatorioService
+          .gerarRelatorio(cd_relator, startDate, endDate)
+          .subscribe(
+            (response: Blob) => {
+              const blob = new Blob([response], { type: 'application/pdf' });
+              const link = document.createElement('a');
+              link.href = URL.createObjectURL(blob);
+              link.download = 'relatorio.pdf';
+              link.click();
+              this.spinnerCarregamento = false;
+            },
+            (error) => {
+              console.error('Erro ao gerar o relatório', error);
+              this.spinnerCarregamento = false;
+            }
+          );
       }
-    );
+    });
   }
 }

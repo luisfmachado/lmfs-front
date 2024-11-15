@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Clientes } from 'src/app/model/clientes';
 import { AlertService } from 'src/app/core/alert.service';
 import { ClientesService } from 'src/app/services/cadastro/clientes.service';
-import { DialogGenericoComponent } from 'src/app/shared/dialog-generico/dialog-generico.component';
+import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 
 @Component({
   selector: 'app-cliente',
@@ -84,17 +84,9 @@ export class ClienteComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         if (result.descricao) {
           this.spinnerCarregamento = true;
-          console.log(
-            result.descricao,
-            result.cnpj,
-            result.celular
-          );
+          console.log(result.descricao, result.cnpj, result.celular);
           this._clienteService
-            .save(
-              result.descricao,
-              result.cnpj,
-              result.celular
-            )
+            .save(result.descricao, result.cnpj, result.celular)
             .subscribe(
               () => {
                 this.carregaDados();
@@ -116,72 +108,6 @@ export class ClienteComponent implements OnInit {
       });
     }
   }
-
-  /*----------------------Editar da tabela---------------------------*/
-  // abrirDialogoEditar(id_produto: number, id_cliente: number): void {
-  //   this._clienteService.getProduto(id_produto, id_cliente).subscribe({
-  //     next: (produto: any) => {
-  //       const dialogRef = this.dialogo.open(DialogEdicaoComponent, {
-  //         data: {
-  //           titulo: 'Editar',
-  //           id_produto: produto.id_produto,
-  //           ds_produto: produto.ds_produto,
-  //           vl_produto: produto.vl_produto,
-  //           vl_custopr: produto.vl_custopr,
-  //           ds_corprod: produto.ds_corprod,
-  //           cliente: produto.id_cliente,
-  //           cancelar: 'Cancelar',
-  //           confirmar: 'Editar',
-  //         },
-  //       });
-
-  //       dialogRef.afterClosed().subscribe((result) => {
-  //         if (result) {
-  //           this.editar(
-  //             result.id_produto,
-  //             result.ds_produto,
-  //             result.vl_produto,
-  //             result.vl_custopr,
-  //             result.ds_corprod,
-  //             result.cliente
-  //           );
-  //         }
-  //       });
-  //     },
-  //     error: (error) => {
-  //       alert(`Erro ao buscar produto: ${error.message}`);
-  //     },
-  //   });
-  // }
-
-  // public editar(
-  //   id_produto: number,
-  //   ds_produto: string,
-  //   vl_produto: number,
-  //   vl_custopr: number,
-  //   ds_corprod: string,
-  //   id_cliente: number
-  // ): void {
-  //   this._clienteService
-  //     .update(
-  //       id_produto,
-  //       ds_produto,
-  //       vl_produto,
-  //       vl_custopr,
-  //       ds_corprod,
-  //       id_cliente
-  //     )
-  //     .subscribe({
-  //       next: (res) => {
-  //         if (res) {
-  //           this.carregaDados();
-  //           this.alertService.show('Alterado com sucesso!', 'Fechar');
-  //         } else {
-  //           this.alertService.show('Erro ao alterar!', 'Fechar');
-  //         }
-  //       },
-  //     });
-  // }
 
   /*----------------------Excluir da tabela---------------------------*/
   public excluir(id_cliente: number): void {
