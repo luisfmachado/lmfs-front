@@ -61,61 +61,137 @@ export class ManualComponent implements OnInit {
 
   /*----------------------Download Arquivo---------------------------*/
   gerarRelatorio(cd_relator: number) {
-    const dialogRef = this.dialogo.open(DialogFiltrosComponent, {
-      maxWidth: '950px',
-      data: {
-        title: 'Filtros',
-        date: 'Data',
-        funcionario: 'Funcionário',
-        cancelar: 'Cancelar',
-        confirmar: 'Gerar',
-      },
-    });
+    //RELATÓRIO DE PONTO
+    if (cd_relator == 3) {
+      const dialogRef = this.dialogo.open(DialogFiltrosComponent, {
+        maxWidth: '950px',
+        data: {
+          title: 'Filtros',
+          date: 'Data',
+          funcionario: 'Funcionário',
+          cancelar: 'Cancelar',
+          confirmar: 'Gerar',
+        },
+      });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.spinnerCarregamento = true;
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.spinnerCarregamento = true;
 
-        let startDate = result.range.start;
-        let endDate = result.range.end;
-        let nm_usuario = result.funcionario;
+          let startDate = result.range.start;
+          let endDate = result.range.end;
+          let nm_usuario = result.funcionario;
 
-        if (result.range.start != null) {
-          startDate = formatInTimeZone(
-            result.range.start,
-            'America/Sao_Paulo',
-            'ddMMyyyy'
-          );
-          endDate = formatInTimeZone(
-            result.range.end,
-            'America/Sao_Paulo',
-            'ddMMyyyy'
-          );
+          if (result.range.start != null) {
+            startDate = formatInTimeZone(
+              result.range.start,
+              'America/Sao_Paulo',
+              'ddMMyyyy'
+            );
+            endDate = formatInTimeZone(
+              result.range.end,
+              'America/Sao_Paulo',
+              'ddMMyyyy'
+            );
+          }
+
+          if (nm_usuario == '') {
+            nm_usuario = null;
+          }
+
+          this._relatorioService
+            .gerarRelatorio(cd_relator, startDate, endDate, nm_usuario)
+            .subscribe(
+              (response: Blob) => {
+                const blob = new Blob([response], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'relatorio.pdf';
+                link.click();
+                this.spinnerCarregamento = false;
+              },
+              (error) => {
+                console.error('Erro ao gerar o relatório', error);
+                this.spinnerCarregamento = false;
+              }
+            );
         }
-        
-        if (nm_usuario == '') {
-          nm_usuario = null;
+      });
+    }
+
+    //RELATÓRIO DE ESTOQUE
+    if (cd_relator == 1) {
+      console.log();
+    }
+
+    /*RELATÓRIO DE VENDAS GERAL / RELATÓRIO DE VENDAS POR PEDIDO*/
+    if (cd_relator == 5 || cd_relator == 4) {
+      const dialogRef = this.dialogo.open(DialogFiltrosComponent, {
+        maxWidth: '950px',
+        data: {
+          title: 'Filtros',
+          date: 'Data',
+          cancelar: 'Cancelar',
+          confirmar: 'Gerar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.spinnerCarregamento = true;
+
+          let startDate = result.range.start;
+          let endDate = result.range.end;
+
+          if (result.range.start != null) {
+            startDate = formatInTimeZone(
+              result.range.start,
+              'America/Sao_Paulo',
+              'ddMMyyyy'
+            );
+            endDate = formatInTimeZone(
+              result.range.end,
+              'America/Sao_Paulo',
+              'ddMMyyyy'
+            );
+          }
+
+          this._relatorioService
+            .gerarRelatorio(cd_relator, startDate, endDate, null)
+            .subscribe(
+              (response: Blob) => {
+                const blob = new Blob([response], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'relatorio.pdf';
+                link.click();
+                this.spinnerCarregamento = false;
+              },
+              (error) => {
+                console.error('Erro ao gerar o relatório', error);
+                this.spinnerCarregamento = false;
+              }
+            );
         }
+      });
 
-        console.log(nm_usuario);
-
-        this._relatorioService
-          .gerarRelatorio(cd_relator, startDate, endDate, nm_usuario)
-          .subscribe(
-            (response: Blob) => {
-              const blob = new Blob([response], { type: 'application/pdf' });
-              const link = document.createElement('a');
-              link.href = URL.createObjectURL(blob);
-              link.download = 'relatorio.pdf';
-              link.click();
-              this.spinnerCarregamento = false;
-            },
-            (error) => {
-              console.error('Erro ao gerar o relatório', error);
-              this.spinnerCarregamento = false;
-            }
-          );
-      }
-    });
+      // this.spinnerCarregamento = true;
+      // this._relatorioService
+      //   .gerarRelatorio(cd_relator, null, null, null)
+      //   .subscribe(
+      //     (response: Blob) => {
+      //       const blob = new Blob([response], { type: 'application/pdf' });
+      //       const link = document.createElement('a');
+      //       link.href = URL.createObjectURL(blob);
+      //       link.download = 'relatorio.pdf';
+      //       link.click();
+      //       this.spinnerCarregamento = false;
+      //     },
+      //     (error) => {
+      //       console.error('Erro ao gerar o relatório', error);
+      //       this.spinnerCarregamento = false;
+      //     }
+      //   );
+    }
   }
 }
