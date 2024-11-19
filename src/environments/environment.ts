@@ -1,9 +1,9 @@
 const protocol = 'http://';
-const resource = 'localhost:8080';
+const resource = 'vidrosdecordesign.com.br:8080';
 
 export const environment = {
   env: 'local',
-  production: false,
+  production: true,
   protocol,
   resource,
 };
