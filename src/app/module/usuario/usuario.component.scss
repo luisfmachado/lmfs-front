@@ -1,0 +1,57 @@
+.body {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 18px;
+  bottom: -15px;
+  position: relative;
+}
+
+.dados {
+  margin: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15px;
+  gap: 10%;
+  border-bottom: 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.dados span {
+  box-sizing: border-box;
+  margin-bottom: 3%;
+}
+
+.content-formulario {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.btn-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 20px;
+  padding-top: 5px;
+}
+
+.btn-style {
+  width: 100%;
+}
+
+.senha {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+}

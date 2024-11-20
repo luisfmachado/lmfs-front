@@ -7,16 +7,13 @@
           src="../assets/mat-card-avatar.svg"
           alt="Foto do Usuário"
         />
-        <div class="info-usuario" [routerLink]="'/meuPerfil'">
+        <div class="info-usuario" [routerLink]="'/config/usuario'">
           <p class="txt_nome_usuario">{{ nome }}</p>
           <p class="txt_nivel_usuario">{{ role }}</p>
         </div>
         <button mat-icon-button (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
-        <!-- <button mat-icon-button>
-        <mat-icon>settings</mat-icon>
-      </button> -->
       </div>
 
       <mat-nav-list>

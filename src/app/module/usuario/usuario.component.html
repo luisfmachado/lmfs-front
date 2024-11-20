@@ -1,0 +1,137 @@
+<div class="body animate-fade-slide-in">
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab label="Dados pessoais">
+        <div class="dados">
+          <span
+            ><h2>Número:</h2>
+            {{ funcionario?.cd_usuario }}</span
+          >
+
+          <span
+            ><h2>Nome:</h2>
+            {{ funcionario?.no_funcion }}</span
+          >
+
+          <span
+            ><h2>RG:</h2>
+            {{ funcionario?.nm_rgfunci ?? '' | mask: '00.000.000-0' }}</span
+          >
+
+          <span
+            ><h2>CPF:</h2>
+            {{ funcionario?.nm_cpfunci ?? '' | mask: '000.000.000/00' }}</span
+          >
+
+          <span
+            ><h2>Data de nascimento:</h2>
+            {{ funcionario?.dt_nascime ?? '' | date: 'dd/MM/yyyy'}}</span
+          >
+
+          <span
+            ><h2>Celular:</h2>
+            {{ funcionario?.nm_celular ?? '' | mask: '(00) 00000-0000'}}</span
+          >
+
+          <span
+            ><h2>Naturalidade:</h2>
+            {{ funcionario?.ds_natural }}</span
+          >
+
+          <span
+            ><h2>Contratação:</h2>
+            {{ funcionario?.dt_emissao ?? '' | date: 'dd/MM/yyyy'}}</span
+          >
+
+          <span
+            ><h2>Cargo:</h2>
+            {{ funcionario?.no_cargofu }}</span
+          >
+
+          <span
+            ><h2>Salário:</h2>
+            {{ funcionario?.vl_salario  | currency : "BRL" : "symbol" : "1.2-2" : "pt-BR"}}</span
+          >
+
+          <span
+            ><h2>Vale refeição:</h2>
+            {{ funcionario?.vl_refeica  | currency : "BRL" : "symbol" : "1.2-2" : "pt-BR"}}</span
+          >
+
+          <span
+            ><h2>Vale transporte:</h2>
+            {{ funcionario?.vl_transpo  | currency : "BRL" : "symbol" : "1.2-2" : "pt-BR"}}</span
+          >
+
+          <span
+            ><h2>Email:</h2>
+            {{ funcionario?.ds_emailfu }}</span
+          >
+        </div>
+      </mat-tab>
+      <mat-tab label="Mudar senha">
+        <div class="senha">
+          <form
+            [formGroup]="changePasswordForm"
+            class="content-formulario"
+            (ngSubmit)="onSubmit()"
+          >
+            <mat-form-field>
+              <mat-label>Antiga senha:</mat-label>
+              <input
+                matInput
+                formControlName="oldPassword"
+                required
+                type="password"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Nova senha:</mat-label>
+              <input
+                matInput
+                formControlName="newPassword"
+                required
+                type="password"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Repita nova senha:</mat-label>
+              <input
+                matInput
+                formControlName="confirmPassword"
+                required
+                type="password"
+              />
+              <mat-error *ngIf="changePasswordForm.hasError('mismatch')"
+                >As senhas não coincidem</mat-error
+              >
+            </mat-form-field>
+            <div class="btn-actions">
+              <button
+                mat-raised-button
+                color="secondary"
+                class="btn-style"
+                type="button"
+                routerLink="/home"
+              >
+                Cancelar
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                class="btn-style"
+                [disabled]="changePasswordForm.invalid"
+              >
+                Concluir
+              </button>
+            </div>
+          </form>
+          <div class="spinner" *ngIf="spinnerCarregamento">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

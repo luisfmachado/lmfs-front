@@ -21,20 +21,17 @@ export class RegisterService {
     rg: string
   ): Observable<Resposta> {
     console.log('descricao - ', descricao);
-    console.log('senha - ',senha);
-    console.log('role - ',role);
-    console.log('nome - ',nome);
-    console.log('rg - ',rg);
-    return this.http.post<Resposta>(
-      `${this.baseURL}/register`,
-      {
-        email: descricao,
-        password: senha,
-        role: role,
-        name: nome,
-        rg: rg,
-      }
-    );
+    console.log('senha - ', senha);
+    console.log('role - ', role);
+    console.log('nome - ', nome);
+    console.log('rg - ', rg);
+    return this.http.post<Resposta>(`${this.baseURL}/register`, {
+      email: descricao,
+      password: senha,
+      role: role,
+      name: nome,
+      rg: rg,
+    });
   }
 
   /*----------------------Deletar---------------------------*/
@@ -43,14 +40,20 @@ export class RegisterService {
   }
 
   /*----------------------Alterar senha---------------------------*/
-  // public update(senhaAntiga: string, senhaNova: string, token: string): Observable<Resposta> {
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${token}`
-  //   });
-  //   const body = {
-  //     oldPassword: senhaAntiga,
-  //     newPassword: senhaNova
-  //   };
-  //   return this.http.post<Resposta>(`${this.baseURL}/updatepass`, body, { headers: headers });
-  // }
+  public update(
+    senhaAntiga: string,
+    senhaNova: string,
+    token: string
+  ): Observable<Resposta> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const body = {
+      oldPassword: senhaAntiga,
+      newPassword: senhaNova,
+    };
+    return this.http.post<Resposta>(`${this.baseURL}/updatepass`, body, {
+      headers: headers,
+    });
+  }
 }
