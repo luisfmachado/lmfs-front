@@ -11,6 +11,7 @@ export interface Funcionario {
     vl_salario: number;
     vl_refeica: number;
     vl_transpo: number;
+    ds_emailfu: string;
 }
 
 export interface FuncionarioVw {

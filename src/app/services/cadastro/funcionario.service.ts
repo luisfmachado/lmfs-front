@@ -12,6 +12,11 @@ export class FuncionarioService {
 
   constructor(private api: ApiService) {}
 
+  /*----------------------Buscar---------------------------*/
+  public getDados(): Observable<Funcionario> {
+    return this.api.get<Funcionario>(`${this.baseURL}/dados`);
+  }
+
   public get(): Observable<any[]> {
     return this.api.get<any[]>(`${this.baseURL}`);
   }
@@ -20,6 +25,7 @@ export class FuncionarioService {
     return this.api.get<any[]>(`${this.baseURL}/name`);
   }
 
+  /*----------------------Salvar---------------------------*/
   public save(
     descricao: string,
     rg: string,
@@ -51,6 +57,7 @@ export class FuncionarioService {
     return this.api.post(`${this.baseURL}/save`, body);
   }
 
+  /*----------------------Deletar---------------------------*/
   public delete(cd_usuario: number): Observable<any> {
     return this.api.delete(`${this.baseURL}/delete/${cd_usuario}`);
   }
