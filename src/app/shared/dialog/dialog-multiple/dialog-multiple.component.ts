@@ -10,7 +10,7 @@ import { ProdutosService } from 'src/app/services/cadastro/produtos.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
 import { Observable } from 'rxjs';
 import { EstoqueService } from 'src/app/services/cadastro/estoque.service';
-import { Estoque, Produtos } from 'src/app/model/estoque';
+import { Produtos } from 'src/app/model/estoque';
 
 interface Opcao {
   id: number;
@@ -86,7 +86,7 @@ export class DialogMultipleComponent implements OnInit {
       data: {
         titulo: 'Finalizar',
         descricao: 'Descrição',
-        fornecedor: 'Fornecedor',
+        fornecedor: 'Cliente',
         date: 'Data de Entrada',
         cancelar: 'Cancelar',
         confirmar: 'Cadastrar',
