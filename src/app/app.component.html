@@ -23,6 +23,7 @@
             <mat-icon class="mat-18">home</mat-icon>
           </div>
         </mat-list-item>
+
         <!-- Cadastros -->
         <mat-list-item
           (click)="toggleSubmenu('cadastros')"
@@ -38,7 +39,6 @@
           </div>
         </mat-list-item>
 
-        <!-- escolas -->
         <div *ngIf="showSubmenu('cadastros')">
           <mat-list-item [routerLink]="'/cadastro/cliente'">
             <div class="item-submenu">
@@ -67,6 +67,30 @@
         </div>
 
         <div *ngIf="showSubmenu('cadastros')">
+          <mat-list-item [routerLink]="'/cadastro/tipo-material'">
+            <div class="item-submenu">
+              <mat-icon>inventory</mat-icon>
+              <span>Tipo de material</span>
+            </div>
+          </mat-list-item>
+        </div>
+
+        <!-- Movimentações -->
+        <mat-list-item
+          (click)="toggleSubmenu('movimentacoes')"
+          onkeyup=""
+          *ngIf="isAdmin"
+        >
+          <div class="item-menu">
+            <span>Movimentações</span>
+            <mat-icon
+              [@rotateIcon]="showSubmenu('movimentacoes') ? 'open' : 'closed'"
+              >expand_more</mat-icon
+            >
+          </div>
+        </mat-list-item>
+
+        <div *ngIf="showSubmenu('movimentacoes')">
           <mat-list-item [routerLink]="'/cadastro/orcamento'">
             <div class="item-submenu">
               <mat-icon>payments</mat-icon>
@@ -75,7 +99,7 @@
           </mat-list-item>
         </div>
 
-        <div *ngIf="showSubmenu('cadastros')">
+        <div *ngIf="showSubmenu('movimentacoes')">
           <mat-list-item [routerLink]="'/cadastro/estoque'">
             <div class="item-submenu">
               <mat-icon>production_quantity_limits</mat-icon>
@@ -84,15 +108,16 @@
           </mat-list-item>
         </div>
 
-        <div *ngIf="showSubmenu('cadastros')">
+        <div *ngIf="showSubmenu('movimentacoes')">
           <mat-list-item [routerLink]="'/cadastro/materia-prima'">
             <div class="item-submenu">
               <mat-icon>inventory</mat-icon>
-              <span>Matéria-prima</span>
+              <span>Entr. Material</span>
             </div>
           </mat-list-item>
         </div>
 
+        <!-- Relatórios -->
         <mat-list-item
           (click)="toggleSubmenu('relatorios')"
           onkeyup=""
@@ -106,7 +131,7 @@
             >
           </div>
         </mat-list-item>
-
+       
         <div *ngIf="showSubmenu('relatorios')">
           <mat-list-item [routerLink]="'/relatorio/geram'">
             <div class="item-submenu">
@@ -199,7 +224,7 @@
         </mat-list-item>
 
         <div *ngIf="showSubmenu('integracao')">
-          <mat-list-item [routerLink]="'/cadastro/orcamento'">
+          <mat-list-item [routerLink]="">
             <div class="item-submenu">
               <mat-icon>radio_button_checked</mat-icon>
               <span>Mercado Livre</span>

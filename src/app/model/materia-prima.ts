@@ -10,6 +10,7 @@ export interface MateriaPrima {
     tp_custoad: number;
     vl_pgtotal: number;
     vl_pgmater: number;
+    lg_faturad: string;
 }
 
 export interface MateriaPrimaVw {
@@ -18,6 +19,7 @@ export interface MateriaPrimaVw {
     dt_movimen: string;
     vl_pgtotal: number;
     no_fornece: string;
+    lg_faturad: string;
 }
 
 export interface tipoPagamento {
@@ -33,4 +35,10 @@ export interface tipoPagamentoAdd {
 export interface PagamentoParceladoCartao {
     id:number;
     nome: string;
+}
+
+export interface TipoMaterial {
+    nm_sequenc: number;
+    no_materia: string;
+    vl_custoun: number;
 }
