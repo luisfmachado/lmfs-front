@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SystemConstants } from 'src/app/config/system.constants';
-import { Produtos } from 'src/app/model/produtos';
+import { ProdutoCusto, Produtos } from 'src/app/model/produtos';
 import { Resposta } from 'src/app/model/resposta';
 
 @Injectable({
@@ -41,15 +41,21 @@ export class ProdutosService {
     });
   }
 
+  public saveCusto(custo: ProdutoCusto[]): Observable<Resposta> {
+    return this.http.post<Resposta>(`${this.baseURL}/custo/save`, custo);
+  }
+
   public saveImport(file: File): Observable<Resposta> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<Resposta>(`${this.baseURL}/import`, formData, { responseType: 'text' as 'json' });
+    return this.http.post<Resposta>(`${this.baseURL}/import`, formData, {
+      responseType: 'text' as 'json',
+    });
   }
 
   public exec(): Observable<string> {
     return this.http.post<string>(`${this.baseURL}/exec`, null, {
-      responseType: 'text' as 'json'
+      responseType: 'text' as 'json',
     });
   }
 
@@ -79,8 +85,8 @@ export class ProdutosService {
         id_cliente: id_cliente.toString(),
       },
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        'Content-Type': 'application/json',
+      }),
     });
   }
 

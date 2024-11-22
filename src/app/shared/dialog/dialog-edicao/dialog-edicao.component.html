@@ -1,66 +1,117 @@
-<h2 mat-dialog-title class="title">{{ data.titulo }}</h2>
-<mat-dialog-content class="mat-typography">
+<mat-tab-group>
+  <mat-tab label="Dados">
+    <mat-dialog-content class="mat-typography">
+      <mat-form-field>
+        <mat-label>ID do Produto</mat-label>
+        <input
+          matInput
+          [(ngModel)]="id_produto"
+          maxlength="6"
+          mask="000000"
+          disabled
+        />
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>ID do Produto</mat-label>
-    <input matInput [(ngModel)]="id_produto" maxlength="6" mask="000000" disabled />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nome do Produto</mat-label>
+        <input matInput [(ngModel)]="ds_produto" required />
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Nome do Produto</mat-label>
-    <input matInput [(ngModel)]="ds_produto" required />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Vlr. de venda</mat-label>
+        <input
+          matInput
+          [(ngModel)]="vl_produto"
+          required
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          currencyMask
+          maxlength="10"
+          class="custom-text-align-left"
+        />
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Vlr. de venda</mat-label>
-    <input
-      matInput
-      [(ngModel)]="vl_produto"
-      required
-      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-      currencyMask
-      maxlength="10"
-      class="custom-text-align-left"
-    />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cor</mat-label>
+        <mat-select [(ngModel)]="ds_corprod">
+          <mat-option
+            *ngFor="let opcaoCor of opcoesCor"
+            [value]="opcaoCor.value"
+          >
+            {{ opcaoCor.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Vlr. de custo</mat-label>
-    <input
-      matInput
-      [(ngModel)]="vl_custopr"
-      required
-      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-      currencyMask
-      maxlength="10"
-      class="custom-text-align-left"
-    />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cliente</mat-label>
+        <mat-select [(ngModel)]="cliente">
+          <mat-option *ngFor="let opcao of opcoes" [value]="opcao.id">
+            {{ opcao.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+  </mat-tab>
 
-  <mat-form-field>
-    <mat-label>Cor</mat-label>
-    <mat-select [(ngModel)]="ds_corprod">
-      <mat-option *ngFor="let opcaoCor of opcoesCor" [value]="opcaoCor.value">
-        {{ opcaoCor.value }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <mat-tab label="Custo">
+    <div class="caixa-dialogo">
+      <form #orcamentoForm="ngForm">
+        <div
+          *ngFor="let produto of produtos; let i = index"
+          class="content-formulario animate-fade-slide-in"
+        >
+          <mat-form-field>
+            <mat-label>Material {{ i + 1 }}</mat-label>
+            <mat-select
+              [(ngModel)]="produto.id_materia"
+              name="produto-{{ i }}-id"
+              required
+            >
+              <mat-option *ngFor="let opcao of opcoesMaterial" [value]="opcao.id">
+                {{ opcao.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Cliente</mat-label>
-    <mat-select [(ngModel)]="cliente">
-      <mat-option
-        *ngFor="let opcao of opcoes"
-        [value]="opcao.id"
-        [disabled]="opcao.disabled"
-      >
-        {{ opcao.value }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{ data.cancelar }}</button>
+          <mat-form-field class="mat_qtd">
+            <mat-label>Quantidade</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="produto.qt_materia"
+              name="quantidade-{{ i }}-qt"
+              required
+            />
+          </mat-form-field>
+
+          <button
+            mat-mini-fab
+            color="warn"
+            aria-label="Remover"
+            (click)="removerConvidado(i)"
+            *ngIf="produtos.length > 1"
+            type="button"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Adicionar"
+            (click)="adicionarConvidado()"
+            type="button"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close class="btn-cancelar">
+    {{ data.cancelar }}
+  </button>
   <button
     class="btn-confirmar"
     mat-button
@@ -71,9 +122,13 @@
         vl_custopr: vl_custopr,
         ds_corprod: ds_corprod,
         cliente: cliente,
+        produtos: produtos
       }"
     cdkFocusInitial
   >
     {{ data.confirmar }}
   </button>
 </mat-dialog-actions>
+<div class="spinner" *ngIf="spinnerCarregamento">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
