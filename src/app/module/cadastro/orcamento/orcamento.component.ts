@@ -146,12 +146,12 @@ export class OrcamentoComponent implements OnInit {
         if (result.pagamentoParceladoId == undefined) {
           result.pagamentoParceladoId = 1;
         }
-        console.log(result.tipoPagamentoId && result.date)
-        if (result.tipoPagamentoId && result.date) {
+        console.log(result.tipoPagamento && result.date)
+        if (result.tipoPagamento && result.date) {
           this.spinnerCarregamento = true;
-          console.log(id_orcamen, result.tipoPagamentoId, result.pagamentoParceladoId, result.date);
+          console.log(id_orcamen, result.tipoPagamento, result.pagamentoParceladoId, result.date);
           this._faturamentoService
-            .updatePagamento(id_orcamen, result.tipoPagamentoId, result.pagamentoParceladoId, result.date)
+            .updatePagamento(id_orcamen, result.tipoPagamento, result.pagamentoParceladoId, result.date)
             .subscribe(
               () => {
                 this.carregaDados();
