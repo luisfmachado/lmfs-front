@@ -5,6 +5,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { PagamentoParceladoCartao, tipoPagamento, tipoPagamentoAdd } from 'src/app/model/materia-prima';
 import { ClientesService } from 'src/app/services/cadastro/clientes.service';
 import { FornecedorService } from 'src/app/services/cadastro/fornecedor.service';
+import { MateriaPrimaService } from 'src/app/services/cadastro/materia-prima.service';
 
 interface Opcao {
   value: string;
@@ -52,12 +53,14 @@ export class DialogGenericoComponent implements OnInit {
   rg: string | null = null;
   cpf: string | null = null;
   celular!: string;
-  tipoPagamentoId!: number;
+  tipoPagamento: number | null = null;
   lg_custoad: string = this.data.custoAddValor || 'F';
   ds_custoad!: string;
   vl_custoad!: number;
   tp_custoad!: number;
   pagamentoParceladoId!: number;
+  tipoMaterial: number | null = null;
+  quantidade: number | null = 0;
 
   opcoes: Opcao[] = [];
   opcoesF: OpcaoF[] = [];
@@ -67,14 +70,14 @@ export class DialogGenericoComponent implements OnInit {
     { value: 'Fumê' },
     { value: 'Cromado' },
   ];
-  tipoPagamento: tipoPagamento[] = [
+  opcoesPagamento: tipoPagamento[] = [
     { id: 1, nome: 'Pix' },
     { id: 2, nome: 'Cheque' },
     { id: 3, nome: 'Cartão de crédito' },
-    { id: 4, nome: 'Cartão de dédito' },
+    { id: 4, nome: 'Cartão de débito' },
   ];
   tipoPagamentoAdd: tipoPagamentoAdd[] = [
-    { id: 1, nome: 'Empresa' },
+    { id: 1, nome: 'Fornecedor' },
     { id: 2, nome: 'Cliente' },
     { id: 3, nome: 'Ambos' },
   ];
@@ -97,13 +100,21 @@ export class DialogGenericoComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogGenericoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private clientesService: ClientesService,
-    private _fornecedorService: FornecedorService
+    private _fornecedorService: FornecedorService,
+    private _materiaPrimaService: MateriaPrimaService
   ) {
   }
 
   ngOnInit(): void {
-    this.carregaCliente();
-    this.carregaFornecedor();
+    if (this.data.tipoMaterial) {
+      this.carregaTipoMaterial();
+    }
+    if (this.data.fornecedor) {
+      this.carregaFornecedor();
+    }
+    if (this.data.cliente) {
+      this.carregaCliente();
+    }
   }
 
   dadosInput(): void {
@@ -118,6 +129,7 @@ export class DialogGenericoComponent implements OnInit {
       valorCusto: this.valorCusto,
       cor: this.cor,
       cliente: this.cliente,
+      tipoMaterial: this.tipoMaterial,
       fornecedor: this.fornecedor,
       file: this.file,
       date: this.date,
@@ -126,12 +138,13 @@ export class DialogGenericoComponent implements OnInit {
       rg: this.rg,
       cpf: this.cpf,
       celular: this.celular,
-      tipoPagamentoId: this.tipoPagamentoId,
+      tipoPagamento: this.tipoPagamento,
       lg_custoad: this.lg_custoad,
       ds_custoadd: this.ds_custoad,
       vl_custoad: this.vl_custoad,
       tp_custoad: this.tp_custoad,
-      pagamentoParceladoId: this.pagamentoParceladoId
+      pagamentoParceladoId: this.pagamentoParceladoId,
+      quantidade: this.quantidade
     });
   }
 
@@ -145,6 +158,19 @@ export class DialogGenericoComponent implements OnInit {
         }));
       },
       error: (err) => console.error('Erro ao carregar clientes:', err),
+    });
+  }
+
+  carregaTipoMaterial(): void {
+    this._materiaPrimaService.getTp().subscribe({
+      next: (nomes) => {
+        this.opcoes = nomes.map((tipoMaterial) => ({
+          value: tipoMaterial.no_materia,
+          id: tipoMaterial.nm_sequenc,
+          disabled: false,
+        }));
+      },
+      error: (err) => console.error('Erro ao carregar tipos de materiais:', err),
     });
   }
 
@@ -198,6 +224,6 @@ export class DialogGenericoComponent implements OnInit {
   }
 
   onPayChange(event: MatSelectChange): void {
-    this.exibirParcelamento = this.tipoPagamentoId === 3 /*|| this.tipoPagamentoId === 2*/;
+    this.exibirParcelamento = this.tipoPagamento === 3 /*|| this.tipoPagamentoId === 2*/;
   }
 }

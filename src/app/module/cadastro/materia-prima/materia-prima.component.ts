@@ -7,6 +7,7 @@ import { MateriaPrima, MateriaPrimaVw } from 'src/app/model/materia-prima';
 import { AlertService } from 'src/app/core/alert.service';
 import { MateriaPrimaService } from 'src/app/services/cadastro/materia-prima.service';
 import { DialogGenericoComponent } from 'src/app/shared/dialog/dialog-generico/dialog-generico.component';
+import { formatInTimeZone } from 'date-fns-tz';
 
 @Component({
   selector: 'app-materia-prima',
@@ -73,49 +74,42 @@ export class MateriaPrimaComponent implements OnInit {
     const user = localStorage.getItem('name');
     if (user) {
       const dialogRef = this.dialogo.open(DialogGenericoComponent, {
-        maxWidth: '950px',
+        maxWidth: '980px',
         data: {
           titulo: 'Entrada:',
-          descricao: 'Descrição',
+          tipoMaterial: 'Material',
           date: 'Data',
           fornecedor: 'Fornecedor',
-          valor: 'Custo do material',
           lg_custoad: 'Gerou custos adicionais?',
           custoAddValor: 'F',
-          tipoPagamento: 'Pagamento',
           ds_custoad: 'Descrição de custo adicional',
           vl_custoad: 'Valor de custo adicional',
           tp_custoad: 'Responsável por custo adicional',
+          quantidade: 'Quantidade',
           cancelar: 'Cancelar',
           confirmar: 'Cadastrar',
         },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        if (result.descricao) {
+        if (result.tipoMaterial) {
           this.spinnerCarregamento = true;
-          console.log(
-            result.descricao,
+          const date = formatInTimeZone(
             result.date,
-            result.tipoPagamento,
-            result.fornecedor,
-            result.lg_custoad,
-            result.ds_custoadd,
-            result.vl_custoad,
-            result.tp_custoad,
-            result.valor,
+            'America/Sao_Paulo',
+            'yyyy-MM-dd'
           );
+          console.log(result.tipoPagamento);
           this._materiaPrimaService
             .save(
-              result.descricao,
-              result.date,
-              result.tipoPagamento,
+              result.tipoMaterial,
+              date,
               result.fornecedor,
               result.lg_custoad,
               result.ds_custoadd,
               result.vl_custoad,
               result.tp_custoad,
-              result.valor,
+              result.quantidade
             )
             .subscribe(
               () => {
@@ -141,6 +135,7 @@ export class MateriaPrimaComponent implements OnInit {
 
   onTypeChange(value: string): void {
     if (value === 'T') {
+      //
     }
   }
 
@@ -159,5 +154,60 @@ export class MateriaPrimaComponent implements OnInit {
         }
       },
     });
+  }
+
+  /*----------------------Excluir da tabela---------------------------*/
+  public gerarPagamento(nm_sequenc: number, lg_faturad: string): void {
+    if (lg_faturad != 'T') {
+      this.abrirPagamento(nm_sequenc);
+    } else {
+      this.alertService.show('Pagamento já concluído!', 'Fechar');
+    } 
+  }
+
+  public abrirPagamento(nm_sequenc: number): void {
+    const user = localStorage.getItem('name');
+    if (user) {
+      const dialogRef = this.dialogo.open(DialogGenericoComponent, {
+        maxWidth: '980px',
+        data: {
+          titulo: 'Pagamento',
+          date: 'Data',
+          valor: 'Valor',
+          cancelar: 'Cancelar',
+          confirmar: 'Cadastrar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result.date && result.valor) {
+          this.spinnerCarregamento = true;
+          const date = formatInTimeZone(
+            result.date,
+            'America/Sao_Paulo',
+            'yyyy-MM-dd'
+          );
+          this._materiaPrimaService
+            .savePagamento(nm_sequenc, date, result.valor)
+            .subscribe(
+              () => {
+                this.carregaDados();
+                this.spinnerCarregamento = false;
+                this.alertService.show('Pagamento registrado!', 'Fechar');
+              },
+              () => {
+                this.spinnerCarregamento = false;
+                this.alertService.show('Erro', 'Fechar');
+              }
+            );
+        } else {
+          this.spinnerCarregamento = false;
+          this.alertService.show(
+            'Ação cancelada ou dados incompletos.',
+            'Fechar'
+          );
+        }
+      });
+    }
   }
 }

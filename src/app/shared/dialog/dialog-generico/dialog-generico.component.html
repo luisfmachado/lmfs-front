@@ -6,6 +6,19 @@
       <input matInput [(ngModel)]="id" maxlength="6" mask="000000" />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.tipoMaterial" class="cliente">
+      <mat-label>{{ data.tipoMaterial }}</mat-label>
+      <mat-select [(ngModel)]="tipoMaterial" required>
+        <mat-option
+          *ngFor="let opcao of opcoes"
+          [value]="opcao.value"
+          [disabled]="opcao.disabled"
+        >
+          {{ opcao.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.descricao" class="descricao">
       <mat-label>{{ data.descricao }}</mat-label>
       <input matInput [(ngModel)]="descricao" required />
@@ -181,6 +194,11 @@
       <input matInput [(ngModel)]="descricao4" required />
     </mat-form-field>
 
+    <mat-form-field *ngIf="data.quantidade" class="descricao2">
+      <mat-label>{{ data.quantidade }}</mat-label>
+      <input matInput [(ngModel)]="quantidade" required type="number"/>
+    </mat-form-field>
+
     <mat-form-field *ngIf="data.date2" class="data">
       <mat-label>{{ data.date2 }}</mat-label>
       <input
@@ -199,8 +217,12 @@
 
     <mat-form-field *ngIf="data.tipoPagamento" class="tipo">
       <mat-label>{{ data.tipoPagamento }}</mat-label>
-      <mat-select [(ngModel)]="tipoPagamentoId" required (selectionChange)="onPayChange($event)">
-        <mat-option *ngFor="let type of tipoPagamento" [value]="type.id">
+      <mat-select
+        [(ngModel)]="tipoPagamento"
+        required
+        (selectionChange)="onPayChange($event)"
+      >
+        <mat-option *ngFor="let type of opcoesPagamento" [value]="type.id">
           {{ type.nome }}
         </mat-option>
       </mat-select>
@@ -249,10 +271,7 @@
     <mat-form-field *ngIf="exibirCamposAdicionais" class="pagamento-adicional">
       <mat-label>{{ data.tp_custoad }}</mat-label>
       <mat-select [(ngModel)]="tp_custoad" required>
-        <mat-option
-          *ngFor="let option of tipoPagamentoAdd"
-          [value]="option.id"
-        >
+        <mat-option *ngFor="let option of tipoPagamentoAdd" [value]="option.id">
           {{ option.nome }}
         </mat-option>
       </mat-select>
@@ -275,6 +294,7 @@
         valorCusto: valorCusto,
         cor: cor,
         cliente: cliente,
+        tipoMaterial: tipoMaterial,
         fornecedor: fornecedor,
         file: file,
         date: date,
@@ -283,12 +303,13 @@
         rg: rg,
         cpf: cpf,
         celular: celular,
-        tipoPagamentoId: tipoPagamentoId,
+        tipoPagamento: tipoPagamento,
         lg_custoad: lg_custoad,
         ds_custoadd: ds_custoad,
         vl_custoad: vl_custoad,
         tp_custoad: tp_custoad,
-        pagamentoParceladoId: pagamentoParceladoId
+        pagamentoParceladoId: pagamentoParceladoId,
+        quantidade: quantidade
       }"
       cdkFocusInitial
     >

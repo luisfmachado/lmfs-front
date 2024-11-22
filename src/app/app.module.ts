@@ -35,6 +35,7 @@ import { DialogFiltrosComponent } from './shared/dialog/dialog-filtros/dialog-fi
 import { ShopeeComponent } from './module/integracao/shopee/shopee.component';
 import { MercadoLivreComponent } from './module/integracao/mercado-livre/mercado-livre.component';
 import { UsuarioComponent } from './module/usuario/usuario.component';
+import { TipoMaterialComponent } from './module/cadastro/tipo-material/tipo-material.component';
 
 
 registerLocaleData(localePt);
@@ -64,7 +65,8 @@ registerLocaleData(localePt);
     DialogFiltrosComponent,
     ShopeeComponent,
     MercadoLivreComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    TipoMaterialComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './services/auth/login.service';
-import { AlertService } from './core/alert.service';
 import {
   animate,
   state,
@@ -43,7 +42,7 @@ export class AppComponent implements OnInit {
     private _authService: LoginService
   ) {}
 
-  title = 'lmfs';
+  title = 'Decor Design';
 
   spinnerCarregamento: boolean = false;
 
