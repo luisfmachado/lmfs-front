@@ -36,10 +36,11 @@ export class MateriaPrimaComponent implements OnInit {
   //Colunas da tabela
   displayedColumns: string[] = [
     'nm_sequenc',
+    'vl_custoun',
     'no_materia',
     'dt_movimen',
-    'vl_pgtotal',
     'no_fornece',
+    'vl_pgtotal',
     'acoes',
   ];
 

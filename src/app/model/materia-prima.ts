@@ -15,6 +15,7 @@ export interface MateriaPrima {
 
 export interface MateriaPrimaVw {
     nm_sequenc: number;
+    vl_custoun: number;
     no_materia: string;
     dt_movimen: string;
     vl_pgtotal: number;
