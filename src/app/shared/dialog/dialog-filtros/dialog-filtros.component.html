@@ -24,6 +24,15 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field *ngIf="data.fornecedor" class="cliente">
+    <mat-label>{{ data.fornecedor }}</mat-label>
+    <mat-select [(ngModel)]="fornecedor">
+      <mat-option *ngFor="let nome of opcoesF" [value]="nome.value">
+        {{ nome.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button mat-button mat-dialog-close>{{ data.cancelar }}</button>

@@ -193,5 +193,48 @@ export class ManualComponent implements OnInit {
       //     }
       //   );
     }
+
+    /*RELATÓRIO DE PAGAMENTOS*/
+    if (cd_relator == 6) {
+      const dialogRef = this.dialogo.open(DialogFiltrosComponent, {
+        maxWidth: '950px',
+        data: {
+          title: 'Filtros',
+          fornecedor: 'Fornecedor',
+          cancelar: 'Cancelar',
+          confirmar: 'Gerar',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.spinnerCarregamento = true;
+
+          let nm_usuario = result.fornecedor;
+
+          if (nm_usuario == '') {
+            nm_usuario = null;
+          }
+
+          console.log('nm_usuario - ', nm_usuario);
+          this._relatorioService
+            .gerarRelatorio(cd_relator, null, null, nm_usuario)
+            .subscribe(
+              (response: Blob) => {
+                const blob = new Blob([response], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'relatorio.pdf';
+                link.click();
+                this.spinnerCarregamento = false;
+              },
+              (error) => {
+                console.error('Erro ao gerar o relatório', error);
+                this.spinnerCarregamento = false;
+              }
+            );
+        }
+      });
+    }
   }
 }
